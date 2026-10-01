@@ -55,6 +55,7 @@ instead, see [Building](#building).
 | **Amp** | official subscription percentages; derived free-allowance percentage | The Amp CLI login in `~/.local/share/amp/secrets.json`, against Amp's `userDisplayBalanceInfo` endpoint. Shows Agent and Orb usage, or the Free allowance and replenishment rate. See [Amp details](docs/providers/amp.md). |
 | **Apify** | official | The `apify login` session already on this Mac (`~/.apify/auth.json`, or the token the CLI keeps in the keychain), or a token pasted in Settings or exported as `APIFY_TOKEN`, against the `/v2/users/me/limits` endpoint the Console's Billing page draws from. Shows this cycle's platform spend against the account's monthly usage limit. See [Apify details](docs/providers/apify.md). |
 | **Kilo** | official | The Kilo CLI's own sign-in (`~/.local/share/kilo/auth.json`), against the same coding-plan quota and balance endpoints the CLI asks. Shows the plan's quota windows and the credit balance. |
+| **DeepSeek Harness** | derived from official Platform responses | The account grant Harness files in `~/.dsh/.credentials.yaml`, against the same `/api/v0/users/get_user_summary` the Platform website answers — sent in `x-dsh-auth-token`, and only to the origin that issued the grant. No sign-in of its own. Shows funded/spent balance. See [DeepSeek Harness details](docs/providers/dsh.md). |
 
 Most providers borrow a credential or session from a tool already on your Mac.
 DeepSeek is the explicit browser-login exception: it never reads a browser's

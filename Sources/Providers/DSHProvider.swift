@@ -1,0 +1,101 @@
+import Foundation
+import os
+
+/// Reads the DeepSeek Platform account through the grant DeepSeek Harness
+/// already holds.
+///
+/// This is the borrowed-credential pattern again — the same bargain as Grok's
+/// `~/.grok/auth.json` or Kilo's `~/.local/share/kilo/auth.json` — with one
+/// wrinkle: Harness's grant is not a website token, so it rides in
+/// `x-dsh-auth-token` and is only good on the origin that issued it. That is
+/// why `DSHCredentials` keeps the `issuer` at all, and why the request is built
+/// against it rather than against a constant.
+///
+/// The money is Platform's own, and the percentage derived from it is ours, so
+/// this is `.derived` — exactly the fidelity the signed-in DeepSeek provider
+/// declares for the same account. The ring wears DeepSeek's mark rather than a
+/// Harness-specific one because the account behind it is DeepSeek's; what
+/// differs is where the credential came from, and Settings says that plainly
+/// (`via DeepSeek Harness`).
+///
+/// A machine with no Harness install gets no ring rather than a row asking for
+/// a sign-in Codenotch cannot perform: the grant is the only way in, and
+/// Codenotch does not own it.
+actor DSHProvider: UsageProvider {
+    nonisolated let id = "dsh"
+    nonisolated let displayName = "DeepSeek Harness"
+    nonisolated let glyph = ProviderGlyph.deepseek
+
+    private let session: URLSession
+    private let credentialsURL: URL
+
+    init(session: URLSession = .shared,
+         credentialsURL: URL = DSHCredentials.credentialsURL) {
+        self.session = session
+        self.credentialsURL = credentialsURL
+    }
+
+    nonisolated var signInRoute: SignInRoute {
+        // Nothing to run from here and no modal of our own: the grant is minted
+        // by Harness's browser sign-in, so the honest action is to open it.
+        .openApp(bundleID: "com.deepseek.dsh", name: "DeepSeek Harness")
+    }
+
+    nonisolated func account() -> ProviderAccount? {
+        DSHCredentials.account(from: credentialsURL)
+    }
+
+    nonisolated var isVisibleWhenAbsent: Bool { false }
+
+    func fetchSnapshot() async throws -> ProviderSnapshot {
+        let credentials = try DSHCredentials.load(from: credentialsURL)
+        let body = try await fetchSummary(credentials)
+        Log.usage.debug("dsh get_user_summary -> \(body.prefix(400), privacy: .public)")
+        let windows = try DSHUsage.windows(fromJSON: body)
+
+        return ProviderSnapshot(
+            id: id,
+            displayName: displayName,
+            glyph: glyph,
+            fidelity: .derived,
+            status: .ok,
+            windows: windows,
+            headlineID: "spend"
+        )
+    }
+
+    private func fetchSummary(_ credentials: DSHCredentials) async throws -> String {
+        guard let url = URL(string: DSHUsage.summaryPath, relativeTo: credentials.issuer) else {
+            throw UsageProviderError.badResponse(status: 0)
+        }
+
+        var request = URLRequest(url: url)
+        request.setValue(credentials.token, forHTTPHeaderField: "x-dsh-auth-token")
+        for (name, value) in DSHUsage.clientHeaders() {
+            request.setValue(value, forHTTPHeaderField: name)
+        }
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.timeoutInterval = 15
+
+        Log.usage.debug("GET \(credentials.issuer.absoluteString, privacy: .public)\(DSHUsage.summaryPath, privacy: .public)")
+        let (data, response) = try await session.data(for: request)
+        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        Log.usage.debug("dsh get_user_summary answered \(status)")
+
+        // The grant was rejected. Harness's own account provider answers this
+        // by clearing the stored grant; here it is a sign-in the *user* has to
+        // do in Harness, so the ring says `needsAuth` and keeps nothing.
+        if status == 401 || status == 403 { throw UsageProviderError.needsAuth }
+        if status == 429 { throw UsageProviderError.rateLimited(retryAfter: 60) }
+        guard (200..<300).contains(status),
+              let text = String(data: data, encoding: .utf8)
+        else { throw UsageProviderError.badResponse(status: status) }
+
+        // A rejected grant can also ride under HTTP 200, named in the envelope
+        // rather than in the status line — the case `DeepSeekUsage` would
+        // otherwise report as "no wallet".
+        if DSHUsage.rejection(inJSON: text) { throw UsageProviderError.needsAuth }
+
+        return text
+    }
+}
