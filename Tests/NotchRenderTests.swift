@@ -970,10 +970,18 @@ final class EverySizeSettingAppliesEverywhereTests: XCTestCase {
     /// chosen while the notch is on the hardware edge is exactly what it is when
     /// it arrives on any other.
     func testTheSizeSettingSurvivesTheHardwareEdge() throws {
-        guard NSScreen.screens.contains(where: { $0.hardwareNotch != nil }) else {
+        // The screen this is actually about, named rather than left to
+        // `currentScreen()`: that one follows the menu-bar screen, and a run
+        // with no key window can hand back a display with no cutout at all. The
+        // guard then passed and the assertion below failed for a reason that had
+        // nothing to do with the edge — and only on machines that have a second
+        // display to be picked instead. `assignedScreen` is the seam the fleet
+        // already uses to say which display a controller belongs to.
+        guard let notched = NSScreen.screens.first(where: { $0.hardwareNotch != nil }) else {
             throw XCTSkip("Needs a display with a notch")
         }
         let controller = NotchWindowController()
+        controller.assignedScreen = notched
         controller.model.updateSnapshots(Fixtures.snapshots())
         defer { controller.stop() }
 

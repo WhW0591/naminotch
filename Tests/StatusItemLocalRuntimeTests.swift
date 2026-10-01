@@ -22,24 +22,34 @@ final class StatusItemLocalRuntimeTests: XCTestCase {
                                       localRuntime: try OllamaLocalUsage.parse(ollamaData))
         let cloud = Fixtures.snapshots()[0]
 
+        // One clock for the whole test, pinned to the middle of the day.
+        //
+        // The ledger buckets by `startOfDay`, and the entry below is a minute
+        // old — so a suite running inside the first minute after midnight put
+        // it in *yesterday* and the Today figures came back zero. The test
+        // passed all day and failed for sixty seconds of it. Nothing here is
+        // about what time it is, so it stops reading the wall clock.
+        let now = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())
+            ?? Date()
+
         // No `show()`: the fleet has no panels, and the menu's model is fed anyway.
         let fleet = NotchFleet(scope: .mainDisplay, edge: .right)
         fleet.setSnapshots([cloud, runtime, ollama])
         var ledger = LocalTokenLedger()
-        ledger.record(LocalPrediction(instance: "qwen3.8-27b", at: Date().addingTimeInterval(-60),
+        ledger.record(LocalPrediction(instance: "qwen3.8-27b", at: now.addingTimeInterval(-60),
                                       inputTokens: 20_000, outputTokens: 1_200), as: qwen)
         fleet.setLedger(ledger)
         fleet.setPerformances([qwen: try XCTUnwrap(LocalModelPerformance(outputTokens: 1200, tokensPerSecond: 24.1))],
                               source: "lmstudio")
-        fleet.setLocalActivities([qwen: LocalModelActivity(phase: .processingPrompt, queued: 1, since: Date())])
-        fleet.setThinkingModels(["gemma4:e4b": Date()])
+        fleet.setLocalActivities([qwen: LocalModelActivity(phase: .processingPrompt, queued: 1, since: now)])
+        fleet.setThinkingModels(["gemma4:e4b": now])
 
         let controller = StatusItemController(onOpenSettings: {})
         controller.snapshots = [cloud, runtime, ollama]
         controller.cells = { fleet.menuModel.snapshots }
         controller.activity = { fleet.menuModel.activity(for: $0) }
         let menu = NSMenu()
-        controller.rebuild(menu: menu, now: Date())
+        controller.rebuild(menu: menu, now: now)
         let titles = menu.items.map(\.title)
         let joined = titles.joined(separator: "\n")
 
@@ -59,7 +69,7 @@ final class StatusItemLocalRuntimeTests: XCTestCase {
         // A hidden model has no cell, so it has no line; the count still counts it.
         fleet.setSnapshots([cloud, ollama, runtime])
         fleet.menuModel.updateSnapshots(runtime.notchSnapshots.filter { $0.id == qwen } + [cloud])
-        controller.rebuild(menu: menu, now: Date())
+        controller.rebuild(menu: menu, now: now)
         XCTAssertFalse(menu.items.map(\.title).contains { $0.hasPrefix("flash-next-test") })
     }
 
