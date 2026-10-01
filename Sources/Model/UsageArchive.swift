@@ -22,7 +22,6 @@ struct UsageArchive {
         /// Optional so archives written before Codex token activity existed
         /// continue to open and show their last quota reading.
         let tokenUsage: CodexTokenUsage?
-        let usageDetail: ProviderUsageDetail?
         /// Whose reading this was. Optional for the same reason, and kept so a
         /// remembered one still says it — a reading restored from the archive
         /// is exactly when "which account is this?" is hardest to answer.
@@ -98,8 +97,7 @@ struct UsageArchive {
                 windows: windows,
                 headlineID: entry.headlineID,
                 weeklyID: entry.weeklyID,
-                tokenUsage: entry.tokenUsage,
-                usageDetail: entry.usageDetail
+                tokenUsage: entry.tokenUsage
             )
             snapshot.plan = entry.plan
             result[entry.id] = (snapshot, entry.fetchedAt)
@@ -126,7 +124,6 @@ struct UsageArchive {
                 headlineID: $0.snapshot.headlineID,
                 weeklyID: $0.snapshot.weeklyID,
                 tokenUsage: $0.snapshot.tokenUsage,
-                usageDetail: $0.snapshot.usageDetail,
                 plan: $0.snapshot.plan
             )
         }

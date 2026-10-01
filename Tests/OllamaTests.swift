@@ -813,7 +813,7 @@ final class OllamaRenderTests: XCTestCase {
         let content = SettingsView(preferences: preferences, providers: { store.providerSummaries },
             signOut: { store.signOut(providerID: $0) }, signIn: { store.signIn(providerID: $0) },
             switchAccount: { _ in false }, retry: { store.refresh(providerID: $0) },
-            resetPosition: {}, quit: {}, updater: Updater(), usageStore: store)
+            resetPosition: {}, quit: {}, usageStore: store)
             .frame(width: SettingsView.width, height: SettingsView.height)
             .background(Color(nsColor: .windowBackgroundColor))
         let hosting = NSHostingView(rootView: content)

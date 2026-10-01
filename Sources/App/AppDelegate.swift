@@ -5,19 +5,12 @@ import SwiftUI
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var notchFleet: NotchFleet?
     private var store: UsageStore?
-    var phoneLinkServer: PhoneLinkServer?
-    var phoneLinkServerStatus: PhoneLinkServerStatus?
-    var phoneLinkPairing: PhoneLinkPairing?
-    var phoneLinkRegistry: PhoneLinkRegistry?
     private var activityCoordinator: ActivityCoordinator?
     private var piResponseMonitor: PiResponseMonitor?
     private var ollamaRelay: OllamaActivityRelay?
     private var lmstudioMetrics: LMStudioMetrics?
     private var preferences: Preferences?
     private var settings: SettingsWindowController?
-    private var whatsNew: WhatsNewWindowController?
-    /// Held for the life of the app: releasing it stops the scheduled checks.
-    private var updater: Updater?
     private var thresholdNotifier: ThresholdNotifier?
     private var resetWatcher: UsageResetWatcher?
     private var limitWatcher: UsageLimitWatcher?
@@ -222,25 +215,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 store?.providerAuthenticationChanged(providerID: "minimax")
             }
 
-            let updater = Updater()
-            self.updater = updater
-            // An update is offered in the notch, and installed there — see
-            // `UpdateCard`. Checked for as it launches; never under test, where
-            // it would reach for the real feed.
-            updater.$prompt
-                .receive(on: RunLoop.main)
-                .sink { [weak fleet] in fleet?.apply(updatePrompt: $0) }
-                .store(in: &cancellables)
-            fleet.onUpdateChoice = { [weak updater] in updater?.respond($0) }
-            // Put off: a red dot on the settings button until it is taken.
-            Publishers.CombineLatest(updater.$pending, updater.$prompt)
-                .map { pending, prompt in pending != nil && prompt == nil }
-                .removeDuplicates()
-                .receive(on: RunLoop.main)
-                .sink { [weak fleet] in fleet?.apply(updatePending: $0) }
-                .store(in: &cancellables)
-            if !isRunningTests { updater.start() }
-
             let relay = OllamaActivityRelay()
             self.ollamaRelay = relay
             // A single publisher chain exceeds Swift's type-checking time limit.
@@ -310,80 +284,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 .sink { [weak fleet] in fleet?.setLedger($0) }
                 .store(in: &cancellables)
 
-            let dir: URL
-            if NSClassFromString("XCTestCase") != nil {
-                dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-            } else {
-                let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-                dir = appSupport.appendingPathComponent("Codenotch/phone-link", isDirectory: true)
-            }
-            let phoneSecretStore: PhoneLinkSecretStore = NSClassFromString("XCTestCase") != nil
-                ? InMemoryPhoneLinkSecretStore()
-                : PhoneLinkKeychainSecretStore()
-            let phoneRegistry = PhoneLinkRegistry(directory: dir, secretStore: phoneSecretStore)
-            let phonePairing = PhoneLinkPairing()
-            let serverStatus = PhoneLinkServerStatus()
-            self.phoneLinkRegistry = phoneRegistry
-            self.phoneLinkPairing = phonePairing
-            
-            let server = PhoneLinkServer(
-                pairing: phonePairing,
-                registry: phoneRegistry,
-                status: serverStatus,
-                getSnapshot: { @Sendable [weak store, weak fleet, weak preferences] in
-                    guard let store, let fleet, let preferences else { return nil }
-                    let snap = await MainActor.run {
-                        PhoneLinkSnapshotBuilder.build(
-                            snapshots: Self.drawn(store.snapshots,
-                                                  weekly: preferences.weeklyHeadline,
-                                                  paced: preferences.claudeDailyPaceRing),
-                            sessions: Array(fleet.sessions.values.flatMap { $0 }),
-                            disconnected: store.disconnected,
-                            order: preferences.providerOrder,
-                            serverName: PhoneLinkNetwork.getComputerName(),
-                            serverVersion: (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0.0",
-                            now: Date()
-                        )
-                    }
-                    return try? JSONEncoder().encode(snap)
-                },
-                refreshAndGetSnapshot: { @Sendable [weak store, weak fleet, weak preferences] in
-                    guard let store, let fleet, let preferences else { return nil }
-                    // A phone asking to refresh is the same gesture as opening
-                    // the menu here, and it is about to render these numbers on
-                    // another screen. Nothing cached will do.
-                    await MainActor.run { store.refreshNow(freshness: .fromSource) }
-                    for _ in 0..<20 {
-                        let isRef = await MainActor.run { !store.refreshing.isEmpty }
-                        if !isRef { break }
-                        try? await Task.sleep(nanoseconds: 1_000_000_000)
-                    }
-                    let snap = await MainActor.run {
-                        PhoneLinkSnapshotBuilder.build(
-                            snapshots: Self.drawn(store.snapshots,
-                                                  weekly: preferences.weeklyHeadline,
-                                                  paced: preferences.claudeDailyPaceRing),
-                            sessions: Array(fleet.sessions.values.flatMap { $0 }),
-                            disconnected: store.disconnected,
-                            order: preferences.providerOrder,
-                            serverName: PhoneLinkNetwork.getComputerName(),
-                            serverVersion: (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0.0",
-                            now: Date()
-                        )
-                    }
-                    return try? JSONEncoder().encode(snap)
-                }
-            )
-            self.phoneLinkServerStatus = serverStatus
-            self.phoneLinkServer = server
-
             let settings = SettingsWindowController(
                 preferences: preferences,
                 // A closure so the sheet re-reads accounts each time it comes
                 // forward; a snapshot here is what made a switched account keep
                 // showing the old address until the app restarted.
                 providers: { [weak store] in store?.providerSummaries ?? [] },
-                updater: updater,
                 signOut: { [weak store] in store?.signOut(providerID: $0) },
                 signIn: { [weak store] in store?.signIn(providerID: $0) ?? false },
                 switchAccount: { [weak store] in
@@ -411,8 +317,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 sendTestNotification: { [weak self] in
                     self?.sendTestNotification()
                 },
-                usageStore: store, ollamaRelay: relay, lmstudioMetrics: lmstudio,
-                phoneLinkPairing: phonePairing, phoneLinkRegistry: phoneRegistry, phoneLinkServerStatus: serverStatus
+                usageStore: store, ollamaRelay: relay, lmstudioMetrics: lmstudio
             )
             // The gear toggles; everything else that opens settings opens it.
             fleet.onOpenSettings = { [weak settings] in settings?.toggle() }
@@ -422,28 +327,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             self.settings = settings
 
-            // What changed, once per version — including on a fresh install,
-            // where it is the introduction.
-            let whatsNew = WhatsNewWindowController(
-                preferences: preferences, version: updater.currentVersion
-            )
-            self.whatsNew = whatsNew
-
             // An agent app has no dock icon and no window: installed and
             // launched, it shows four empty rings on a screen edge and no
             // reason to look at them. Once, on the very first run, it opens the
             // one place that explains what to connect.
-            //
-            // Sequenced behind What's New rather than beside it: two windows
-            // arriving together is one to dismiss before you can read either.
             let introduce = { [weak settings] in
                 guard preferences.isFirstLaunch else { return }
                 settings?.show()
             }
-            whatsNew.onDismiss = introduce
-            if !whatsNew.showIfNeeded() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: introduce)
-            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: introduce)
 
             let statusItem = StatusItemController { [weak settings] in settings?.show() }
             self.statusItem = statusItem
@@ -507,16 +399,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             preferences.$foldsForFullScreen
                 .receive(on: RunLoop.main)
                 .sink { [weak fleet] in fleet?.apply(foldsForFullScreen: $0) }
-                .store(in: &cancellables)
-
-            preferences.$deepSeekPricingEnabled
-                .receive(on: RunLoop.main)
-                .sink { [weak fleet] in fleet?.apply(deepSeekPricingEnabled: $0) }
-                .store(in: &cancellables)
-
-            preferences.$deepSeekPricingSchedule
-                .receive(on: RunLoop.main)
-                .sink { [weak fleet] in fleet?.apply(deepSeekPricingSchedule: $0) }
                 .store(in: &cancellables)
 
             preferences.$minimaxRegion
@@ -975,28 +857,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             .store(in: &cancellables)
 
-        preferences.$phoneLinkEnabled
-            .receive(on: RunLoop.main)
-            .sink { [weak self] enabled in
-                guard PhoneLink.isAvailable, let self = self, let srv = self.phoneLinkServer else { return }
-                Task { @MainActor in
-                    if enabled {
-                        self.phoneLinkServerStatus?.state = .starting
-                        do {
-                            let prefPort = self.preferences?.phoneLinkPort ?? 8788
-                            let port = try await srv.start(port: prefPort)
-                            self.preferences?.phoneLinkPort = port
-                            self.phoneLinkServerStatus?.state = .ready(port: port)
-                        } catch {
-                            self.phoneLinkServerStatus?.state = .failed(error.localizedDescription)
-                        }
-                    } else {
-                        await srv.stop()
-                        self.phoneLinkServerStatus?.state = .off
-                    }
-                }
-            }
-            .store(in: &cancellables)
         fleet.apply(displayPreference: preferences.displayPreference)
         fleet.apply(alongOffset: preferences.offset(for: preferences.notchEdge))
         fleet.apply(scale: preferences.notchScale)
@@ -1010,8 +870,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         fleet.apply(weeklyReading: preferences.weeklyReading)
         fleet.apply(foldsForFullScreen: preferences.foldsForFullScreen)
         fleet.apply(surfaceStyle: preferences.notchSurfaceStyle)
-        fleet.apply(deepSeekPricingEnabled: preferences.deepSeekPricingEnabled)
-        fleet.apply(deepSeekPricingSchedule: preferences.deepSeekPricingSchedule)
         fleet.show()
     }
 
@@ -1232,11 +1090,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @MainActor func openSettings() { settings?.show() }
-    @MainActor func openConnectPhone() {
-        guard PhoneLink.isAvailable, let pairing = phoneLinkPairing, let registry = phoneLinkRegistry, let status = phoneLinkServerStatus else { return }
-        if preferences?.phoneLinkEnabled == false { preferences?.phoneLinkEnabled = true }
-        PhoneLinkWindowController.shared.show(pairing: pairing, registry: registry, port: preferences?.phoneLinkPort ?? 8788, serverStatus: status)
-    }
 
     func applicationWillTerminate(_ notification: Notification) {
         ollamaRelay?.configure(enabled: false, endpoint: OllamaEndpoint.defaultAddress)
@@ -1246,6 +1099,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         store?.stop()
         activityCoordinator?.stop()
         notchFleet?.stop()
-        Task { await phoneLinkServer?.stop() }
     }
 }

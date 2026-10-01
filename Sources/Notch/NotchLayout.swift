@@ -181,8 +181,6 @@ enum NotchLayout {
 
     // The hover tooltip
     static let cardWidth     = Design.px(600)
-    /// The update card's, wider for its three buttons — see `UpdateCard`.
-    static let updateCardWidth = Design.px(820)
     static let cardCorner    = Design.px(49.5)
     static let cardPadding   = Design.px(32)
     static let tailLength    = Design.px(75)
@@ -197,13 +195,6 @@ enum NotchLayout {
     static let moneyBarHeight = Design.px(12)
     static let moneyBarToStats = Design.px(14)
     static let moneyStatGap = Design.px(4)
-    static let usageDetailIdentityGap = Design.px(4)
-    static let usageDetailBarHeight = Design.px(10.5)
-    static let usageDetailLabelToBar = Design.px(12)
-    static let usageDetailBarToStats = Design.px(10)
-    static let usageDetailChartHeight = Design.px(96)
-    static let usageDetailChartGap = Design.px(18)
-    static let usageDetailBarGap = Design.px(5)
     static let sessionRowGap = Design.px(10)   // the two lines of one session
     /// The spinner beside a session's status. Sized against the body text's cap
     /// (18px) rather than picked by eye, so it reads as part of the word rather
@@ -368,22 +359,8 @@ enum NotchLayout {
     /// The tooltip's height for a given number of limit windows and live
     /// sessions. Worked out here rather than left to SwiftUI so the hover region
     /// can be computed before the card is ever laid out.
-    static func usageDetailHeight(_ groupCount: Int, showsPricing: Bool = true) -> CGFloat {
-        guard groupCount > 0 else { return 0 }
-        let summary = hairline + blockSpacing + cardBodyLineHeight
-            + blockSpacing + 2 * cardBodyLineHeight + moneyStatGap
-        let chart = cardBodyLineHeight + usageDetailLabelToBar + usageDetailChartHeight
-        let usageDivider = blockSpacing + hairline
-        let pricing = showsPricing
-            ? blockSpacing + 2 * cardBodyLineHeight + usageDetailIdentityGap
-            : 0
-        let chartDivider = blockSpacing + hairline
-        return blockSpacing + summary + (showsPricing ? usageDivider : 0) + pricing + chartDivider
-            + blockSpacing + 2 * chart + usageDetailChartGap
-    }
-
     static func cardHeight(windowCount: Int, groupCount: Int = 0,
-                           moneyWindowCount: Int = 0, usageDetailGroupCount: Int = 0,
+                           moneyWindowCount: Int = 0,
                            sessionCount: Int = 0,
                            sessionCap: Int = defaultSessionCap,
                            statusMessage: String? = nil,
@@ -394,7 +371,6 @@ enum NotchLayout {
                            localModelName: String? = nil, showsLocalPerformance: Bool = false,
                            localLedgerRows: Int = 0,
                            compactRowCount: Int = 0,
-                           showsDeepSeekPricing: Bool = true,
                            costRows: Int = 0) -> CGFloat {
         let header = max(glyphSize, cardTitleLineHeight)
             + (hasPlan ? cardBodyLineHeight : 0)
@@ -454,9 +430,6 @@ enum NotchLayout {
             height += blockSpacing + cardBodyLineHeight
                 + CGFloat(costRows) * (cardBodyLineHeight + sessionRowGap)
         }
-
-        height += usageDetailHeight(usageDetailGroupCount,
-                                    showsPricing: showsDeepSeekPricing)
 
         if hasTokenUsage {
             height += codexUsageTop + hairline + blockSpacing
@@ -589,9 +562,6 @@ enum NotchLayout {
     /// below or above it on a horizontal one.
     static func tooltipDepth(for edge: NotchEdge,
                              maxCardHeight: CGFloat = defaultMaxCardHeight) -> CGFloat {
-        // Beside a side edge's notch the update card has to fit too, and it is
-        // wider than a tooltip: held to the tooltip's width, the window cut
-        // its far side off.
-        (edge.isVertical ? max(cardWidth, updateCardWidth) : maxCardHeight) + tailLength + tailGap
+        (edge.isVertical ? cardWidth : maxCardHeight) + tailLength + tailGap
     }
 }

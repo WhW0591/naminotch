@@ -63,8 +63,6 @@ final class NotchFleet {
     private var weeklyReading: Bool = false
     private var foldsForFullScreen = true
     private var surfaceStyle: NotchSurfaceStyle = .glass
-    private var deepSeekPricingEnabled = true
-    private var deepSeekPricingSchedule = DeepSeekPricing.Schedule.current
     /// The ⌥-drag nudge along the current edge. One value for the whole
     /// fleet, the same as `edge` itself — displays do not each get their own
     /// edge, so they do not each get their own nudge either.
@@ -80,28 +78,6 @@ final class NotchFleet {
     var onLook: (() -> Void)?
     var onRefreshProvider: ((String) async -> Void)?
     var onOpenSettings: (() -> Void)?
-    /// The notch's answer to an update it offered.
-    var onUpdateChoice: ((UpdateChoice) -> Void)?
-    private var updatePrompt: UpdatePrompt?
-
-    private var updatePending = false
-
-    /// A newer version waiting — see `NotchViewModel.updatePending`.
-    func apply(updatePending: Bool) {
-        self.updatePending = updatePending
-        for controller in controllers.values {
-            controller.model.updatePending = updatePending
-        }
-    }
-
-    /// An update to offer in the notch, or how its install is going; nil once
-    /// answered or done.
-    func apply(updatePrompt: UpdatePrompt?) {
-        self.updatePrompt = updatePrompt
-        for controller in controllers.values {
-            controller.apply(updatePrompt: updatePrompt)
-        }
-    }
     var onFocusSession: ((pid_t) -> Void)?
     var signInItems: [(title: String, action: () -> Void)] = []
     /// An ⌥-drag on any one panel settled at a new offset. Persisting it is
@@ -256,20 +232,6 @@ final class NotchFleet {
         self.surfaceStyle = surfaceStyle
         for controller in controllers.values {
             controller.model.surfaceStyle = surfaceStyle
-        }
-    }
-
-    func apply(deepSeekPricingEnabled: Bool) {
-        self.deepSeekPricingEnabled = deepSeekPricingEnabled
-        for controller in controllers.values {
-            controller.model.deepSeekPricingEnabled = deepSeekPricingEnabled
-        }
-    }
-
-    func apply(deepSeekPricingSchedule: DeepSeekPricing.Schedule) {
-        self.deepSeekPricingSchedule = deepSeekPricingSchedule
-        for controller in controllers.values {
-            controller.model.deepSeekPricingSchedule = deepSeekPricingSchedule
         }
     }
 
@@ -470,8 +432,6 @@ final class NotchFleet {
         controller.model.showsNotchReadings = showsNotchReadings
         controller.model.weeklyReading = weeklyReading
         controller.model.surfaceStyle = surfaceStyle
-        controller.model.deepSeekPricingEnabled = deepSeekPricingEnabled
-        controller.model.deepSeekPricingSchedule = deepSeekPricingSchedule
 
         controller.onRefresh = onRefresh
         controller.onLook = { [weak self] in self?.onLook?() }
@@ -479,9 +439,6 @@ final class NotchFleet {
         controller.onOpenSettings = onOpenSettings
         controller.model.onOpenSettings = onOpenSettings
         controller.model.onFocusSession = onFocusSession
-        controller.model.onUpdateChoice = { [weak self] in self?.onUpdateChoice?($0) }
-        controller.apply(updatePrompt: updatePrompt)
-        controller.model.updatePending = updatePending
         controller.onReposition = onReposition
         controller.onMoveToEdge = onMoveToEdge
         controller.signInItems = signInItems

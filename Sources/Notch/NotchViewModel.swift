@@ -154,13 +154,6 @@ final class NotchViewModel: ObservableObject {
     /// the one action people actually get stuck without a second, ordinary
     /// route that only needs SwiftUI's own gesture recognition to work.
     var onOpenSettings: (() -> Void)?
-    /// An update offered in the notch, and how far along taking it is — see
-    /// `UpdateCard`.
-    @Published var updatePrompt: UpdatePrompt?
-    /// The notch's answer to it.
-    var onUpdateChoice: ((UpdateChoice) -> Void)?
-    /// A newer version waiting, put off — the red dot on the settings button.
-    @Published var updatePending = false
     /// A tap on a session row in the tooltip: jump to the terminal tab the
     /// session runs in. Takes the session's pid; wired to `SessionFocus`.
     var onFocusSession: ((pid_t) -> Void)?
@@ -214,11 +207,6 @@ final class NotchViewModel: ObservableObject {
     /// Mirrors the persisted Appearance choice so the separate notch window
     /// redraws immediately when Settings changes it.
     @Published var surfaceStyle: NotchSurfaceStyle = .glass
-    /// Whether DeepSeek's billing phase rows are visible in its usage card.
-    @Published var deepSeekPricingEnabled = true
-    /// The rule used by the DeepSeek card, mirrored from Preferences so a
-    /// settings change is reflected in every notch immediately.
-    @Published var deepSeekPricingSchedule = DeepSeekPricing.Schedule.current
     /// Whether each ring carries its percentage beside the hardware notch.
     /// Mirrors the Appearance setting; see `showsCellReading`.
     @Published var showsNotchReadings = false
@@ -269,9 +257,6 @@ final class NotchViewModel: ObservableObject {
     func tooltipAlong(index: Int, length: CGFloat) -> CGFloat {
         cardAlong(centredOn: ringAlong(index: index, in: cellWing), length: length)
     }
-
-    /// The notch's middle, along the panel — what the update card hangs from.
-    var notchMiddleAlong: CGFloat { cellWing.lead + cellWing.length / 2 }
 
     /// A card `length` long centred on `centre`, kept on the screen.
     func cardAlong(centredOn centre: CGFloat, length: CGFloat) -> CGFloat {
@@ -1273,7 +1258,6 @@ final class NotchViewModel: ObservableObject {
             NotchLayout.cardHeight(windowCount: snapshot.windows.count,
                 groupCount: Set(snapshot.windows.compactMap(\.group)).count,
                 moneyWindowCount: snapshot.windows.filter { $0.money != nil }.count,
-                usageDetailGroupCount: snapshot.usageDetail?.visibleGroups.count ?? 0,
                 sessionCount: snapshot.localModel == nil ? sessionCap + 1 : 0,
                 sessionCap: sessionCap,
                 statusMessage: snapshot.statusMessage,
@@ -1285,7 +1269,6 @@ final class NotchViewModel: ObservableObject {
                 showsLocalPerformance: snapshot.showsLocalPerformance,
                 localLedgerRows: snapshot.localLedgerRowCount,
                 compactRowCount: snapshot.compactRowCount,
-                showsDeepSeekPricing: deepSeekPricingEnabled,
                 costRows: costRows(for: snapshot))
         }.max() ?? 0
     }

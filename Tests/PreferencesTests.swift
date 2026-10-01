@@ -78,8 +78,6 @@ final class PreferencesMigrationTests: XCTestCase {
         XCTAssertFalse(preferences.isConnected("glm"))
         XCTAssertFalse(preferences.isConnected("kiro"))
         XCTAssertFalse(preferences.isConnected("minimax"))
-        XCTAssertTrue(preferences.deepSeekPricingEnabled)
-        XCTAssertEqual(preferences.deepSeekPricingSchedule, .current)
     }
 
     /// MiniMax is discovered like everyone else, and stays off until switched
@@ -244,29 +242,6 @@ final class PreferencesMigrationTests: XCTestCase {
         let shown = Preferences(defaults: UserDefaults(suiteName: name)!)
         XCTAssertTrue(shown.isConnected(model))
         XCTAssertFalse(shown.connectedProviders.contains(model))
-    }
-
-    func testDeepSeekPricingSettingsSurviveARelaunchAndCanBeReset() {
-        let (fresh, name) = makeDefaults()
-        let preferences = Preferences(defaults: fresh)
-        preferences.deepSeekPricingEnabled = false
-        preferences.deepSeekPricingSchedule = DeepSeekPricing.Schedule(
-            peakWeekdays: [2],
-            windows: [
-                .init(startMinute: 120, endMinute: 180),
-                .init(startMinute: 360, endMinute: 420),
-                .init(startMinute: 900, endMinute: 960)
-            ]
-        )
-
-        let reloaded = Preferences(defaults: UserDefaults(suiteName: name)!)
-        XCTAssertFalse(reloaded.deepSeekPricingEnabled)
-        XCTAssertEqual(reloaded.deepSeekPricingSchedule.peakWeekdays, [2])
-        XCTAssertEqual(reloaded.deepSeekPricingSchedule.windows.count, 3)
-        XCTAssertEqual(reloaded.deepSeekPricingSchedule.windows[2].startMinute, 900)
-
-        reloaded.resetDeepSeekPricingSchedule()
-        XCTAssertEqual(reloaded.deepSeekPricingSchedule, .current)
     }
 
     /// Off by default, and it has to stay chosen once it is chosen: an extra

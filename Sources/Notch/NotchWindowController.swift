@@ -241,12 +241,6 @@ final class NotchWindowController {
             }
             .store(in: &cancellables)
 
-        model.$updatePrompt
-            .sink { [weak self] _ in
-                MainActor.assumeIsolated { self?.updateInteractiveRects() }
-            }
-            .store(in: &cancellables)
-
         // A model can gain speed rows without changing the cell count. Read
         // after Published's willSet so sizing sees the new card contents too.
         model.$snapshots
@@ -1243,7 +1237,6 @@ final class NotchWindowController {
             windowCount: snapshot.windows.count,
             groupCount: snapshot.windowGroupCount,
             moneyWindowCount: snapshot.windows.filter { $0.money != nil }.count,
-            usageDetailGroupCount: snapshot.usageDetail?.visibleGroups.count ?? 0,
             sessionCount: snapshot.localModel == nil ? (model.activity(for: snapshot.id)?.sessions.count ?? 0) : 0,
             sessionCap: model.sessionCap,
             statusMessage: snapshot.statusMessage,
@@ -1254,8 +1247,7 @@ final class NotchWindowController {
             localModelName: snapshot.localModel?.name,
             showsLocalPerformance: snapshot.showsLocalPerformance,
                 localLedgerRows: snapshot.localLedgerRowCount,
-            compactRowCount: snapshot.compactRowCount,
-            showsDeepSeekPricing: model.deepSeekPricingEnabled
+            compactRowCount: snapshot.compactRowCount
         )
         // Across the stack the region is the card, its tail, and the gap the
         // pointer has to cross. Along it, the card's own extent.
@@ -1285,40 +1277,8 @@ final class NotchWindowController {
         )
     }
 
-    /// Where the update card is, on the notch's middle — see `UpdateCard`.
-    private var updateCardRect: CGRect? {
-        guard model.isExpanded, model.updatePrompt != nil else { return nil }
-        let size = UpdateCard.size(for: model.edge.tooltipDirection)
-        let across = model.edge.isVertical ? size.width : size.height
-        let along = model.edge.isVertical ? size.height : size.width
-        let centre = model.cardAlong(centredOn: model.notchMiddleAlong, length: along)
-        return placement.rect(
-            along: centre - along / 2,
-            across: model.notchDrawnDepth,
-            length: along,
-            depth: NotchLayout.tailGap + NotchLayout.tailLength + across
-        )
-    }
-
-    /// **An update offered, or installing**: the notch opens for it and stays
-    /// open until it is answered — see `UpdateCard`.
-    func apply(updatePrompt: UpdatePrompt?) {
-        let arriving = model.updatePrompt == nil && updatePrompt != nil
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
-            model.updatePrompt = updatePrompt
-        }
-        if arriving, visibility != .hidden, panel != nil {
-            model.hoveredIndex = nil
-            setExpanded(true)
-        }
-        updateInteractiveRects()
-        // Answered: back to whatever the pointer says.
-        if updatePrompt == nil { cursorMoved() }
-    }
-
     private func updateInteractiveRects() {
         var rects = [liveRect]
-        if let card = updateCardRect { rects.append(card) }
         if model.isExpanded, let event = model.activeResetAlert, let card = resetCardRect(event: event) {
             rects.append(card)
         }
@@ -1498,8 +1458,6 @@ final class NotchWindowController {
             return
         }
 
-        // An update offered holds it open until it is answered.
-        if model.updatePrompt != nil { return }
         // A peek holds the notch open for its own duration; only after that
         // does the pointer get a say again.
         if let peekUntil, peekUntil > Date() { return }

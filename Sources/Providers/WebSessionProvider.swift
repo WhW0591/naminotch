@@ -115,7 +115,6 @@ final class WebSessionProvider: NSObject, UsageProvider {
         let script: String
         /// Turns the response body into windows, or throws if it cannot.
         let parse: (String) throws -> [LimitWindow]
-        let detailParse: ((String) throws -> ProviderUsageDetail?)?
 
         init(id: String, displayName: String, glyph: ProviderGlyph, origin: URL,
              script: String, fidelity: Fidelity = .official,
@@ -125,7 +124,6 @@ final class WebSessionProvider: NSObject, UsageProvider {
              managePath: String = "usage",
              headlineID: String? = nil,
              weeklyID: String? = nil,
-             detailParse: ((String) throws -> ProviderUsageDetail?)? = nil,
              parse: @escaping (String) throws -> [LimitWindow]) {
             self.id = id
             self.displayName = displayName
@@ -139,7 +137,6 @@ final class WebSessionProvider: NSObject, UsageProvider {
             self.managePath = managePath
             self.headlineID = headlineID
             self.weeklyID = weeklyID
-            self.detailParse = detailParse
             self.parse = parse
         }
     }
@@ -359,10 +356,8 @@ final class WebSessionProvider: NSObject, UsageProvider {
         }
 
         let windows: [LimitWindow]
-        let usageDetail: ProviderUsageDetail?
         do {
             windows = try site.parse(body)
-            usageDetail = try site.detailParse?(body)
         } catch UsageProviderError.needsAuth {
             // HTTP 200 with a 1004 body that the page script missed: still a
             // dead session, not a signed-in parse error.
@@ -378,8 +373,7 @@ final class WebSessionProvider: NSObject, UsageProvider {
             status: .ok,
             windows: windows,
             headlineID: site.headlineID,
-            weeklyID: site.weeklyID,
-            usageDetail: usageDetail
+            weeklyID: site.weeklyID
         )
     }
 

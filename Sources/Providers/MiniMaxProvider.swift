@@ -132,8 +132,7 @@ actor MiniMaxProvider: UsageProvider {
                 return recordedSuccess(
                     fidelity: .derived,
                     windows: snapshot.windows,
-                    plan: snapshot.plan,
-                    usageDetail: snapshot.usageDetail
+                    plan: snapshot.plan
                 )
             } else {
                 throw UsageProviderError.needsAuth
@@ -246,8 +245,7 @@ actor MiniMaxProvider: UsageProvider {
     }
 
     private func recordedSuccess(fidelity: Fidelity, windows: [LimitWindow],
-                                 plan: String?,
-                                 usageDetail: ProviderUsageDetail? = nil) -> ProviderSnapshot {
+                                 plan: String?) -> ProviderSnapshot {
         consecutiveRateLimits = 0
         retryNoEarlierThan = nil
         archive.saveBackoffUntil(nil, providerID: id)
@@ -261,8 +259,7 @@ actor MiniMaxProvider: UsageProvider {
             windows: windows,
             headlineID: "session",
             weeklyID: "weekly",
-            plan: plan?.nonEmptyPlan,
-            usageDetail: usageDetail
+            plan: plan?.nonEmptyPlan
         )
     }
 

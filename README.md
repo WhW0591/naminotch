@@ -25,62 +25,12 @@ two never disagree.
 
 That button is the disk image itself, not the page it sits on — the asset is
 named `Codenotch.dmg` in every release, so `releases/latest/download/` always
-resolves to the newest one and the link never needs updating. Signed,
-notarized, and updating itself from then on. Take this one unless you have a
-reason not to; the [release page](../../releases/latest) has the notes.
-
-To try unreleased `main` without an Xcode install, the [preview
-build](../../releases/tag/preview) is rebuilt from every commit, and the
-Package workflow keeps a per-commit disk image on each of its
-[runs](../../actions/workflows/package.yml). Neither is notarized — they are
-ad-hoc signed, because the Developer ID certificate exists on one machine — so
-macOS quarantines the download. Clear the flag once, after dragging the app to
-Applications:
-
-```sh
-xattr -dr com.apple.quarantine /Applications/Codenotch.app
-```
-
-If macOS says the app is *damaged*, that is the quarantine flag rather than a bad download — run the command above.
+resolves to the newest one and the link never needs updating. Signed and
+notarized. Take this one unless you have a reason not to; the
+[release page](../../releases/latest) has the notes.
 
 Universal binary. macOS 15 or later. To build and install a copy from source
 instead, see [Building](#building).
-
-## Windows
-
-[![Download for Windows](docs/design/download-windows.svg)](../../releases/latest/download/Codenotch-Setup.exe)
-
-A Windows port — Rust/Tauri 2, same design and providers — lives in [`windows/`](windows/README.md).
-The button is the installer itself, named `Codenotch-Setup.exe` in every release for the same
-reason the dmg keeps one name. It installs for the current user without administrator rights,
-and fetches WebView2 if Windows does not already have it.
-
-The installer is not code-signed, so the first time it runs SmartScreen says *Windows protected
-your PC*. Choose **More info**, then **Run anyway**. Every Windows change also leaves an
-installer on its [Windows Package run](../../actions/workflows/windows-package.yml).
-
-## Connect your phone
-
-The Codenotch phone app (iOS and Android) can show the same usage
-percentages, reset times and session states as the notch on your Mac.
-It reads only what the notch already displays — never tokens, credentials
-or raw API responses.
-
-To pair, open **Settings › Phone › Connect a Phone…** (or the menu item)
-on your Mac. A QR code appears with a five-minute countdown; scan it with
-the Codenotch phone app, or copy the link and paste it into the app. The
-Mac and phone must be on the same Wi-Fi network — the server answers only
-local-network addresses and rejects anything routed over the internet.
-
-Each code is single-use and expires after five minutes. Reopening the
-window always mints a fresh one.
-
-To remove a paired phone, open **Settings › Phone**, find the device in
-the list and click **Remove**. Its credentials are deleted immediately and
-any subsequent request from that phone is rejected.
-
-See [docs/phone-link-protocol.md](docs/phone-link-protocol.md) for the
-wire-level details.
 
 ## What it reads
 
@@ -283,13 +233,6 @@ and the time until it resets, like `72% · 2h 18m | 41% · 4h 05m`. Choosing
 what the bar shows never changes what Codenotch reads, and with nothing chosen
 the icon comes back. Its menu has the full readings either way.
 
-## Updates
-
-Codenotch updates itself. [Sparkle](https://sparkle-project.org) checks daily
-and installs in the background without prompting; Settings says so and can
-switch it off. Every update is EdDSA-signed, so nothing installs that wasn't
-built and signed by the maintainer.
-
 ## Building
 
 ```sh
@@ -298,11 +241,8 @@ make run                # generate, build, launch a Debug build
 make test               # unit tests
 ```
 
-No signing identity is required for either. `make release` — which archives,
-notarizes, and produces a signed auto-update feed — needs a Developer ID
-certificate and an App Store Connect notary profile, and is only ever run by
-the maintainer to cut an official release. See
-[CONTRIBUTING.md](CONTRIBUTING.md). CI runs the same unit tests unsigned via
+No signing identity is required for either. See [CONTRIBUTING.md](CONTRIBUTING.md)
+for the rest of the development setup. CI runs the same unit tests unsigned via
 `make test-ci`.
 
 A Debug build is ad-hoc signed, which means it has no stable code identity, so

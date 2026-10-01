@@ -355,10 +355,6 @@ struct ProviderSnapshot: Identifiable, Equatable {
         return credits
     }
 
-    /// Provider-owned online usage detail, such as DeepSeek's API key/model
-    /// breakdown and daily token/cost series.
-    var usageDetail: ProviderUsageDetail? = nil
-
     /// Locally sampled cumulative token usage for a custom endpoint.
     var customUsageHistory: [CustomEndpointUsageDay]? = nil
 

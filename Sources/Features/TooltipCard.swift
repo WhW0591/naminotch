@@ -1096,8 +1096,6 @@ struct TooltipCard: View {
     /// Project rows the cost section may list, as the view model solved it.
     var costRows: Int = 0
     var resetTimeFormat: ResetTimeFormat = .automatic
-    var deepSeekPricingEnabled: Bool = true
-    var deepSeekPricingSchedule: DeepSeekPricing.Schedule = .current
     var tailOffset: CGFloat = 0
     /// A tap on a session row jumps to that session's terminal — nil leaves
     /// the rows as plain text.
@@ -1118,7 +1116,6 @@ struct TooltipCard: View {
             windowCount: snapshot.windows.count,
             groupCount: snapshot.windowGroupCount,
             moneyWindowCount: snapshot.windows.filter { $0.money != nil }.count,
-            usageDetailGroupCount: snapshot.usageDetail?.visibleGroups.count ?? 0,
             sessionCount: snapshot.localModel == nil ? (activity?.sessions.count ?? 0) : 0,
             sessionCap: sessionCap,
             statusMessage: snapshot.statusMessage,
@@ -1130,7 +1127,6 @@ struct TooltipCard: View {
             showsLocalPerformance: snapshot.showsLocalPerformance,
                 localLedgerRows: snapshot.localLedgerRowCount,
             compactRowCount: snapshot.compactRowCount,
-            showsDeepSeekPricing: deepSeekPricingEnabled,
             costRows: costRows
         )
     }
@@ -1152,11 +1148,6 @@ struct TooltipCard: View {
                         CodexUsageSection(usage: tokenUsage, now: now)
                     } else if let history = snapshot.customUsageHistory {
                         CodexUsageSection(usage: history.codexUsage, now: now)
-                    }
-                    if let usageDetail = snapshot.usageDetail, usageDetail.hasUsage {
-                        DeepSeekUsageDetail(detail: usageDetail, now: now,
-                                            schedule: deepSeekPricingSchedule,
-                                            showsPricing: deepSeekPricingEnabled)
                     }
                     if let activity, snapshot.localModel == nil {
                         SessionList(summary: activity, now: now, cap: sessionCap,

@@ -40,7 +40,9 @@ struct SettingsOrb: View {
     var returning: Bool = false
     /// With the notch folding away as it goes — see `GooArc.quick`.
     var quick: Bool = false
-    /// **A red dot**: a newer version is waiting — see `Updater.pending`.
+    /// **A red dot**: something in Settings wants attention. Nothing sets this
+    /// at the moment; the hook is kept because the disc already has the shape
+    /// for a badge and re-cutting it later is the expensive half.
     var badge: Bool = false
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

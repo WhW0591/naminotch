@@ -43,15 +43,6 @@ final class Preferences: ObservableObject {
 
     /// Where LM Studio's server answers. Defaults to the port LM Studio's own
     /// settings name, so a server moved off 1234 is found without typing.
-    @Published var phoneLinkEnabled: Bool {
-        didSet { defaults.set(phoneLinkEnabled, forKey: Keys.phoneLinkEnabled) }
-    }
-
-    @Published var phoneLinkPort: Int {
-        didSet { defaults.set(phoneLinkPort, forKey: Keys.phoneLinkPort) }
-    }
-
-
     @Published var lmstudioEndpoint: String {
         didSet { defaults.set(lmstudioEndpoint, forKey: Keys.lmstudioEndpoint) }
     }
@@ -238,32 +229,6 @@ final class Preferences: ObservableObject {
     /// the main Codex window either way.
     @Published var showCodexExtraLimits: Bool {
         didSet { defaults.set(showCodexExtraLimits, forKey: Keys.showCodexExtraLimits) }
-    }
-
-    /// Whether DeepSeek's current peak/off-peak billing phase is shown in its
-    /// usage card. Enabled by default because the card's pricing rows are
-    /// useful only when the rule is visible and understood.
-    @Published var deepSeekPricingEnabled: Bool {
-        didSet { defaults.set(deepSeekPricingEnabled, forKey: Keys.deepSeekPricingEnabled) }
-    }
-
-    /// The locally maintained DeepSeek billing rule. It is stored as one
-    /// Codable value so adding another rule field does not scatter more keys
-    /// through the preferences store.
-    @Published var deepSeekPricingSchedule: DeepSeekPricing.Schedule {
-        didSet {
-            let normalized = deepSeekPricingSchedule.normalized
-            if normalized != deepSeekPricingSchedule {
-                deepSeekPricingSchedule = normalized
-                return
-            }
-            guard let data = try? JSONEncoder().encode(deepSeekPricingSchedule) else { return }
-            defaults.set(data, forKey: Keys.deepSeekPricingSchedule)
-        }
-    }
-
-    func resetDeepSeekPricingSchedule() {
-        deepSeekPricingSchedule = .current
     }
 
     /// Whether the weekly limit gets a ring of its own, and where it sits.
@@ -510,8 +475,6 @@ final class Preferences: ObservableObject {
         static let seen = "seenProviders"
         static let disabledModels = "disabledModels"
         static let ollamaEndpoint = "ollamaEndpoint"
-        static let phoneLinkEnabled = "phoneLinkEnabled"
-        static let phoneLinkPort = "phoneLinkPort"
 
         static let lmstudioEndpoint = "lmstudioEndpoint"
         static let introducedOllama = "introducedOllama"
@@ -568,8 +531,6 @@ final class Preferences: ObservableObject {
         static let minimaxRegion = "minimaxRegion"
         static let antigravityHeadlineLimit = "antigravityHeadlineLimit"
         static let antigravityHeadlineModel = "antigravityHeadlineModel"
-        static let deepSeekPricingEnabled = "deepSeekPricingEnabled"
-        static let deepSeekPricingSchedule = "deepSeekPricingSchedule"
         static let showCodexExtraLimits = "showCodexExtraLimits"
     }
 
@@ -796,9 +757,6 @@ final class Preferences: ObservableObject {
         ).absoluteString) ?? OllamaEndpoint.defaultAddress
         // A stored choice wins; otherwise LM Studio's own configuration file
         // says where it listens, and 1234 is what it ships with.
-        self.phoneLinkEnabled = defaults.object(forKey: Keys.phoneLinkEnabled) as? Bool ?? false
-        self.phoneLinkPort = defaults.object(forKey: Keys.phoneLinkPort) as? Int ?? 8788
-
         self.lmstudioEndpoint = (try? LMStudioEndpoint.parse(
             defaults.string(forKey: Keys.lmstudioEndpoint)
                 ?? LMStudioEndpoint.configuredAddress() ?? LMStudioEndpoint.defaultAddress
@@ -860,13 +818,6 @@ final class Preferences: ObservableObject {
         // Off by default for the same reason: it changes what every ring means.
         self.weeklyHeadline = defaults.bool(forKey: Keys.weeklyHeadline)
         self.showCodexExtraLimits = Self.storedShowCodexExtraLimits(defaults: defaults)
-        self.deepSeekPricingEnabled = defaults.object(forKey: Keys.deepSeekPricingEnabled) as? Bool ?? true
-        if let data = defaults.data(forKey: Keys.deepSeekPricingSchedule),
-           let schedule = try? JSONDecoder().decode(DeepSeekPricing.Schedule.self, from: data) {
-            self.deepSeekPricingSchedule = schedule.normalized
-        } else {
-            self.deepSeekPricingSchedule = .current
-        }
         // Absent means never chosen. Main display only, because that is what a
         // single-panel setup always did — all-displays on a fresh install
         // would put notches where none were expected.

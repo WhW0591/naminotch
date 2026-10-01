@@ -20,13 +20,9 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
     private let signIn: (String) -> Bool
     private let switchAccount: (String) -> Bool
     private let retry: (String) -> Void
-    private let updater: Updater
     private let ollamaRelay: OllamaActivityRelay?
     private let lmstudioMetrics: LMStudioMetrics?
     private let usageStore: UsageStore?
-    let phoneLinkPairing: PhoneLinkPairing?
-    let phoneLinkRegistry: PhoneLinkRegistry?
-    let phoneLinkServerStatus: PhoneLinkServerStatus?
     private let resetPosition: () -> Void
     private let quit: () -> Void
     private let previewResetAlert: (() -> Void)?
@@ -36,7 +32,6 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
 
     init(preferences: Preferences,
          providers: @escaping () -> [ProviderSummary],
-         updater: Updater,
          signOut: @escaping (String) -> Void,
          signIn: @escaping (String) -> Bool,
          switchAccount: @escaping (String) -> Bool,
@@ -49,13 +44,10 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
          sendTestNotification: (() -> Void)? = nil,
          usageStore: UsageStore? = nil,
          ollamaRelay: OllamaActivityRelay? = nil,
-         lmstudioMetrics: LMStudioMetrics? = nil, phoneLinkPairing: PhoneLinkPairing? = nil, phoneLinkRegistry: PhoneLinkRegistry? = nil, phoneLinkServerStatus: PhoneLinkServerStatus? = nil) {
+         lmstudioMetrics: LMStudioMetrics? = nil) {
         self.ollamaRelay = ollamaRelay
         self.lmstudioMetrics = lmstudioMetrics
         self.usageStore = usageStore
-        self.phoneLinkPairing = phoneLinkPairing
-        self.phoneLinkRegistry = phoneLinkRegistry
-        self.phoneLinkServerStatus = phoneLinkServerStatus
         self.resetPosition = resetPosition
         self.quit = quit
         self.previewResetAlert = previewResetAlert
@@ -64,7 +56,6 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         self.sendTestNotification = sendTestNotification
         self.switchAccount = switchAccount
         self.retry = retry
-        self.updater = updater
         self.preferences = preferences
         self.providers = providers
         self.signOut = signOut
@@ -259,14 +250,13 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         window.initialFirstResponder = nil
         window.contentView = NSHostingView(
             rootView: SettingsView(preferences: preferences,
-                                   providers: providers, phoneLinkPairing: phoneLinkPairing, phoneLinkRegistry: phoneLinkRegistry, phoneLinkServerStatus: phoneLinkServerStatus,
+                                   providers: providers,
                                    signOut: signOut,
                                    signIn: signIn,
                                    switchAccount: switchAccount,
                                    retry: retry,
                                    resetPosition: resetPosition,
                                    quit: quit,
-                                   updater: updater,
                                    ollamaRelay: ollamaRelay, lmstudioMetrics: lmstudioMetrics,
                                    usageStore: usageStore,
                                    previewResetAlert: previewResetAlert,
