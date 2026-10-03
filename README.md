@@ -87,10 +87,13 @@ assume.
 
 | | |
 |---|---|
+| [FEATURES.md](FEATURES.md) | Everything the app does, and what must not stop working |
 | [TASKS.md](TASKS.md) | Why things are the way they are, and what has already been broken once |
-| [docs/providers](docs/providers) | One file per provider: what it reads and what it shows |
+| [docs/providers](docs/providers) | Detail for the providers that have it, and the contract for adding one |
 | [docs/design](docs/design) | The notch's geometry, the card's layout, the provider artwork |
-| [AGENTS.md](AGENTS.md) | How to build and test here without leaving the directory |
+
+Build and test instructions live in the workspace's `AGENTS.md`, one directory
+above this repository — it is not part of the project and does not travel with it.
 
 ## Licence
 

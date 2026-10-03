@@ -16,6 +16,7 @@ has to be read; the entry below is the same routing in one place, for the change
 you are about to make.
 
 | Changing… | Read first |
+| `FEATURES.md` | The inventory: every surface, every invariant, and what was removed on purpose |
 |---|---|
 | any number in `Design.swift`, `NotchLayout.swift` or `Typography.swift`; the notch's shape, the ring's geometry, the card's layout | [`docs/specs/2026-08-28-usage-notch-design.md`](docs/specs/2026-08-28-usage-notch-design.md) |
 | a provider glyph, icon or brand colour | [`docs/design/provider-assets.md`](docs/design/provider-assets.md) |
