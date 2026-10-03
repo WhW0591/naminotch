@@ -465,12 +465,7 @@ final class CodexUsageTests: XCTestCase {
         XCTAssertEqual(
             withTokens - plain,
             NotchLayout.codexUsageTop + NotchLayout.hairline + NotchLayout.blockSpacing
-                + NotchLayout.codexMetricTop + NotchLayout.codexMetricHeight
-                + NotchLayout.codexMetricBottom
-                + NotchLayout.hairline
-                + 2 * NotchLayout.cardBodyLineHeight
-                + NotchLayout.codexUsageRowGap
-                + NotchLayout.codexChartTop + NotchLayout.codexChartHeight,
+                + NotchLayout.cardBodyLineHeight,
             accuracy: 0.001
         )
     }

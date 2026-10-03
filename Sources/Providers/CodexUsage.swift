@@ -1,10 +1,14 @@
 import Foundation
 
-/// Account-wide Codex activity returned by the Codex profile endpoint.
+/// Token usage for one account, as daily buckets.
 ///
-/// `/wham/profiles/me` reports token totals in daily buckets and account-level
-/// summary statistics.
-struct CodexTokenUsage: Codable, Equatable, Sendable {
+/// Codex is where this started: `/wham/profiles/me` reports token totals in
+/// daily buckets *and* account-level statistics, and `Summary` is those
+/// statistics — which only Codex publishes, which is why it is optional. The
+/// daily buckets are the part the card draws, and DeepSeek's platform answers
+/// the same question with the same shape, so the type is named for the account
+/// rather than for whichever provider came first.
+struct AccountTokenUsage: Codable, Equatable, Sendable {
     struct Summary: Codable, Equatable, Sendable {
         let lifetimeTokens: Int?
         let peakDailyTokens: Int?
@@ -28,22 +32,47 @@ struct CodexTokenUsage: Codable, Equatable, Sendable {
     struct DailyBucket: Codable, Equatable, Identifiable, Sendable {
         let startDate: String
         let tokens: Int
+        /// What the day cost, in the account's own currency, where the provider
+        /// reports money at all. Codex counts tokens and never says; DeepSeek's
+        /// platform bills by the day and does.
+        var cost: Double? = nil
 
         var id: String { startDate }
 
-        init(startDate: String, tokens: Int) {
+        init(startDate: String, tokens: Int, cost: Double? = nil) {
             self.startDate = startDate
             self.tokens = tokens
+            self.cost = cost
         }
     }
 
     let summary: Summary?
     let dailyUsageBuckets: [DailyBucket]
+    /// The currency the buckets' `cost` is in, where there is one. Per account
+    /// rather than per bucket: the platform names it once, above the series.
+    var currency: String? = nil
+    /// The hour the buckets were cut at, where the *app* chose it.
+    ///
+    /// `nil` means the series is the provider's own day, which this app did not
+    /// set and cannot move — Codex's is, its buckets arriving as server-written
+    /// date strings. The lookup has to agree with the cut that was actually
+    /// made rather than with the setting's current value, so this travels with
+    /// the buckets instead of being read fresh.
+    var dayStartHour: Int? = nil
 
     init(summary: Summary? = nil,
-         dailyUsageBuckets: [DailyBucket] = []) {
+         dailyUsageBuckets: [DailyBucket] = [],
+         currency: String? = nil,
+         dayStartHour: Int? = nil) {
         self.summary = summary
         self.dailyUsageBuckets = dailyUsageBuckets
+        self.currency = currency
+        self.dayStartHour = dayStartHour
+    }
+
+    /// The instant the bucket that contains `date` began.
+    private func dayStart(of date: Date, calendar: Calendar) -> Date {
+        UsageDay.start(of: date, calendar: calendar, hour: dayStartHour ?? 0)
     }
 
     /// The consecutive calendar days represented by the card's chart.
@@ -69,8 +98,18 @@ struct CodexTokenUsage: Codable, Equatable, Sendable {
     /// A missing current-day bucket means the server has not published today's
     /// usage yet. A present zero is a real zero, not a pending value.
     func usageToday(now: Date = Date(), calendar: Calendar = .current) -> Int? {
-        let key = Self.dayKey(for: calendar.startOfDay(for: now), calendar: calendar)
+        let key = Self.dayKey(for: dayStart(of: now, calendar: calendar), calendar: calendar)
         return dailyUsageBuckets.first(where: { $0.startDate == key })?.tokens
+    }
+
+    /// What today has cost so far, where the provider bills by the day.
+    ///
+    /// Today's own bucket, like `usageToday` — not the last bucket there is.
+    /// The card may be showing a reading taken yesterday, and yesterday's spend
+    /// is not today's.
+    func costToday(now: Date = Date(), calendar: Calendar = .current) -> Double? {
+        let key = Self.dayKey(for: dayStart(of: now, calendar: calendar), calendar: calendar)
+        return dailyUsageBuckets.first(where: { $0.startDate == key })?.cost
     }
 
     var peakDailyTokens: Int? {
@@ -338,11 +377,11 @@ enum CodexUsage {
     }
 
     /// Decode the profile endpoint's token statistics.
-    static func profileUsage(from data: Data) throws -> CodexTokenUsage {
+    static func profileUsage(from data: Data) throws -> AccountTokenUsage {
         do {
             let response = try JSONDecoder().decode(ProfileUsageResponse.self, from: data)
             let stats = response.stats
-            return CodexTokenUsage(
+            return AccountTokenUsage(
                 summary: stats.map {
                     .init(lifetimeTokens: $0.lifetime_tokens,
                           peakDailyTokens: $0.peak_daily_tokens,

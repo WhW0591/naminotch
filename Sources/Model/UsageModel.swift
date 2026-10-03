@@ -335,7 +335,7 @@ struct ProviderSnapshot: Identifiable, Equatable {
     /// it. The optional top model is an enrichment from the desktop breakdown
     /// endpoint; it never changes the profile token buckets. Other providers
     /// leave this nil because they do not expose the same account-level data.
-    var tokenUsage: CodexTokenUsage? = nil
+    var tokenUsage: AccountTokenUsage? = nil
     /// The account's named tier, when the provider publishes one. Shown under
     /// the tooltip title. Nil when there is nothing to name.
     var plan: String? = nil

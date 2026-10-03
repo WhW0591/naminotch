@@ -22,7 +22,7 @@ final class CostModel: ObservableObject {
     @Published private(set) var rows: [ProjectCost] = []
     /// Tokens per day and the summary the card's chart reads, from the
     /// transcripts; Codex brings its own from the server.
-    @Published private(set) var tokenUsage: CodexTokenUsage?
+    @Published private(set) var tokenUsage: AccountTokenUsage?
     @Published private(set) var state: State = .unavailable
     /// False for plans with no rolling limits (credit-based seats): the session
     /// and week views need limit samples, so only month and all-time apply.

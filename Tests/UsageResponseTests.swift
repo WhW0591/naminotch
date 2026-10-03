@@ -359,7 +359,7 @@ final class UsageArchiveTests: XCTestCase {
 
     func testCodexDailyUsageRoundTripsWithTheQuotaReading() {
         let defaults = makeDefaults()
-        let usage = CodexTokenUsage(
+        let usage = AccountTokenUsage(
             summary: .init(lifetimeTokens: 90, peakDailyTokens: 90,
                             longestRunningTurnSeconds: 3600,
                             currentStreakDays: 1, longestStreakDays: 3),

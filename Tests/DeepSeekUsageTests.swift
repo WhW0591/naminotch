@@ -96,4 +96,29 @@ final class DeepSeekUsageTests: XCTestCase {
         XCTAssertEqual(reading.usedFraction, 9.20 / 20.07, accuracy: 0.001)
         XCTAssertEqual(reading.availableTokens, 3_300_000)
     }
+
+    /// A dormant wallet above the funded one must not become the account.
+    ///
+    /// Taken as `normal_wallets.first`, this exact shape — an empty USD wallet
+    /// listed above a funded CNY one, which is what a real account returned —
+    /// produced `spent 0, balance 0`; `usedFraction` is guarded on `funded > 0`,
+    /// so the ring drew an empty circle for an account with money in it.
+    func testTheFundedWalletIsTheOneRead() throws {
+        let json = #"{"data":{"biz_data":{"normal_wallets":[{"currency":"USD","balance":"0.00"},{"currency":"CNY","balance":"10.87"}],"total_costs":[{"currency":"USD","amount":"0.00"},{"currency":"CNY","amount":"9.20"}]}}}"#
+        let reading = try DeepSeekUsage.reading(fromJSON: json)
+        XCTAssertEqual(reading.currency, "CNY", "the empty USD wallet was read instead")
+        XCTAssertEqual(reading.spent, 9.20, accuracy: 0.001)
+        XCTAssertEqual(reading.balance, 10.87, accuracy: 0.001)
+        XCTAssertEqual(reading.usedFraction, 9.20 / 20.07, accuracy: 0.001)
+    }
+
+    /// Every wallet empty is a true zero, not a failure — and the first is
+    /// still the one named, because a currency has to be reported either way.
+    func testAnAccountWithNothingInAnyWalletStillReads() throws {
+        let json = #"{"data":{"biz_data":{"normal_wallets":[{"currency":"USD","balance":"0.00"},{"currency":"CNY","balance":"0"}],"total_costs":[]}}}"#
+        let reading = try DeepSeekUsage.reading(fromJSON: json)
+        XCTAssertEqual(reading.currency, "USD")
+        XCTAssertEqual(reading.balance, 0, accuracy: 0.001)
+        XCTAssertEqual(reading.usedFraction, 0, accuracy: 0.001)
+    }
 }

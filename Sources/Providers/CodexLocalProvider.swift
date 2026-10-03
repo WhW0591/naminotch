@@ -106,7 +106,7 @@ actor CodexLocalProvider: UsageProvider {
     private static func fetchProfileUsage(
         session: URLSession,
         credential: CodexCredentials.Credential
-    ) async throws -> CodexTokenUsage {
+    ) async throws -> AccountTokenUsage {
         var request = URLRequest(
             url: URL(string: "https://chatgpt.com/backend-api/wham/profiles/me")!,
             cachePolicy: .reloadIgnoringLocalCacheData,

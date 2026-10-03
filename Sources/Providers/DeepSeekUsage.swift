@@ -25,8 +25,25 @@ enum DeepSeekUsage {
     static func reading(fromJSON json: String) throws -> Reading {
         guard let data = json.data(using: .utf8) else { throw ParseError.malformed }
         let envelope = try JSONDecoder().decode(Envelope.self, from: data)
-        guard let summary = envelope.data?.bizData,
-              let wallet = summary.normalWallets.first else { throw ParseError.noWallet }
+        guard let summary = envelope.data?.bizData else { throw ParseError.noWallet }
+
+        // **The wallet the figures are actually about.**
+        //
+        // `normal_wallets` lists every currency the account has ever been
+        // issued, and an empty one can sit above the funded one. Taken as
+        // `.first`, an account holding CNY with a dormant USD wallet listed
+        // above it read as "USD, 0.00 balance, 0.00 spent" — `funded` was zero,
+        // so `usedFraction` returned zero, and the ring drew an empty circle
+        // for an account with money in it. Measured on a real account before
+        // this was fixed: USD balance 0 above CNY balance, and the ring said 0%.
+        //
+        // The first wallet with a balance is the one the numbers belong to. An
+        // account with nothing in any of them falls back to the first, which is
+        // a true zero either way — and still `noWallet` when the list is empty.
+        let wallet = summary.normalWallets.first { (Double($0.balance) ?? 0) > 0 }
+            ?? summary.normalWallets.first
+        guard let wallet else { throw ParseError.noWallet }
+
         let spent = summary.totalCosts.first(where: { $0.currency == wallet.currency })
             .flatMap { Double($0.amount) } ?? 0
         guard let balance = Double(wallet.balance), spent >= 0, balance >= 0 else {

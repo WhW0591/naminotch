@@ -382,14 +382,14 @@ public struct CustomEndpoint: Identifiable, Codable, Equatable, Sendable {
 }
 
 extension Array where Element == CustomEndpointUsageDay {
-    var codexUsage: CodexTokenUsage {
+    var codexUsage: AccountTokenUsage {
         var previous = 0
         let buckets = sorted { $0.day < $1.day }.map { sample in
             let delta = sample.totalTokens >= previous ? sample.totalTokens - previous : sample.totalTokens
             previous = sample.totalTokens
-            return CodexTokenUsage.DailyBucket(startDate: sample.day, tokens: delta)
+            return AccountTokenUsage.DailyBucket(startDate: sample.day, tokens: delta)
         }
-        return CodexTokenUsage(dailyUsageBuckets: buckets)
+        return AccountTokenUsage(dailyUsageBuckets: buckets)
     }
 }
 public struct CustomEndpointPreset: Identifiable, Sendable {

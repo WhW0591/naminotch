@@ -22,7 +22,11 @@ import os
 /// a sign-in Codenotch cannot perform: the grant is the only way in, and
 /// Codenotch does not own it.
 actor DSHProvider: UsageProvider {
-    nonisolated let id = "dsh"
+    /// The id this provider registers under, named once so the places that have
+    /// to know it without building one — the default-on rule in `Preferences` —
+    /// cannot drift from the one it answers to.
+    nonisolated static let providerID = "dsh"
+    nonisolated let id = DSHProvider.providerID
     nonisolated let displayName = "DeepSeek Harness"
     nonisolated let glyph = ProviderGlyph.deepseek
 
@@ -53,6 +57,11 @@ actor DSHProvider: UsageProvider {
         Log.usage.debug("dsh get_user_summary -> \(body.prefix(400), privacy: .public)")
         let windows = try DSHUsage.windows(fromJSON: body)
 
+        // Today's tokens are a second request on the same grant, and a failure
+        // there must not cost the ring its reading: the balance *is* the ring,
+        // and the day's figure is one extra row under it.
+        let usage = try? await fetchDailyUsage(credentials)
+
         return ProviderSnapshot(
             id: id,
             displayName: displayName,
@@ -60,12 +69,34 @@ actor DSHProvider: UsageProvider {
             fidelity: .derived,
             status: .ok,
             windows: windows,
-            headlineID: "spend"
+            headlineID: "spend",
+            tokenUsage: usage
         )
     }
 
     private func fetchSummary(_ credentials: DSHCredentials) async throws -> String {
-        guard let url = URL(string: DSHUsage.summaryPath, relativeTo: credentials.issuer) else {
+        try await get(DSHUsage.summaryPath, credentials)
+    }
+
+    /// The account's daily totals, which the card draws as "Today".
+    ///
+    /// Two requests on the same grant, and the money is the optional half: if
+    /// the second fails the day's tokens still show, because a row carrying one
+    /// number beats no row at all.
+    private func fetchDailyUsage(_ credentials: DSHCredentials) async throws -> AccountTokenUsage {
+        // Read once, so the window and the label on the figures cannot disagree
+        // if the setting moves while the two requests are in flight.
+        let hour = UsageDay.startHour
+        let query = DSHUsage.amountQuery(dayStartHour: hour)
+        let amount = try await get(DSHUsage.amountPath + "?" + query, credentials)
+        let cost = try? await get(DSHUsage.costPath + "?" + query, credentials)
+        return try DSHUsage.dailyUsage(amountJSON: amount, costJSON: cost, dayStartHour: hour)
+    }
+
+    /// One read on the grant, with the five client headers the owning package
+    /// builds for every Platform request.
+    private func get(_ path: String, _ credentials: DSHCredentials) async throws -> String {
+        guard let url = URL(string: path, relativeTo: credentials.issuer) else {
             throw UsageProviderError.badResponse(status: 0)
         }
 
@@ -77,10 +108,10 @@ actor DSHProvider: UsageProvider {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.timeoutInterval = 15
 
-        Log.usage.debug("GET \(credentials.issuer.absoluteString, privacy: .public)\(DSHUsage.summaryPath, privacy: .public)")
+        Log.usage.debug("GET \(credentials.issuer.absoluteString, privacy: .public)\(path, privacy: .public)")
         let (data, response) = try await session.data(for: request)
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
-        Log.usage.debug("dsh get_user_summary answered \(status)")
+        Log.usage.debug("dsh \(path, privacy: .public) answered \(status)")
 
         // The grant was rejected. Harness's own account provider answers this
         // by clearing the stored grant; here it is a sign-in the *user* has to

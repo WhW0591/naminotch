@@ -21,7 +21,7 @@ struct UsageArchive {
         let weeklyID: String?
         /// Optional so archives written before Codex token activity existed
         /// continue to open and show their last quota reading.
-        let tokenUsage: CodexTokenUsage?
+        let tokenUsage: AccountTokenUsage?
         /// Whose reading this was. Optional for the same reason, and kept so a
         /// remembered one still says it — a reading restored from the archive
         /// is exactly when "which account is this?" is hardest to answer.
