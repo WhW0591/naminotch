@@ -625,7 +625,10 @@ enum CostRange: String, CaseIterable, Identifiable {
     var start: Date? {
         switch self {
         case .today:
-            return Calendar.current.startOfDay(for: Date())
+            // The app's day, not the calendar's — see `UsageDay`. This is the
+            // same boundary the local ledger files its own days under, and the
+            // two are read side by side.
+            return UsageDay.start(of: Date())
         case .month:
             let cal = Calendar.current
             return cal.date(from: cal.dateComponents([.year, .month], from: Date()))

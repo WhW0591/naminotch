@@ -5,7 +5,7 @@ extension CostStore {
     /// The per-day token chart and summary for a Claude login, from the
     /// indexed turns: the same shape the Codex server publishes, so the card
     /// draws both alike. Nil until anything has been indexed.
-    func tokenUsage(now: Date = Date(), calendar: Calendar = .current) -> CodexTokenUsage? {
+    func tokenUsage(now: Date = Date(), calendar: Calendar = .current) -> AccountTokenUsage? {
         var days: [(key: String, tokens: Int)] = []
         var lifetime = 0
         queue.sync {
@@ -27,6 +27,11 @@ extension CostStore {
         formatter.calendar = calendar
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd"
+        // `startOfDay` here on purpose, unlike the two uses below it: these are
+        // the stored days' own key dates being turned back into instants so
+        // consecutive ones can be compared, not a decision about which day an
+        // instant belongs to. The keys are the app's days already — see
+        // `UsageDay` — and what matters is that they keep their order.
         let dates = days.compactMap { formatter.date(from: $0.key) }.map { calendar.startOfDay(for: $0) }
         var longest = 0, run = 0
         var previous: Date?
@@ -41,17 +46,21 @@ extension CostStore {
         }
         var current = 0
         if let last = dates.last {
-            let today = calendar.startOfDay(for: now)
+            // The app's day, so a streak survives the small hours the way the
+            // figures it is counted from do. Both sides are compared by calendar
+            // day, and the boundary instant still falls on the date it is the
+            // boundary *of*.
+            let today = UsageDay.start(of: now, calendar: calendar)
             let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
             if calendar.isDate(last, inSameDayAs: today) || calendar.isDate(last, inSameDayAs: yesterday) { current = run }
         }
 
-        let summary = CodexTokenUsage.Summary(lifetimeTokens: lifetime,
+        let summary = AccountTokenUsage.Summary(lifetimeTokens: lifetime,
                                               peakDailyTokens: days.map(\.tokens).max(),
                                               longestRunningTurnSeconds: nil,
                                               currentStreakDays: current,
                                               longestStreakDays: longest)
-        let buckets = days.map { CodexTokenUsage.DailyBucket(startDate: $0.key, tokens: $0.tokens) }
-        return CodexTokenUsage(summary: summary, dailyUsageBuckets: buckets)
+        let buckets = days.map { AccountTokenUsage.DailyBucket(startDate: $0.key, tokens: $0.tokens) }
+        return AccountTokenUsage(summary: summary, dailyUsageBuckets: buckets)
     }
 }

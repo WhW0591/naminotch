@@ -126,8 +126,33 @@ final class LMStudioMetrics: ObservableObject {
         if !ledger.isEmpty { ledger = LocalTokenLedger(calendar: calendar) }
     }
 
-    private func relink() {
-        guard let link else { return }
+    /// Re-files the ledger under the day boundary now in force.
+    ///
+    /// The ledger's days are keyed by the instant each began, worked out when
+    /// the entries were *filed* — so moving the hour would leave everything it
+    /// already holds under keys nothing looks up again, and the history would be
+    /// silently orphaned rather than merely re-cut. The server log is the source
+    /// and the ledger is derived from it, so the answer is to read it again.
+    ///
+    /// Deliberately heavy, and deliberately not on any path a live reading takes:
+    /// it is called when somebody changes the setting, which is rare, and it
+    /// costs one pass over the log.
+    func rebaseLedger() {
+        // Nothing filed yet, so the read that is already coming will use the new
+        // boundary and this would only start a second one.
+        guard historyLoaded else { return }
+        revision += 1
+        history?.cancel()
+        history = nil
+        logTimer?.invalidate()
+        logTimer = nil
+        tail = nil
+        ledger = LocalTokenLedger(calendar: calendar)
+        historyLoaded = false
+        startLog()
+    }
+
+    private func relink() {        guard let link else { return }
         Task { await link.close() }
         retryAfter = .distantPast
     }

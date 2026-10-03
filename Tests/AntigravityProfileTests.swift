@@ -149,10 +149,11 @@ final class AntigravityProfileTests: XCTestCase {
         XCTAssertFalse(Preferences.isDefaultOnFamily("antigravity-work"), "Antigravity profile must start off")
         XCTAssertFalse(Preferences.isDefaultOnFamily("antigravity-personal"), "Antigravity profile must start off")
         XCTAssertFalse(Preferences.isDefaultOnFamily("gemini-api"), "gemini-api must start off")
-        XCTAssertTrue(Preferences.isDefaultOnFamily("claude"), "Claude defaults on")
-        XCTAssertTrue(Preferences.isDefaultOnFamily("claude-work"), "Claude profiles default on")
+        XCTAssertFalse(Preferences.isDefaultOnFamily("claude"), "Claude no longer defaults on")
+        XCTAssertFalse(Preferences.isDefaultOnFamily("claude-work"), "Claude profiles no longer default on")
         XCTAssertTrue(Preferences.isDefaultOnFamily("codex"), "Codex defaults on")
         XCTAssertTrue(Preferences.isDefaultOnFamily("codex-work"), "Codex profiles default on")
+        XCTAssertTrue(Preferences.isDefaultOnFamily(DSHProvider.providerID), "DeepSeek Harness defaults on")
     }
 
     // MARK: - Activity Monitor Roots

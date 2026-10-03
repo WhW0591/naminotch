@@ -74,11 +74,52 @@ final class LocalTokenLedgerTests: XCTestCase {
         let all = ledger.totalsToday(now: night)
         XCTAssertEqual(all.requests, 3)
         XCTAssertEqual(all.totalTokens, 150 + 400 + 14)
-        // Tomorrow, nothing has happened yet, but the last response is still the last.
-        let tomorrow = try XCTUnwrap(ledger.summary(for: "qwen", now: night.addingTimeInterval(60)))
+
+        // Just past midnight is still the night's work — the ledger's day turns
+        // over at six, so nothing has moved on yet.
+        let afterMidnight = try XCTUnwrap(
+            ledger.summary(for: "qwen", now: LMStudioLogFixtures.date(2026, 9, 11, 0, 0, 59)))
+        XCTAssertEqual(afterMidnight.today.requests, 2, "the day turned over at midnight")
+
+        // The new day, at the hour it actually starts. The last response is
+        // still the last, whatever day it was logged in.
+        let tomorrow = try XCTUnwrap(
+            ledger.summary(for: "qwen", now: LMStudioLogFixtures.date(2026, 9, 11, 6, 0, 1)))
         XCTAssertEqual(tomorrow.today.requests, 0)
         XCTAssertEqual(tomorrow.tokensTodayText, "0 in · 0 out")
         XCTAssertEqual(tomorrow.last?.inputTokens, 50)
+    }
+
+    /// **The day turns over at six, on the reader's own clock.**
+    ///
+    /// Calendar arithmetic, not six hours subtracted from the epoch: on the
+    /// morning a zone moves its clocks those two differ by an hour, and the
+    /// reader means the clock. Warsaw moves in the small hours of 29 March 2026,
+    /// so that day is twenty-three hours long — and it still starts at six.
+    func testTheDayTurnsOverAtSixOnTheReadersClock() throws {
+        var ledger = LocalTokenLedger(calendar: calendar)
+        let lateNight = LMStudioLogFixtures.date(2026, 3, 28, 23, 0, 0)
+        ledger.record(prediction(at: lateNight, input: 100, output: 10))
+
+        // Four in the morning, after the clocks have gone forward. Still the
+        // work of the day before.
+        let smallHours = try XCTUnwrap(
+            ledger.summary(for: "qwen", now: LMStudioLogFixtures.date(2026, 3, 29, 4, 0, 0)))
+        XCTAssertEqual(smallHours.today.requests, 1, "the day turned over at midnight")
+
+        XCTAssertEqual(ledger.dayStart(for: LMStudioLogFixtures.date(2026, 3, 29, 4, 0, 0)),
+                       LMStudioLogFixtures.date(2026, 3, 28, 6, 0, 0),
+                       "the boundary belongs to the day before")
+
+        // Six on the clock, not six hours after midnight — the two differ on
+        // this date, and six is what was asked for.
+        XCTAssertEqual(ledger.dayStart(for: LMStudioLogFixtures.date(2026, 3, 29, 8, 0, 0)),
+                       LMStudioLogFixtures.date(2026, 3, 29, 6, 0, 0))
+
+        // And the new day has nothing in it yet.
+        let morning = try XCTUnwrap(
+            ledger.summary(for: "qwen", now: LMStudioLogFixtures.date(2026, 3, 29, 6, 0, 1)))
+        XCTAssertEqual(morning.today.requests, 0)
     }
 
     func testSharesAreAbsentRatherThanZeroWhenNothingWasCounted() {

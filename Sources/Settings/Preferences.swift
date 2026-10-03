@@ -193,6 +193,21 @@ final class Preferences: ObservableObject {
         didSet { defaults.set(resetTimeFormat.rawValue, forKey: Keys.resetTimeFormat) }
     }
 
+    /// The hour the app's day turns over — see `UsageDay`.
+    ///
+    /// Setting it moves the local ledger, the cost log and the platform client
+    /// together, because all three read `UsageDay`; this is the only thing that
+    /// writes it. Changing it also asks the store to re-read, since the figures
+    /// already on screen were cut at the old boundary.
+    @Published var dayStartHour: Int {
+        didSet {
+            let clamped = min(23, max(0, dayStartHour))
+            if clamped != dayStartHour { dayStartHour = clamped; return }
+            defaults.set(dayStartHour, forKey: Keys.dayStartHour)
+            UsageDay.configure(startHour: dayStartHour)
+        }
+    }
+
     @Published var showUsagePace: Bool {
         didSet { defaults.set(showUsagePace, forKey: Self.showUsagePaceKey) }
     }
@@ -497,6 +512,7 @@ final class Preferences: ObservableObject {
         static let customSize = "customNotchScale"
         static let display = "notchDisplay"
         static let resetTimeFormat = "resetTimeFormat"
+        static let dayStartHour = "dayStartHour"
         static let asksProviderOnLook = "asksProviderOnLook"
         static let scope = "notchScope"
         static let accentColor = "accentColor"
@@ -807,6 +823,16 @@ final class Preferences: ObservableObject {
             .map(DisplayPreference.display) ?? .followActiveWindow
         self.resetTimeFormat = defaults.string(forKey: Keys.resetTimeFormat)
             .flatMap(ResetTimeFormat.init(rawValue:)) ?? .automatic
+        // Six unless somebody has said otherwise, and the same six the app had
+        // before this was a setting — so an install that predates it keeps the
+        // days it already had.
+        let startHour = (defaults.object(forKey: Keys.dayStartHour) as? Int)
+            .map { min(23, max(0, $0)) } ?? UsageDay.defaultStartHour
+        self.dayStartHour = startHour
+        // The one place that writes it, before anything has had a chance to
+        // file or range by day. `didSet` does not fire during initialisation,
+        // so this is not a duplicate of the property's own write.
+        UsageDay.configure(startHour: startHour)
         self.showUsagePace = defaults.bool(forKey: Self.showUsagePaceKey)
         // Off by default: see the property. A request spent on every look is a
         // choice, and on a rate-limited provider it can cost freshness rather
@@ -990,11 +1016,24 @@ final class Preferences: ObservableObject {
         menuBarProviders = menuBarLimits.choosing(shown, providerID, among: listed).chosen
     }
 
-    /// Claude and Codex stay on for a first install and for a newly discovered
-    /// profile. Everyone else starts off.
+    /// Codex and DeepSeek Harness stay on for a first install and for a newly
+    /// discovered profile. Everyone else starts off.
+    ///
+    /// **Claude is deliberately not here.** The upstream app leads with it, and
+    /// this build is for someone who runs Codex and Harness — so a Claude ring
+    /// would be a placeholder on the screen edge for an assistant that is never
+    /// signed in here, and it is the one provider that reaches for the login
+    /// keychain on its first refresh. Switching it on once in Settings keeps it
+    /// on, which is the whole cost of the choice.
+    ///
+    /// DSH is here for the opposite reason: a borrowed-credential provider that
+    /// is off until it is found is a ring nobody ever sees. It reads a grant the
+    /// Mac already has, asks for no sign-in, and — because a machine without
+    /// Harness gets no cell rather than a sign-in row — would be invisible to
+    /// exactly the people it can serve.
     nonisolated static func isDefaultOnFamily(_ providerID: String) -> Bool {
-        ClaudeProfile.isClaude(providerID: providerID)
-            || CodexProfile.isCodex(providerID: providerID)
+        CodexProfile.isCodex(providerID: providerID)
+            || providerID == DSHProvider.providerID
     }
 
     /// Model cells are `providerID:model:…`. A new loaded model is not a new

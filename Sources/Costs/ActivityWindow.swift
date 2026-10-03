@@ -15,7 +15,7 @@ enum ActivityPeriod: String, CaseIterable, Identifiable {
 struct TimelinePane: View {
     @ObservedObject var accounts: CostAccountStore = .shared
     @ObservedObject var prices: PriceTable = .shared
-    @State private var day: Date = Calendar.current.startOfDay(for: Date())
+    @State private var day: Date = UsageDay.start(of: Date())
     @State private var rows: [Row] = []
     @State private var loading = false
     @State private var hovered: String?
@@ -25,7 +25,10 @@ struct TimelinePane: View {
     private var cal: Calendar { Calendar.current }
     private var interval: DateInterval {
         switch period {
-        case .day: return DateInterval(start: day, duration: 86_400)
+        // Through `UsageDay`, so the window runs six-to-six like the figures in
+        // it, and to the *next day* rather than 86,400 seconds later: a day is
+        // not always that long.
+        case .day: return DateInterval(start: day, end: UsageDay.end(of: day, calendar: cal))
         case .week: return cal.dateInterval(of: .weekOfYear, for: day)!
         case .month: return cal.dateInterval(of: .month, for: day)!
         }
@@ -113,7 +116,7 @@ struct TimelinePane: View {
                 Spacer()
                 HStack(spacing: 6) {
                     Button { shift(-1) } label: { Image(systemName: "chevron.left") }
-                    Button(L10n.t("Today")) { day = Calendar.current.startOfDay(for: Date()) }.disabled(isToday)
+                    Button(L10n.t("Today")) { day = UsageDay.start(of: Date()) }.disabled(isToday)
                     Button { shift(1) } label: { Image(systemName: "chevron.right") }.disabled(isToday)
                     Button { load() } label: { Image(systemName: "arrow.clockwise") }
                 }
@@ -328,7 +331,8 @@ struct TimelinePane: View {
         var d = interval.start
         var days: [Date] = []
         while d < interval.end { days.append(d); d = cal.date(byAdding: .day, value: 1, to: d)! }
-        let perDay = Dictionary(grouping: filtered, by: { cal.startOfDay(for: $0.first) })
+        let perDay = Dictionary(grouping: filtered,
+                                by: { UsageDay.start(of: $0.first, calendar: cal) })
         let cost = perDay.mapValues { $0.compactMap(\.cost).reduce(0, +) }
         let time = perDay.mapValues { $0.map(\.duration).reduce(0, +) }
         let maxV = max(cost.values.max() ?? 0, 0.01)

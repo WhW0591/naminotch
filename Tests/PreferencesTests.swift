@@ -32,7 +32,7 @@ final class PreferencesMigrationTests: XCTestCase {
 
         let preferences = Preferences(defaults: fresh)
         XCTAssertFalse(preferences.isConnected("glm"))
-        XCTAssertTrue(preferences.isConnected("claude"))
+        XCTAssertTrue(preferences.isConnected("codex"))
         XCTAssertEqual(preferences.notchVisibility, .alwaysShow)
     }
 
@@ -71,9 +71,10 @@ final class PreferencesMigrationTests: XCTestCase {
         XCTAssertEqual(preferences.notchEdge, .right)
         XCTAssertEqual(preferences.notchSize, .medium)
         XCTAssertEqual(preferences.weeklyRing, .off)
-        XCTAssertTrue(preferences.isConnected("claude"))
+        XCTAssertFalse(preferences.isConnected("claude"))
         XCTAssertTrue(preferences.isConnected("codex"))
-        XCTAssertTrue(preferences.isConnected("claude-work"))
+        XCTAssertTrue(preferences.isConnected(DSHProvider.providerID))
+        XCTAssertFalse(preferences.isConnected("claude-work"))
         XCTAssertFalse(preferences.isConnected("cursor"))
         XCTAssertFalse(preferences.isConnected("glm"))
         XCTAssertFalse(preferences.isConnected("kiro"))
@@ -81,56 +82,70 @@ final class PreferencesMigrationTests: XCTestCase {
     }
 
     /// MiniMax is discovered like everyone else, and stays off until switched
-    /// on. Claude and Codex are the only families that default on.
+    /// on. Codex and DeepSeek Harness are the only families that default on.
     func testMiniMaxStaysOffAfterReconcile() {
         let (fresh, name) = makeDefaults()
         let preferences = Preferences(defaults: fresh)
         preferences.reconcile(discoveredIDs: ["claude", "codex", "minimax"])
-        XCTAssertEqual(preferences.connectedProviders, ["claude", "codex"])
+        XCTAssertEqual(preferences.connectedProviders, ["codex"])
         XCTAssertFalse(preferences.isConnected("minimax"))
-        XCTAssertTrue(preferences.isConnected("claude"))
+        XCTAssertTrue(preferences.isConnected("codex"))
 
         let again = Preferences(defaults: UserDefaults(suiteName: name)!)
         again.reconcile(discoveredIDs: ["claude", "codex", "cursor", "glm", "deepseek", "minimax"])
         XCTAssertFalse(again.isConnected("minimax"))
         XCTAssertFalse(again.isConnected("cursor"))
         XCTAssertFalse(again.isConnected("deepseek"))
-        XCTAssertTrue(again.isConnected("claude"))
+        XCTAssertTrue(again.isConnected("codex"))
     }
 
     /// Kiro is discovered like everyone else, and stays off until switched on.
-    /// Claude and Codex are the only families that default on.
+    /// Codex and DeepSeek Harness are the only families that default on.
     func testKiroStaysOffAfterReconcile() {
         let (fresh, name) = makeDefaults()
         let preferences = Preferences(defaults: fresh)
         preferences.reconcile(discoveredIDs: ["claude", "codex", "kiro"])
         XCTAssertFalse(preferences.isConnected("kiro"))
-        XCTAssertTrue(preferences.isConnected("claude"))
+        XCTAssertTrue(preferences.isConnected("codex"))
 
         let again = Preferences(defaults: UserDefaults(suiteName: name)!)
         again.reconcile(discoveredIDs: ["claude", "codex", "cursor", "glm", "kiro", "deepseek"])
         XCTAssertFalse(again.isConnected("kiro"))
         XCTAssertFalse(again.isConnected("cursor"))
         XCTAssertFalse(again.isConnected("deepseek"))
-        XCTAssertTrue(again.isConnected("claude"))
+        XCTAssertTrue(again.isConnected("codex"))
     }
 
-    func testAFirstLaunchSeedsClaudeAndCodexOnceDiscovered() {
+    func testAFirstLaunchSeedsCodexAndHarnessOnceDiscovered() {
         let (fresh, name) = makeDefaults()
         let preferences = Preferences(defaults: fresh)
-        preferences.reconcile(discoveredIDs: ["claude", "codex", "cursor", "glm", "kiro", "minimax", "claude-work"])
-        XCTAssertEqual(preferences.connectedProviders, ["claude", "codex", "claude-work"])
+        preferences.reconcile(discoveredIDs: ["claude", "codex", "cursor", "glm", "kiro", "minimax", "claude-work", DSHProvider.providerID])
+        XCTAssertEqual(preferences.connectedProviders, ["codex", DSHProvider.providerID])
+        XCTAssertFalse(preferences.isConnected("claude"))
+        XCTAssertFalse(preferences.isConnected("claude-work"))
         XCTAssertFalse(preferences.isConnected("cursor"))
         XCTAssertFalse(preferences.isConnected("kiro"))
         XCTAssertFalse(preferences.isConnected("minimax"))
 
         let again = Preferences(defaults: UserDefaults(suiteName: name)!)
-        again.reconcile(discoveredIDs: ["claude", "codex", "cursor", "glm", "kiro", "minimax", "claude-work", "deepseek"])
+        again.reconcile(discoveredIDs: ["claude", "codex", "cursor", "glm", "kiro", "minimax", "claude-work", DSHProvider.providerID, "deepseek"])
         XCTAssertFalse(again.isConnected("cursor"))
         XCTAssertFalse(again.isConnected("kiro"))
         XCTAssertFalse(again.isConnected("minimax"))
         XCTAssertFalse(again.isConnected("deepseek"))
-        XCTAssertTrue(again.isConnected("claude"))
+        XCTAssertTrue(again.isConnected("codex"))
+        XCTAssertTrue(again.isConnected(DSHProvider.providerID))
+    }
+
+    /// DeepSeek Harness starts on, unlike every other borrowed credential.
+    ///
+    /// It is the one provider that asks for no sign-in *and* draws nothing while
+    /// it is off: it reads a grant the Mac already has, and a machine without
+    /// Harness gets no cell rather than a row asking for a sign-in Codenotch
+    /// cannot perform. Off by default, it would therefore be invisible to
+    /// exactly the people it can serve.
+    func testDeepSeekHarnessDefaultsOn() {
+        XCTAssertTrue(Preferences.isDefaultOnFamily(DSHProvider.providerID))
     }
 
     func testHiddenProvidersInvertAgainstWhatThisMacHas() {
@@ -138,22 +153,25 @@ final class PreferencesMigrationTests: XCTestCase {
         fresh.set(["glm", "cursor"], forKey: "hiddenProviders")
         let preferences = Preferences(defaults: fresh)
         XCTAssertFalse(preferences.isConnected("glm"))
-        XCTAssertTrue(preferences.isConnected("claude"))
+        XCTAssertTrue(preferences.isConnected("codex"))
         preferences.reconcile(discoveredIDs: ["claude", "codex", "cursor", "glm"])
+        // The invert is against the old off-list, not the default-on families:
+        // everything discovered and not hidden comes back on, Claude included.
         XCTAssertEqual(preferences.connectedProviders, ["claude", "codex"])
         XCTAssertFalse(preferences.isConnected("cursor"))
-        XCTAssertTrue(preferences.isConnected("claude"))
+        XCTAssertTrue(preferences.isConnected("codex"))
     }
 
-    func testANewClaudeProfileTurnsOnWithoutReopeningCursor() {
+    func testANewCodexProfileTurnsOnWithoutReopeningCursor() {
         let (fresh, name) = makeDefaults()
         let preferences = Preferences(defaults: fresh)
         preferences.reconcile(discoveredIDs: ["claude", "codex", "cursor"])
         XCTAssertFalse(preferences.isConnected("cursor"))
 
         let later = Preferences(defaults: UserDefaults(suiteName: name)!)
-        later.reconcile(discoveredIDs: ["claude", "codex", "cursor", "claude-work"])
-        XCTAssertTrue(later.isConnected("claude-work"))
+        later.reconcile(discoveredIDs: ["claude", "codex", "cursor", "codex-work", "claude-work"])
+        XCTAssertTrue(later.isConnected("codex-work"))
+        XCTAssertFalse(later.isConnected("claude-work"), "a new Claude profile no longer defaults on")
         XCTAssertFalse(later.isConnected("cursor"))
     }
 
@@ -439,8 +457,8 @@ final class MenuBarLimitsPreferenceTests: XCTestCase {
         XCTAssertEqual(reopened.menuBarLimits, MenuBarLimits(isOn: true, chosen: ["claude", "gemini"]))
     }
 
-    /// The menu bar choice and the connection are two switches: taking Claude
-    /// out of the bar leaves it read, and switching Codex off leaves its place
+    /// The menu bar choice and the connection are two switches: taking Codex
+    /// out of the bar leaves it read, and switching Claude off leaves its place
     /// in the bar waiting for it.
     func testTheMenuBarNeverTouchesWhatIsRead() throws {
         let (defaults, name) = try makeDefaults()
@@ -450,19 +468,19 @@ final class MenuBarLimitsPreferenceTests: XCTestCase {
         let read = preferences.connectedProviders
 
         preferences.showsLimitsInMenuBar = true
-        preferences.setInMenuBar(false, for: "claude", among: ["claude", "codex"])
-        XCTAssertTrue(preferences.isConnected("claude"), "out of the bar, still read")
+        preferences.setInMenuBar(false, for: "codex", among: ["claude", "codex"])
+        XCTAssertTrue(preferences.isConnected("codex"), "out of the bar, still read")
         XCTAssertEqual(preferences.connectedProviders, read)
 
-        preferences.setConnected(false, for: "codex")
-        XCTAssertTrue(preferences.isInMenuBar("codex"), "not read today, still chosen for when it is")
-        preferences.setInMenuBar(true, for: "gemini", among: ["codex", "gemini"])
+        preferences.setConnected(false, for: "claude")
+        XCTAssertTrue(preferences.isInMenuBar("claude"), "not read today, still chosen for when it is")
+        preferences.setInMenuBar(true, for: "gemini", among: ["claude", "gemini"])
         XCTAssertFalse(preferences.isConnected("gemini"), "choosing it for the bar does not start reading it")
 
         let reopened = try reopen(name)
-        XCTAssertTrue(reopened.isConnected("claude"))
-        XCTAssertFalse(reopened.isConnected("codex"))
-        XCTAssertEqual(reopened.menuBarProviders, ["codex", "gemini"])
+        XCTAssertTrue(reopened.isConnected("codex"))
+        XCTAssertFalse(reopened.isConnected("claude"))
+        XCTAssertEqual(reopened.menuBarProviders, ["claude", "gemini"])
     }
 }
 

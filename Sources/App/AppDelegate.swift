@@ -346,6 +346,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             statusItem.onRefreshAll = { [weak store] in store?.refreshNow(freshness: .fromSource) }
             statusItem.onLook = { [weak store] in store?.refreshBecauseSomeoneIsLooking() }
+
+            // Moving the day's boundary re-cuts every figure that was read
+            // under the old one — the local ledger's days and the platform's
+            // buckets alike — and the card would otherwise show totals from one
+            // boundary beside a label from another until the next poll. Both
+            // are somebody's own click, so neither is answered from a cache.
+            preferences.$dayStartHour
+                .removeDuplicates()
+                .receive(on: RunLoop.main)
+                .sink { [weak self, weak store] hour in
+                    UsageDay.configure(startHour: hour)
+                    self?.lmstudioMetrics?.rebaseLedger()
+                    store?.refreshNow(freshness: .fromSource)
+                }
+                .store(in: &cancellables)
             // The menu's tick writes to the same preference Settings writes to,
             // and reads nothing back of its own: the sink below carries the new
             // value to the item, and Settings — a published property away —
@@ -672,13 +687,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         // What each agent is doing right now, so the notch can say whether it is
         // still working without you switching to it.
+        //
+        // Harness's is held rather than built inline, because the tooltip has to
+        // be able to tell it when a completion has been read.
+        let dshMonitor = DSHSessionMonitor()
         var monitors: [String: any AgentActivityMonitor] = [
             "cursor": CursorActivityMonitor(),
             "grok": GrokActivityMonitor(),
             "gemini-api": GeminiAPIActivityMonitor(),
             "kimi": KimiActivityMonitor(),
-            "dsh": DSHSessionMonitor(),
+            "dsh": dshMonitor,
         ]
+        // A closed tooltip is a look. Harness's card is the only one holding
+        // finished work until somebody reads it, so it is the only one that
+        // needs telling; the others report what is true now and nothing more.
+        fleet.onTooltipDismissed = { [weak dshMonitor] providerID in
+            guard providerID == DSHProvider.providerID else { return }
+            dshMonitor?.markSeen()
+        }
         for profile in antigravityProfiles {
             monitors[profile.id] = AntigravityActivityMonitor(profile: profile)
         }

@@ -1328,6 +1328,23 @@ struct SettingsView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
 
+            Section(L10n.t("Days")) {
+                Picker(L10n.t("Day starts at"), selection: $preferences.dayStartHour) {
+                    ForEach(0..<24, id: \.self) { hour in
+                        Text(UsageFormat.hour(hour)).tag(hour)
+                    }
+                }
+                .pickerStyle(.menu)
+                Text(L10n.t("Work is counted from this hour rather than from midnight, so a session that runs past it belongs to the day it was started in — a reading taken at two in the morning is about the evening that produced it."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(L10n.t("The same boundary is used everywhere a day is counted: the local model ledger, the cost log, and the DeepSeek Harness card, whose daily figures the platform cuts wherever Codenotch asks it to."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
             // An ordinary row here, not a bar pinned across every pane —
             // that cost every pane a strip of height for one line that only
             // ever matters on this one, and "blocking the UI" is exactly

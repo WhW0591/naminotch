@@ -64,8 +64,10 @@ final class LMStudioViewTests: XCTestCase {
         XCTAssertNil(other.ringFraction)
         XCTAssertEqual(other.localLedgerRowCount, 0)
 
-        // Midnight passes with no new line: today is empty, the arc stays.
-        vm.now = LMStudioLogFixtures.date(2026, 9, 11, 0, 0, 1)
+        // The day turns over with no new line: today is empty, the arc stays.
+        // Six, not midnight — the ledger's day does not end there, and a test
+        // that assumed it did would pass all day and fail every night.
+        vm.now = LMStudioLogFixtures.date(2026, 9, 11, 6, 0, 1)
         vm.updateSnapshots([try runtime()])
         let tomorrow = try XCTUnwrap(vm.snapshots.first { $0.id == qwen })
         XCTAssertEqual(tomorrow.localLedger?.tokensTodayText, "0 in · 0 out")

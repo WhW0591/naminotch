@@ -148,7 +148,11 @@ final class LMStudioMetricsTests: XCTestCase {
         XCTAssertEqual(exact.tokensPerSecond, 17.929, accuracy: 0.001, "the newest of the two native responses")
         XCTAssertEqual(exact.measuredAt, LMStudioLogFixtures.date(2026, 9, 10, 0, 35, 56))
         XCTAssertEqual(metrics.ledger.instances, [flash, qwen])
-        let summary = try XCTUnwrap(metrics.ledger.summary(for: qwen, now: LMStudioLogFixtures.date(2026, 9, 10, 12, 0, 0)))
+        // Read at five in the morning, deliberately. The log's own stamps put
+        // these responses at 00:18–00:35, and the ledger's day does not turn
+        // over until six — so read at noon they are *yesterday's* work, which is
+        // the point of the boundary and not what this test is about.
+        let summary = try XCTUnwrap(metrics.ledger.summary(for: qwen, now: LMStudioLogFixtures.date(2026, 9, 10, 5, 0, 0)))
         XCTAssertEqual(summary.today.requests, 2)
         XCTAssertEqual(summary.today.inputTokens, 66 + 59)
         XCTAssertEqual(summary.today.outputTokens, 324)

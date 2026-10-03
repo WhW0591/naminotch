@@ -117,8 +117,25 @@ struct LocalTokenLedger: Equatable {
     /// read in another answered with an empty day and no error.
     let calendar: Calendar
 
+    /// The hour the ledger's day turns over, in the reader's own zone.
+    ///
+    /// **Not midnight.** A session that runs past it belongs to the day it was
+    /// started in: a reading taken at two in the morning is about the evening
+    /// that produced it, and a "today" that resets while somebody is still
+    /// working answers a question nobody asked.
+    ///
+    /// The rule itself lives in `UsageDay`, because the cost log is filed by the
+    /// same one and the two are read side by side. This is the ledger's name for
+    /// it, kept so the boundary can still be read off the type that files by it.
+    static var dayStartHour: Int { UsageDay.startHour }
+
     init(calendar: Calendar = .current) {
         self.calendar = calendar
+    }
+
+    /// The instant the ledger's day containing `date` began.
+    func dayStart(for date: Date) -> Date {
+        UsageDay.start(of: date, calendar: calendar)
     }
 
     /// Per instance, per local calendar day.
@@ -136,7 +153,7 @@ struct LocalTokenLedger: Equatable {
     /// own model up — and defaults to the instance the log named.
     mutating func record(_ prediction: LocalPrediction, as key: String? = nil) {
         let instance = key ?? prediction.instance
-        let day = calendar.startOfDay(for: prediction.at)
+        let day = dayStart(for: prediction.at)
         days[instance, default: [:]][day, default: Totals()].add(prediction)
         // History is read oldest-first, but a live line can land while an
         // older file is still being read; the newest response keeps the cell.
@@ -151,7 +168,7 @@ struct LocalTokenLedger: Equatable {
     }
 
     func totals(for instance: String, on day: Date) -> Totals? {
-        days[instance]?[calendar.startOfDay(for: day)]
+        days[instance]?[dayStart(for: day)]
     }
 
     func summary(for instance: String, now: Date) -> Summary? {
@@ -162,7 +179,7 @@ struct LocalTokenLedger: Equatable {
 
     /// Everything logged today across every instance, for Settings.
     func totalsToday(now: Date) -> Totals {
-        let day = calendar.startOfDay(for: now)
+        let day = dayStart(for: now)
         return days.values.reduce(into: Totals()) { sum, perDay in
             guard let totals = perDay[day] else { return }
             sum.requests += totals.requests

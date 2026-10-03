@@ -24,10 +24,10 @@ final class StatusItemLocalRuntimeTests: XCTestCase {
 
         // One clock for the whole test, pinned to the middle of the day.
         //
-        // The ledger buckets by `startOfDay`, and the entry below is a minute
-        // old — so a suite running inside the first minute after midnight put
-        // it in *yesterday* and the Today figures came back zero. The test
-        // passed all day and failed for sixty seconds of it. Nothing here is
+        // The ledger turns its day over at six, and the entry below is a minute
+        // old — so a suite running inside the first minute after *that* put it
+        // in the day before and the Today figures came back zero. It used to be
+        // midnight, and it will move again if the boundary does. Nothing here is
         // about what time it is, so it stops reading the wall clock.
         let now = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())
             ?? Date()
@@ -35,6 +35,14 @@ final class StatusItemLocalRuntimeTests: XCTestCase {
         // No `show()`: the fleet has no panels, and the menu's model is fed anyway.
         let fleet = NotchFleet(scope: .mainDisplay, edge: .right)
         fleet.setSnapshots([cloud, runtime, ollama])
+        // The cell reads "today" against the model's own clock rather than the
+        // dates in the fixtures — and `setSnapshots` has just set that clock to
+        // the real one, so it is pinned *here*, before the ledger is handed over
+        // and the cells are decorated against it. Pinned any earlier and it is
+        // overwritten; not pinned at all and the two clocks disagree for the six
+        // hours a day that the ledger's boundary splits, and the menu reads
+        // "0 in · 0 out" all night.
+        fleet.menuModel.now = now
         var ledger = LocalTokenLedger()
         ledger.record(LocalPrediction(instance: "qwen3.8-27b", at: now.addingTimeInterval(-60),
                                       inputTokens: 20_000, outputTokens: 1_200), as: qwen)
