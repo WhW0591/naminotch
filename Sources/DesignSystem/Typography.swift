@@ -21,8 +21,13 @@ enum Typography {
     static let percentPairAcross = Font.system(size: percentPairAcrossSize, weight: .semibold)
 
     /// "Claude Usage". Cap height 26px.
-    static let cardTitle = Font.system(size: Design.fontSize(capPixels: 26), weight: .semibold)
+    ///
+    /// The two card faces are anchored with the card rather than with the ring,
+    /// so they are read at a size chosen for reading — see
+    /// `Design.tooltipScale`. Everything above is the notch's and still tracks
+    /// `Design.scale`.
+    static let cardTitle = Font.system(size: Design.cardFontSize(capPixels: 26), weight: .semibold)
 
     /// "Current session", "73% Used", "Resets in 51 min". Cap height 18px.
-    static let cardBody = Font.system(size: Design.fontSize(capPixels: 18), weight: .regular)
+    static let cardBody = Font.system(size: Design.cardFontSize(capPixels: 18), weight: .regular)
 }

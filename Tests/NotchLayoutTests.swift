@@ -17,8 +17,14 @@ final class NotchLayoutTests: XCTestCase {
         // the pitch includes a real font's line box rather than a measured
         // cap height, and SF's metrics are not the frame's to the pixel.
         XCTAssertEqual(NotchLayout.cellPitch(for: .right) / NotchLayout.ringDiameter, 275.0 / 117.0, accuracy: 0.05)
-        // The card is 600px wide.
-        XCTAssertEqual(NotchLayout.cardWidth / NotchLayout.ringDiameter, 600.0 / 117.0, accuracy: 0.001)
+        // The card is 600px wide *in the frame*, but it is not measured off the
+        // ring the way everything above this line is: the frame's ring is a
+        // graphic anchor, and following it through left the card's body text at
+        // 9.5pt. The card goes through `Design.cardPx` instead — see
+        // `Design.tooltipScale` — so its width against the ring is the frame's
+        // ratio *times that scale*, deliberately.
+        XCTAssertEqual(NotchLayout.cardWidth / NotchLayout.ringDiameter,
+                       600.0 / 117.0 * Design.tooltipScale, accuracy: 0.001)
     }
 
     func testShapeGrowsOneCellAtATime() {
@@ -497,10 +503,11 @@ final class PreferencesTests: XCTestCase {
                        "a returning user would be introduced to the app again")
     }
 
-    func testEverythingIsConnectedByDefault() {
+    func testTheDefaultOnFamiliesAreConnectedOnAFreshInstall() {
         let p = preferences()
-        XCTAssertTrue(p.isConnected("claude"))
         XCTAssertTrue(p.isConnected("codex"))
+        XCTAssertTrue(p.isConnected(DSHProvider.providerID))
+        XCTAssertFalse(p.isConnected("claude"))
         XCTAssertFalse(p.isConnected("a-provider-that-does-not-exist-yet"))
     }
 
@@ -508,7 +515,7 @@ final class PreferencesTests: XCTestCase {
         let p = preferences()
         p.setConnected(false, for: "cursor")
         XCTAssertFalse(p.isConnected("cursor"))
-        XCTAssertTrue(p.isConnected("claude"))
+        XCTAssertTrue(p.isConnected("codex"))
         p.setConnected(true, for: "cursor")
         XCTAssertTrue(p.isConnected("cursor"))
     }
@@ -1107,7 +1114,7 @@ final class RenameMigrationTests: XCTestCase {
     func testMigratingWithNothingToMigrateIsHarmless() {
         let (defaults, _) = suite()
         Preferences.migrateFromPreviousName(into: defaults, from: "does.not.exist")
-        XCTAssertTrue(Preferences(defaults: defaults).isConnected("claude"))
+        XCTAssertTrue(Preferences(defaults: defaults).isConnected("codex"))
     }
 }
 

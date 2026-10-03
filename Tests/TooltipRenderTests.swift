@@ -212,7 +212,7 @@ final class TooltipRenderTests: XCTestCase {
     }
 
     func testCodexCardRendersAccountActivity() throws {
-        let usage = CodexTokenUsage(
+        let usage = AccountTokenUsage(
             summary: .init(lifetimeTokens: 280_000, peakDailyTokens: 150_000,
                             longestRunningTurnSeconds: 4020,
                             currentStreakDays: 2, longestStreakDays: 11),
@@ -240,9 +240,13 @@ final class TooltipRenderTests: XCTestCase {
         let renderer = ImageRenderer(content: view)
         renderer.scale = 3
         let image = try XCTUnwrap(renderer.nsImage)
+        // The card draws the activity section, so it is taller than the same
+        // card without it — which is now the rule and the day's one row.
+        let activitySection = NotchLayout.codexUsageTop + NotchLayout.hairline
+            + NotchLayout.blockSpacing + NotchLayout.cardBodyLineHeight
         XCTAssertGreaterThan(
             image.size.height,
-            NotchLayout.cardHeight(windowCount: 2) + NotchLayout.codexChartHeight,
+            NotchLayout.cardHeight(windowCount: 2) + activitySection,
             "the account activity section was not included in the rendered card"
         )
 

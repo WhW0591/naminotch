@@ -9,9 +9,18 @@ import Foundation
 /// providers is competing with the windows it sits beside rather than reporting
 /// on them.
 ///
-/// The scale multiplies the whole surface — rings, text, tooltip and all — so
-/// the proportions stay exactly as they were drawn. `NotchLayout` keeps every
-/// constant it quotes from the design frame, and `medium` is that frame at 1:1.
+/// The scale multiplies the notch and the cells it carries — the rings, the
+/// percentages under them — so their proportions stay exactly as they were
+/// drawn. `NotchLayout` keeps every constant it quotes from the design frame,
+/// and `medium` is that frame at 1:1.
+///
+/// **It deliberately does not reach the hover card.** The card is anchored for
+/// reading rather than off the ring's 44pt — see `Design.tooltipScale` — and
+/// that is one decision, not two, so it is not something this setting should be
+/// able to undo. Set the notch to Small and the card stays legible; set it to
+/// Large and the card does not grow a second time. This comment used to claim
+/// the scale covered "rings, text, tooltip and all", which the code has never
+/// done: `NotchRootView` applies it to the notch and to nothing else.
 enum NotchSize: String, CaseIterable, Identifiable {
     case small
     case medium

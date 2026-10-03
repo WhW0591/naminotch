@@ -179,41 +179,39 @@ enum NotchLayout {
     static let gripGap     = Design.px(13)    // from the settings disc
     static let gripHotZone = Design.px(140)
 
-    // The hover tooltip
-    static let cardWidth     = Design.px(600)
-    static let cardCorner    = Design.px(49.5)
-    static let cardPadding   = Design.px(32)
-    static let tailLength    = Design.px(75)
-    static let tailHeight    = Design.px(87)
-    static let tailGap       = Design.px(28)    // tail tip -> notch body edge
-    static let barHeight     = Design.px(10.5)
-    static let headerGap     = Design.px(17)    // glyph -> title
-    static let headerToBlock = Design.px(21)
-    static let labelToBar    = Design.px(16.8)
-    static let barToUsed     = Design.px(17.8)
-    static let blockSpacing  = Design.px(20)
-    static let moneyBarHeight = Design.px(12)
-    static let moneyBarToStats = Design.px(14)
-    static let moneyStatGap = Design.px(4)
-    static let sessionRowGap = Design.px(10)   // the two lines of one session
+    // The hover tooltip. Every distance here is measured with `Design.cardPx`
+    // rather than `Design.px`: the card is anchored for reading, not off the
+    // ring's 44pt — see `Design.tooltipScale`. `hairline` below is deliberately
+    // *not*, because the notch draws rules with the same value.
+    static let cardWidth     = Design.cardPx(600)
+    static let cardCorner    = Design.cardPx(49.5)
+    static let cardPadding   = Design.cardPx(32)
+    static let tailLength    = Design.cardPx(75)
+    static let tailHeight    = Design.cardPx(87)
+    static let tailGap       = Design.cardPx(28)    // tail tip -> notch body edge
+    static let barHeight     = Design.cardPx(10.5)
+    static let headerGap     = Design.cardPx(17)    // glyph -> title
+    static let headerToBlock = Design.cardPx(21)
+    static let labelToBar    = Design.cardPx(16.8)
+    static let barToUsed     = Design.cardPx(17.8)
+    static let blockSpacing  = Design.cardPx(20)
+    static let moneyBarHeight = Design.cardPx(12)
+    static let moneyBarToStats = Design.cardPx(14)
+    static let moneyStatGap = Design.cardPx(4)
+    static let sessionRowGap = Design.cardPx(10)   // the two lines of one session
     /// The spinner beside a session's status. Sized against the body text's cap
     /// (18px) rather than picked by eye, so it reads as part of the word rather
     /// than a bullet pinned near it.
-    static let statusDot       = Design.px(17)
-    static let statusDotStroke = Design.px(3.4)
-    static let statusDotGap    = Design.px(11)
+    static let statusDot       = Design.cardPx(17)
+    static let statusDotStroke = Design.cardPx(3.4)
+    static let statusDotGap    = Design.cardPx(11)
     static let hairline      = Design.px(2.5)  // rule above the session list
 
-    // Codex account activity
-    static let codexUsageTop   = Design.px(20)
-    static let codexMetricTop  = Design.px(14)
-    static let codexMetricRowGap = Design.px(8)
-    static let codexMetricRowHeight = Design.px(40)
-    static let codexMetricHeight = 5 * codexMetricRowHeight + 4 * codexMetricRowGap
-    static let codexMetricBottom = Design.px(14)
-    static let codexUsageRowGap = Design.px(12)
-    static let codexChartTop   = Design.px(15)
-    static let codexChartHeight = Design.px(115)
+    // Codex account activity. One row now — the day's tokens — so the metric
+    // list and the chart that used to be measured here are gone with them.
+    static let codexUsageTop   = Design.cardPx(20)
+    /// Still used by the reset-credits block below, which shares its rhythm.
+    static let codexUsageRowGap = Design.cardPx(12)
     /// Title, count, and expiry. The third line is reserved so a missing
     /// expiry cannot shrink the hover region under the card.
     static var codexResetCreditsHeight: CGFloat {
@@ -228,13 +226,13 @@ enum NotchLayout {
     }()
 
     static let cardTitleLineHeight: CGFloat = lineHeight(
-        NSFont.systemFont(ofSize: Design.fontSize(capPixels: 26), weight: .semibold)
+        NSFont.systemFont(ofSize: Design.cardFontSize(capPixels: 26), weight: .semibold)
     )
     /// The card's body face. Held rather than rebuilt at each use: the line
     /// height below and the wrap measurement in `bodyTextHeight` have to be
     /// measuring the same font, or the budget and the text disagree.
     static let cardBodyFont = NSFont.systemFont(
-        ofSize: Design.fontSize(capPixels: 18), weight: .regular
+        ofSize: Design.cardFontSize(capPixels: 18), weight: .regular
     )
     static let cardBodyLineHeight: CGFloat = lineHeight(cardBodyFont)
 
@@ -405,16 +403,16 @@ enum NotchLayout {
                 + CGFloat(windowCount - 1) * blockSpacing
             if groupCount > 0 {
                 // Each group adds a title line, spacing (12), and 16px vertical padding inside the box
-                let groupExtra = cardBodyLineHeight + Design.px(12) + 2 * Design.px(16)
+                let groupExtra = cardBodyLineHeight + Design.cardPx(12) + 2 * Design.cardPx(16)
                 height += CGFloat(groupCount) * groupExtra
 
                 if groupCount > 1 {
                     // We use 28px between groups instead of the default 20px (blockSpacing)
-                    height += CGFloat(groupCount - 1) * (Design.px(28) - blockSpacing)
+                    height += CGFloat(groupCount - 1) * (Design.cardPx(28) - blockSpacing)
                 }
 
                 // Extra padding at the very bottom
-                height += Design.px(8)
+                height += Design.cardPx(8)
             }
         } else {
             // The status message, at whatever height it actually wraps to.
@@ -432,12 +430,9 @@ enum NotchLayout {
         }
 
         if hasTokenUsage {
-            height += codexUsageTop + hairline + blockSpacing
-                + codexMetricTop + codexMetricHeight + codexMetricBottom
-                + hairline
-                + 2 * cardBodyLineHeight
-                + codexUsageRowGap
-                + codexChartTop + codexChartHeight
+            // The rule, then one row: today's tokens. See `CodexUsageSection`
+            // for what used to be here and why it is not any more.
+            height += codexUsageTop + hairline + blockSpacing + cardBodyLineHeight
         }
 
         if sessionCount > 0 {
