@@ -303,7 +303,7 @@ struct NotchRootView: View {
                     } else {
                         Color.clear
                             .frame(width: place.panelSize.width, height: place.panelSize.height)
-                            .glassEffect(model.surfaceStyle.glass.interactive(), in: Rectangle())
+                            .glassEffect(model.surfaceStyle.glass, in: Rectangle())
                             .background {
                                 if let dim = model.surfaceStyle.glassDim {
                                     Rectangle().fill(dim)
