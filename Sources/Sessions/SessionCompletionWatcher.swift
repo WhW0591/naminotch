@@ -68,6 +68,14 @@ struct SessionCompletionWatcher {
     /// `idle` to `idle` is the steady state of a window nobody is using —
     /// neither is a piece of work ending.
     static func reason(from was: AgentSession.State, to now: AgentSession.State) -> Reason? {
+        // **A question is worth a sound however the session got to it.**
+        //
+        // "Blocked on you" is about where a session *is*, not about which edge it
+        // crossed to get there. A session that was already idle when it stopped to
+        // ask something never left `busy`, so the guard below skipped it and the one
+        // event you cannot afford to miss — the one where nothing happens until you
+        // answer — went unannounced.
+        if now == .waiting, was != .waiting { return .blocked }
         guard was == .busy else { return nil }
         switch now {
         case .success: return .finished
