@@ -41,6 +41,23 @@ final class LocalizationCoverageTests: XCTestCase {
                     let ch = text[cursor]
                     if ch == "\\", text.index(after: cursor) < text.endIndex {
                         let next = text[text.index(after: cursor)]
+                        // `\u{201C}` is a curly quote, not the letter u: the
+                        // scan used to drop the backslash and report `u{201C}`,
+                        // a key nothing ever asks for.
+                        if next == "u", text.index(text.index(after: cursor), offsetBy: 1) < text.endIndex,
+                           text[text.index(cursor, offsetBy: 2)] == "{" {
+                            var hex = ""
+                            var probe = text.index(cursor, offsetBy: 3)
+                            while probe < text.endIndex, text[probe] != "}" {
+                                hex.append(text[probe]); probe = text.index(after: probe)
+                            }
+                            if let code = UInt32(hex, radix: 16),
+                               let scalar = Unicode.Scalar(code) {
+                                key.append(Character(scalar))
+                                cursor = text.index(after: probe)
+                                continue
+                            }
+                        }
                         if next == "(" {
                             // A sentinel, not `%@` yet: whether the literal
                             // percent beside it needs doubling is only known

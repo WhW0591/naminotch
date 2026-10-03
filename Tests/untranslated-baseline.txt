@@ -1,8 +1,9 @@
 # Keys the source asks for that have no zh-Hans yet.
 #
-# Regenerated after the scan learned the second half of the format rule:
-# `%@%% deficit` is the key Swift makes from "\(value)% deficit" — a literal
-# percent beside an interpolation is doubled — so a key with it single is one
-# nothing ever looks up. Both halves are pinned in `CatalogFormatTests`.
-# The list may only shrink: translate a string, delete its line.
-The sound plays on the ordinary output, not the interface sound-effects channel — so it is still heard with u{201C}Play user interface sound effectsu{201D} switched off in System Settings → Sound.
+# **Empty, and that is the goal.** Every string the source asks for has a
+# Chinese translation; this file exists so that the next one to be added cannot
+# quietly go without. `LocalizationCoverageTests` reads it, and a new key that
+# is not translated fails there — which is the whole of "remember to do it",
+# expressed as something that cannot be forgotten.
+#
+# Adding a line is a regression, not a plan. Translate the string instead.

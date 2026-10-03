@@ -74,7 +74,23 @@ final class CatalogFormatTests: XCTestCase {
     /// Keys with a value in them: the only ones `String(format:)` ever reads.
     private func formattedKeys(_ strings: [String: [String: String]]) -> [String: [String: String]] {
         strings.filter { key, _ in
-            ["%@", "%lld", "%d", "%f"].contains { key.contains($0) }
+            // `%.` is here for `Spend: $%.2f`, which carries a double and matched
+        // none of the others — so a translation could reorder or drop it with
+        // nothing to notice. The list stays a list of what an interpolation
+        // produces rather than "keys containing a percent": a bare `%` before a
+        // word (`"12% used · 88% left"`) parses as a flag and a conversion, and
+        // widening the test to every parseable key made six of those fail.
+        // `%.<digit>` is here for `Spend: $%.2f`, which carries a double and
+        // matched none of the others — so a translation could reorder or drop
+        // it with nothing to notice. It is a pattern rather than the plain
+        // `"%.", `, which matched the full stop in `reaches 100%.` and made two
+        // ordinary sentences fail. The list stays a list of what an
+        // interpolation produces rather than "keys containing a percent": a bare
+        // `%` before a word (`"12% used · 88% left"`) parses as a flag and a
+        // conversion, and widening the test to every parseable key made six of
+        // those fail.
+        ["%@", "%lld", "%d", "%f"].contains { key.contains($0) }
+            || key.range(of: #"%\.[0-9]"#, options: .regularExpression) != nil
         }
     }
 
