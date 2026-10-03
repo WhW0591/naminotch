@@ -34,7 +34,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// that rate-limits, actively harmful.
     private var isRunningTests: Bool { Runtime.isUnderTest }
 
-    /// Quit any copy of Codenotch that was already running.
+    /// Quit any copy of NamiNotch that was already running.
     ///
     /// Every notch is a window on the screen edge, so a second copy is not a
     /// harmless duplicate the way a second text editor is: it draws a second
@@ -119,7 +119,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             fleet.setSnapshots(Fixtures.snapshots())
         } else {
             // DeepSeek's Platform usage page is a browser-session provider:
-            // login is explicit, stays in Codenotch's own WKWebView store, and
+            // login is explicit, stays in NamiNotch's own WKWebView store, and
             // the page-local requests are refreshed only after that login.
             let deepSeek = WebSessionProvider(site: Sites.deepSeek)
             // QianwenAI's Token Plan is the same kind of provider: no usage API
@@ -994,7 +994,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         var notice = UsageResetEvent(providerID: "codenotch", providerName: AppIdentity.name,
                                      windowLabel: "", glyph: .claude,
                                      previousFraction: 0, currentFraction: 0, resetsAt: nil)
-        notice.noticeTitle = L10n.t("Codenotch test")
+        notice.noticeTitle = L10n.t("NamiNotch test")
         notice.noticeSubtitle = L10n.t("This is what one looks like.")
         notice.noticeStatus = ""
         fleet.showResetAlert(notice, duration: 5.0)

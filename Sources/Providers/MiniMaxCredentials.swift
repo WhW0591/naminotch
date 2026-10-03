@@ -59,7 +59,7 @@ enum MiniMaxRegion: String, Codable, CaseIterable {
 
 /// The MiniMax Coding Plan key and optional console session cookie.
 ///
-/// Codenotch owns both: the user pastes them in Settings (or exports them),
+/// NamiNotch owns both: the user pastes them in Settings (or exports them),
 /// and they live in the login keychain under service names no other app uses
 /// — not `ollama-api-key`, which is Ollama's item on the same account.
 /// Browser cookie databases are never opened: a Chrome or Safari session is

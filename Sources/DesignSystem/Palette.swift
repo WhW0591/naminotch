@@ -131,7 +131,7 @@ extension NSColor {
     }
 }
 
-private struct CodenotchReduceTransparencyKey: EnvironmentKey {
+private struct NamiNotchReduceTransparencyKey: EnvironmentKey {
     static let defaultValue: Bool = false
 }
 
@@ -139,12 +139,12 @@ extension EnvironmentValues {
     /// True when macOS Accessibility "Reduce Transparency" is enabled in system settings,
     /// or explicitly overridden via `.environment(\.codenotchReduceTransparency, ...)`.
     var codenotchReduceTransparency: Bool {
-        get { self[CodenotchReduceTransparencyKey.self] || self.accessibilityReduceTransparency }
-        set { self[CodenotchReduceTransparencyKey.self] = newValue }
+        get { self[NamiNotchReduceTransparencyKey.self] || self.accessibilityReduceTransparency }
+        set { self[NamiNotchReduceTransparencyKey.self] = newValue }
     }
 }
 
-private struct CodenotchHeadlessGlassKey: EnvironmentKey {
+private struct NamiNotchHeadlessGlassKey: EnvironmentKey {
     static let defaultValue: Bool = false
 }
 
@@ -174,7 +174,7 @@ extension EnvironmentValues {
     /// opaque hardware band — which is the part that is ours to get wrong.
     /// See TASKS.md, "The hardware's band stays black".
     var codenotchHeadlessGlass: Bool {
-        get { self[CodenotchHeadlessGlassKey.self] }
-        set { self[CodenotchHeadlessGlassKey.self] = newValue }
+        get { self[NamiNotchHeadlessGlassKey.self] }
+        set { self[NamiNotchHeadlessGlassKey.self] = newValue }
     }
 }

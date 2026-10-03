@@ -8,7 +8,7 @@ read_when:
 
 # Adding a provider
 
-Codenotch's providers are registered by hand, in several places, and nothing
+NamiNotch's providers are registered by hand, in several places, and nothing
 about a provider's identity is derived from its type. Adding one is therefore a
 list, and this is it — collected from the eight files the DeepSeek Harness
 provider touched when it was added, plus the surfaces that were checked

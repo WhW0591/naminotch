@@ -1328,7 +1328,7 @@ final class ModalRouteCopyTests: XCTestCase {
     func testItDoesNotClaimYouStaySignedIn() {
         let caveat = SignInRoute.modal(name: "Perplexity").signOutCaveat
         XCTAssertFalse(caveat.contains("stay signed in"),
-                       "a session Codenotch owns really is ended")
+                       "a session NamiNotch owns really is ended")
     }
 }
 

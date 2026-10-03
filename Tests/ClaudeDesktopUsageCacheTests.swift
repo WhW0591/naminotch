@@ -426,7 +426,7 @@ final class ClaudeDesktopUsageCacheTests: XCTestCase {
     func testAnEntryForAnotherOrganizationIsIgnored() {
         let directory = makeCacheDirectory(["a_0": Entry().data()])
         // The reading exists, and it is not this profile's. Claude Desktop is
-        // signed into one account while Codenotch may draw a ring per profile,
+        // signed into one account while NamiNotch may draw a ring per profile,
         // so the wrong account's session percentage must not reach the wrong ring.
         XCTAssertNil(ClaudeDesktopUsageCache(directory: directory)
             .read(organization: "99999999-8888-7777-6666-555555555555"))

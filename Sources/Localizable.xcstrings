@@ -13,15 +13,7 @@
       }
     },
     "NamiNotch test": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NamiNotch 测试"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Codex": {
       "extractionState": "manual",
@@ -46,180 +38,52 @@
       }
     },
     "%@ / %@ remaining": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "还剩 %@ / %@"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ / %@ tokens": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ / %@ token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ / %@ tokens remaining": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "还剩 %@ / %@ token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ credits left · %@ monthly + %@ extra": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "还剩 %@ 额度 · 每月 %@ + 额外 %@"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ of %@ monthly credits left": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每月 %@ 额度还剩 %@"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ tokens": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Configure endpoint details and credentials in Settings.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在设置里配置端点详情和凭据。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Could not reach the endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无法连接到该端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Custom Endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自定义端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Monthly Budget": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每月预算"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Monthly Tokens": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每月 token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Not an HTTP endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "不是 HTTP 端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Quota Used": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已用额度"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Remaining Budget": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "剩余预算"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Remaining Tokens": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "剩余 token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "The address must start with http:// or https://": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "地址必须以 http:// 或 https:// 开头"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "The endpoint answered %@": {
       "extractionState": "manual",
@@ -233,48 +97,16 @@
       }
     },
     "The endpoint did not answer in time": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "端点未及时响应"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Tokens Since Server Start": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自服务器启动以来的 token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Tokens Used": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已用 token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Total Spend": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "总花费"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ h": {
       "extractionState": "manual",
@@ -321,191 +153,55 @@
       }
     },
     "Active time": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "活动时间"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Activity": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "活动"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "All accounts": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "所有账号"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Day": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "日"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Estimated cost": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "预估花费"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Estimated cost per day; hover a bar for active time": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每日预估花费；悬停柱条可看活动时间"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Loading…": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "载入中…"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Month": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "月"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "No sessions on this day": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "这一天没有会话"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Sessions": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "会话"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Total": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "合计"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Turns": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "轮次"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Turns are read from the transcripts each account writes; the first ones show up a few minutes after a session starts.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "轮次读自各账号写入的记录；一场会话开始几分钟后才会出现第一批。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Week": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "All": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全部"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "All time": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全部时间"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Elsewhere": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "其它"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Other (%@)": {
       "extractionState": "manual",
@@ -519,158 +215,43 @@
       }
     },
     "Session": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "会话"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "This month": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "本月"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "This session": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "本次会话"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "This week": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "本周"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ finished": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ 已完成"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ is waiting on you": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ 在等你"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "A banner in Notification Center, which reaches you on another display or with the notch hidden. The notch stays quiet; sounds still play.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "通知中心里的横幅——在另一块显示器上、或刘海被隐藏时也能送到。刘海那边保持安静；提示音照常播放。"
-          }
-        }
-      }
-    },
-    "Codenotch test": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Codenotch 测试"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "In the notch": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在刘海内"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Mac notifications": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mac 通知"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "The agent stopped to ask you something.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "智能体停下来要问你一件事。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "The agent's turn is done.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "智能体这一轮做完了。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "The notch opens for a moment or shows a card, with the sound you chose. Nothing reaches Notification Center.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "刘海会打开一下或显示一张卡片，并播放你选的提示音。不会送到通知中心。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "This is what one looks like.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "这就是它长什么样。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@h %@m": {
       "extractionState": "manual",
@@ -750,70 +331,22 @@
       }
     },
     "%@h limit": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ 小时限额"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Credit balance": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "额度余额"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Daily limit": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每日限额"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Hourly limit": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每小时限额"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Kilo Cloud rejected the request": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kilo Cloud 拒绝了该请求"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Plan limit": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "方案限额"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ Limit Reached": {
       "extractionState": "manual",
@@ -871,48 +404,16 @@
       }
     },
     "Ample, watch and critical each stay one flat colour, jumping between them at the limits below.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "充裕、留意、危急各用一种固定颜色，在下面的界限处直接跳变。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Colour ramp": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "颜色渐变"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Hard step": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "硬跳变"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "The colour blends continuously from ample to critical across the full range, turning yellow at the watch limit below.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "颜色在整个区间内从充裕连续过渡到危急，并在下面的留意界限处转为黄色。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ is at %@%%": {
       "extractionState": "manual",
@@ -970,59 +471,19 @@
       }
     },
     "Not Checked": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未检查"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Online": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在线"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Slow": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "缓慢"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Unreachable": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无法访问"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Activity…": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "活动…"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Context %@%%": {
       "extractionState": "manual",
@@ -1069,37 +530,13 @@
       }
     },
     "Install the %@ CLI first; Sign in opens its install page.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请先安装 %@ CLI；「登录」会打开它的安装页。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Runs %@ in your terminal; it opens the browser to sign in and saves the session this reads.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在你的终端里运行 %@；它会打开浏览器登录，并保存本工具读取的会话。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Runs %@ in your terminal; sign in there with /login and the notch reads the session.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在你的终端里运行 %@；在其中用 /login 登录，刘海即可读取该会话。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ days ago": {
       "extractionState": "manual",
@@ -1200,38 +637,22 @@
         }
       }
     },
-    "macOS refused Codenotch access to %@'s saved login. Use Allow access… in Settings to ask again.": {
+    "macOS refused NamiNotch access to %@'s saved login. Use Allow access… in Settings to ask again.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS 拒绝了 Codenotch 访问 %@ 已保存的登录。请在设置里用「允许访问…」重新申请。"
+            "value": "macOS 拒绝了 NamiNotch 访问 %@ 已保存的登录。请在设置里用「允许访问…」重新申请。"
           }
         }
       }
     },
     "API key (per token)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "API 密钥（按 token 计）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Monthly plan": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "包月方案"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ turns · %@ files": {
       "extractionState": "manual",
@@ -1278,26 +699,10 @@
       }
     },
     "This Kilo account has no usage to read yet — top up credits or subscribe to a coding plan.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "这个 Kilo 账号还没有可读取的用量——充值额度或订阅编程方案。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Usage rides on the account Kilo CLI signs into — run `kilo` once and sign in, and the notch reads it.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用量跟着 Kilo CLI 登录的那个账号走——运行一次 `kilo` 并登录，刘海即可读取。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ unused resets": {
       "extractionState": "manual",
@@ -1344,15 +749,7 @@
       }
     },
     "Cycle": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周期"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "$%@": {
       "extractionState": "manual",
@@ -1388,15 +785,7 @@
       }
     },
     "Apify CLI": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apify CLI"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Connected · %@ loaded": {
       "extractionState": "manual",
@@ -1410,15 +799,7 @@
       }
     },
     "No tokens today": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日无 token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Loaded in %@.": {
       "extractionState": "manual",
@@ -1432,136 +813,40 @@
       }
     },
     "%@ / %@ left": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "还剩 %@ / %@"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "API Key": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "API 密钥"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "API key": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "API 密钥"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Abacus.AI": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abacus.AI"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Add Endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Add to Endpoints": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "加入端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Appearance & Icon": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "外观与图标"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Auth Header": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "认证请求头"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Authentication required to inspect usage route": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "检查用量路由需要认证"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Authorization": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "认证"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Base URL": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "基础 URL"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Cancel": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "取消"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Checking usage route...": {
       "extractionState": "manual",
@@ -1575,103 +860,31 @@
       }
     },
     "Choose a preset to pre-fill settings:": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "选择一个预设来预填设置："
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Configured Endpoints": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已配置的端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Connect any OpenAI-compatible API, local inference runtime, or custom proxy.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接入任何兼容 OpenAI 的 API、本地推理运行时或自定义代理。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Current Spend ($)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "当前花费（$）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Custom JSON fields": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自定义 JSON 字段"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Detected usage format: %@. Save Endpoint to apply.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "检测到用量格式：%@。保存端点后生效。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Discovered Local Services:": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "发现的本地服务："
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Edit": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "编辑"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Edit Endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "编辑端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "File contains malformed JSON.": {
       "extractionState": "manual",
@@ -1685,37 +898,13 @@
       }
     },
     "Hide Templates": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "隐藏模板"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Icon": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "图标"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Import Custom JSON...": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入自定义 JSON…"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Imported custom JSON preset mapping.": {
       "extractionState": "manual",
@@ -1729,312 +918,88 @@
       }
     },
     "JSON endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "JSON 端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "LiteLLM": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "LiteLLM"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "LiteLLM key info may require a management credential; use Manual USD entry if unavailable.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "LiteLLM 的密钥信息可能需要管理凭据；若拿不到，请改用「手动 USD」输入。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Manual": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "手动"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Model": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模型"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Model field": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模型字段"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Model filter (optional)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模型筛选（可选）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Model name (e.g. gpt-4o, llama-3.3)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模型名称（例如 gpt-4o、llama-3.3）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Monthly Budget ($)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每月预算（$）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Monthly Budget (M tokens)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每月预算（百万 token）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "New Custom Endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "新建自定义端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "New-API": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New-API"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "No custom endpoints yet. Click 'Add Endpoint' or pick a Quick Template to get started.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "还没有自定义端点。点击「添加端点」，或选一个快速模板开始。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "No supported usage schema detected": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未检测到受支持的用量格式"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "No usage URL for this base URL": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "此基础 URL 没有对应的用量 URL"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "OpenRouter": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OpenRouter"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Other usage source": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "其它用量来源"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Public": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "公开"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Quick Templates": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "快速模板"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Quota units": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "额度单位"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Records path": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "记录路径"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Requires --metrics on llama-server": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "需要在 llama-server 上启用 --metrics"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Reset Spend": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "重置花费"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Reset Tokens": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "重置 token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Retry detection": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "重新检测"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Ring Accent": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "环的主色"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Save Endpoint": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Save JSON template...": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存 JSON 模板…"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Saved template. Edit it and click Import Custom JSON to load.": {
       "extractionState": "manual",
@@ -2048,378 +1013,106 @@
       }
     },
     "Scan Local Engines": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "扫描本地引擎"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Select a model...": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "选择模型…"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Show dollar amount ($) instead of percentage (%)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "显示金额（$）而非百分比（%）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Show remaining budget instead of spent": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "显示剩余预算而非已花"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Show token count instead of percentage (%)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "显示 token 数而非百分比（%）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Spend: $%.2f": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "花费：$%.2f"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Subscription credits": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "订阅额度"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Test": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "测试"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Test Connection & Fetch Models": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "测试连接并获取模型"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Token field": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "token 字段"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Tokens (Millions)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "token 数（百万）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Tokens Used (M tokens)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已用 token（百万）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Tokens since server start": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自服务器启动以来的 token"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Tokens: %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "token：%@"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Tracking Unit": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "计量单位"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "URL must start with http:// or https:// and have a valid host.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URL 必须以 http:// 或 https:// 开头，且主机名有效。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "USD ($)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "美元（$）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "USD spend": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "美元花费"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Upload Custom Image...": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "上传自定义图片…"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Usage URL": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用量 URL"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Usage URL: %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用量 URL：%@"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Usage authentication": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用量认证"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Usage preset": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用量预设"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Usage route unavailable or unreachable": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用量路由不可用或无法访问"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Usage source": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用量来源"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "e.g. 10.0 (leave empty for unlimited)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "例如 10.0（留空表示不限）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "e.g. 2.5": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "例如 2.5"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "e.g. 20.00 (leave empty for unlimited)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "例如 20.00（留空表示不限）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "e.g. 4.25": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "例如 4.25"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "e.g. My OpenRouter, Local vLLM": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "例如 My OpenRouter、Local vLLM"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "https://api.openai.com/v1": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://api.openai.com/v1"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "llama.cpp": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "llama.cpp"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "sk-... (optional for local)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "sk-...（本地可留空）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "vLLM": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "vLLM"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ %@ · via %@": {
       "extractionState": "manual",
@@ -2433,70 +1126,30 @@
       }
     },
     "Adds a compact weekly-usage ring around each chosen provider that publishes it.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "为每个公开发布周用量的已选 provider，加一圈紧凑的周用量环。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Channel": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "渠道"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp, Apify, the Kilo CLI or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp, Apify, the Kilo CLI or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 从这台 Mac 上已经登录的工具里读取用量——它从不索要密码。安装并登录以下任意一个：Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro、Amp、Apify、Kilo CLI，或一个 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes），它的环就会出现在刘海里。"
+            "value": "NamiNotch 从这台 Mac 上已经登录的工具里读取用量——它从不索要密码。安装并登录以下任意一个：Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro、Amp、Apify、Kilo CLI，或一个 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes），它的环就会出现在刘海里。"
           }
         }
       }
     },
     "Colour transition": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "颜色渐变"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Costs": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "花费"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Custom Endpoints": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自定义端点"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Day starts at": {
       "extractionState": "manual",
@@ -2521,15 +1174,7 @@
       }
     },
     "For every provider with a weekly limit beside a shorter one, the main ring shows the week. The shorter window moves to the thin ring and the card. Alerts, the menu bar and providers with no weekly limit are unchanged, and Claude's daily pace ring still leads when it is on.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "对于同时有周限额和更短窗口的 provider，主环显示周用量。较短的窗口移到细环和卡片上。提醒、菜单栏，以及没有周限额的 provider 都不受影响；Claude 的每日进度环开启时仍居首位。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Hidden from the notch · Loaded in %@": {
       "extractionState": "manual",
@@ -2554,26 +1199,10 @@
       }
     },
     "Name": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "名称"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Name this account": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "为此账号命名"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "On this edge your notch is merged into your Mac's own cutout, and the cutout sets its size. This has no effect here — it is waiting for you to move the notch to another edge.": {
       "extractionState": "manual",
@@ -2587,26 +1216,10 @@
       }
     },
     "OpenAI-compatible APIs, local runtimes and custom proxies.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "兼容 OpenAI 的 API、本地运行时和自定义代理。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
-    "Opens System Settings when banners are off for Codenotch.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "当 Codenotch 的横幅被关闭时，打开系统设置。"
-          }
-        }
-      }
+    "Opens System Settings when banners are off for NamiNotch.": {
+      "extractionState": "manual"
     },
     "Percentage under each ring": {
       "extractionState": "manual",
@@ -2620,15 +1233,7 @@
       }
     },
     "Send a test": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "发送测试"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Show or hide this model in the notch. It stays loaded in %@.": {
       "extractionState": "manual",
@@ -2642,15 +1247,7 @@
       }
     },
     "Show weekly limit in menu bar": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在菜单栏显示周限额"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "The figure under each ring. Turn it off for rings alone; the number is still a hover away in the card.": {
       "extractionState": "manual",
@@ -2664,70 +1261,30 @@
       }
     },
     "The notch opens for a moment, with the session sound.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "刘海会打开一下，并播放会话提示音。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
-    "The same boundary is used everywhere a day is counted: the local model ledger, the cost log, and the DeepSeek Harness card, whose daily figures the platform cuts wherever Codenotch asks it to.": {
+    "The same boundary is used everywhere a day is counted: the local model ledger, the cost log, and the DeepSeek Harness card, whose daily figures the platform cuts wherever NamiNotch asks it to.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "凡是按天计数的地方都用同一个边界：本地模型账本、花费日志，以及 DeepSeek Harness 卡片——后者的每日数据由平台按 Codenotch 指定的位置切分。"
+            "value": "凡是按天计数的地方都用同一个边界：本地模型账本、花费日志，以及 DeepSeek Harness 卡片——后者的每日数据由平台按 NamiNotch 指定的位置切分。"
           }
         }
       }
     },
     "Weekly limit as the main ring": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "以周限额作为主环"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "What each project spent of each login's allowance.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每个项目花掉了各登录账号额度的多少。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "What the notch, the menu bar and notifications call this account. Empty goes back to %@.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "刘海、菜单栏和通知如何称呼此账号。留空则回到 %@。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Where to notify": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "通知方式"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Which appearance the settings window is drawn in. The notch is dark by design whatever this is set to — its own Surface choice above decides how dark.": {
       "extractionState": "manual",
@@ -2741,15 +1298,7 @@
       }
     },
     "With the colour ramp on, this still marks critical elsewhere in the app, but the ring's own red only arrives at 100%.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "开启颜色渐变后，它在 App 其它地方仍会标出危急；但环自身的红色只在 100% 时出现。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Work is counted from this hour rather than from midnight, so a session that runs past it belongs to the day it was started in — a reading taken at two in the morning is about the evening that produced it.": {
       "extractionState": "manual",
@@ -2785,59 +1334,19 @@
       }
     },
     "%@ · %@/month (catalog)": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · %@/月（目录价）"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "%@ · price unknown, set it here": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · 价格未知，请在此填写"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "1 USD = %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 美元 = %@"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Billing": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "计费方式"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Day, week and month per login: sessions per project with what each cost.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "按登录账号看日、周、月：每个项目的会话数，以及各自的花费。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Detected from each login once a day. A week of the plan costs the price ÷ 4.35; a project that used 4%% of the weekly allowance spent 4%% of that. Amounts in %@, your Mac's currency. Type the amount you actually pay to override the list price.": {
       "extractionState": "manual",
@@ -2851,136 +1360,40 @@
       }
     },
     "Exchange rate": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "汇率"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "How the money is worked out": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "金额是怎么算出来的"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Market data": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "市场数据"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Monthly price": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每月价格"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Not fetched yet": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "尚未获取"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Open Activity…": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "打开活动…"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Open catalog": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "打开目录"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Per-token prices": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "按 token 价格"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Plan": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "方案"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Plan catalog": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "方案目录"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Plan not detected yet": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "尚未识别方案"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Refreshed once a day, no account needed: exchange rate from open.er-api.com, per-token prices from OpenRouter. Plans live in plans.json, editable.": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每天刷新一次，无需账号：汇率来自 open.er-api.com，按 token 价格来自 OpenRouter。方案存放在 plans.json 里，可编辑。"
-          }
-        }
-      }
+      "extractionState": "manual"
     },
     "Follow the System": {
       "extractionState": "manual",
@@ -3047,9 +1460,6 @@
           }
         }
       }
-    },
-    "No tokens today": {
-      "extractionState": "manual"
     },
     "Spend limit": {
       "extractionState": "manual",
@@ -3266,7 +1676,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在终端运行 amp login，Codenotch 会读取 ~/.local/share/amp/secrets.json。"
+            "value": "在终端运行 amp login，NamiNotch 会读取 ~/.local/share/amp/secrets.json。"
           }
         }
       }
@@ -3282,13 +1692,13 @@
         }
       }
     },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro、Amp 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
+            "value": "NamiNotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro、Amp 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
           }
         }
       }
@@ -3579,13 +1989,13 @@
         }
       }
     },
-    "Codenotch was refused access to %@'s saved login. Click this ring to ask again, and choose Always Allow.": {
+    "NamiNotch was refused access to %@'s saved login. Click this ring to ask again, and choose Always Allow.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 未能读取 %@ 已保存的登录信息。点击这个圆环再试一次，并选择「始终允许」。"
+            "value": "NamiNotch 未能读取 %@ 已保存的登录信息。点击这个圆环再试一次，并选择「始终允许」。"
           }
         }
       }
@@ -4118,13 +2528,13 @@
         }
       }
     },
-    "Nothing on screen. Open Codenotch again from Applications to bring these settings back.": {
+    "Nothing on screen. Open NamiNotch again from Applications to bring these settings back.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "屏幕上什么都没有。从「应用程序」再打开 Codenotch，才能回到这些设置。"
+            "value": "屏幕上什么都没有。从「应用程序」再打开 NamiNotch，才能回到这些设置。"
           }
         }
       }
@@ -4162,13 +2572,13 @@
         }
       }
     },
-    "A normal app icon in the Dock while Codenotch is running.": {
+    "A normal app icon in the Dock while NamiNotch is running.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 运行时，程序坞里有一个普通应用图标。"
+            "value": "NamiNotch 运行时，程序坞里有一个普通应用图标。"
           }
         }
       }
@@ -4184,13 +2594,13 @@
         }
       }
     },
-    "No icon anywhere. Open Codenotch again from Applications to bring these settings back.": {
+    "No icon anywhere. Open NamiNotch again from Applications to bring these settings back.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "哪里都没有图标。从「应用程序」再打开 Codenotch，才能回到这些设置。"
+            "value": "哪里都没有图标。从「应用程序」再打开 NamiNotch，才能回到这些设置。"
           }
         }
       }
@@ -4349,13 +2759,13 @@
         }
       }
     },
-    "Open Codenotch at login": {
+    "Open NamiNotch at login": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "登录时打开 Codenotch"
+            "value": "登录时打开 NamiNotch"
           }
         }
       }
@@ -4404,24 +2814,24 @@
         }
       }
     },
-    "Codenotch never signs in — each reading is borrowed from the tool that already holds the account. Signing out here stops the credential being read and forgets the numbers, but leaves you signed in to that tool. macOS asks once per tool the first time, and again whenever you sign in to a different account; Always Allow keeps it quiet.": {
+    "NamiNotch never signs in — each reading is borrowed from the tool that already holds the account. Signing out here stops the credential being read and forgets the numbers, but leaves you signed in to that tool. macOS asks once per tool the first time, and again whenever you sign in to a different account; Always Allow keeps it quiet.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 从不自己登录 — 每条读数都借自已经持有该账号的工具。在这里退出只会停止读取凭证并忘掉数字，你在那个工具里仍然是登录状态。macOS 每种工具第一次会问一次，换账号再登录时还会再问；选「始终允许」就不会再打扰。"
+            "value": "NamiNotch 从不自己登录 — 每条读数都借自已经持有该账号的工具。在这里退出只会停止读取凭证并忘掉数字，你在那个工具里仍然是登录状态。macOS 每种工具第一次会问一次，换账号再登录时还会再问；选「始终允许」就不会再打扰。"
           }
         }
       }
     },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor, Codex, Antigravity, GLM, Grok or OpenCode, and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor, Codex, Antigravity, GLM, Grok or OpenCode, and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor、Codex、Antigravity、GLM、Grok 或 OpenCode 中的任意一个，刘海里就会出现对应的圆环。"
+            "value": "NamiNotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor、Codex、Antigravity、GLM、Grok 或 OpenCode 中的任意一个，刘海里就会出现对应的圆环。"
           }
         }
       }
@@ -4437,13 +2847,13 @@
         }
       }
     },
-    "Version %@. Updates install in the background and apply next time Codenotch starts.": {
+    "Version %@. Updates install in the background and apply next time NamiNotch starts.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "版本 %@。更新在后台安装，下次启动 Codenotch 时生效。"
+            "value": "版本 %@。更新在后台安装，下次启动 NamiNotch 时生效。"
           }
         }
       }
@@ -4514,13 +2924,13 @@
         }
       }
     },
-    "Codenotch is not reading %@'s saved login. Choose Allow access… above and answer Allow.": {
+    "NamiNotch is not reading %@'s saved login. Choose Allow access… above and answer Allow.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 没有读取 %@ 保存的登录信息。请在上方选择“允许访问…”，然后选择“允许”。"
+            "value": "NamiNotch 没有读取 %@ 保存的登录信息。请在上方选择“允许访问…”，然后选择“允许”。"
           }
         }
       }
@@ -4558,13 +2968,13 @@
         }
       }
     },
-    "Codenotch Settings": {
+    "NamiNotch Settings": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 设置"
+            "value": "NamiNotch 设置"
           }
         }
       }
@@ -4580,13 +2990,13 @@
         }
       }
     },
-    "What's new in Codenotch": {
+    "What's new in NamiNotch": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 新变化"
+            "value": "NamiNotch 新变化"
           }
         }
       }
@@ -4613,13 +3023,13 @@
         }
       }
     },
-    "macOS refused this — try moving Codenotch to /Applications.": {
+    "macOS refused this — try moving NamiNotch to /Applications.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS 拒绝了 — 试着把 Codenotch 移到「应用程序」。"
+            "value": "macOS 拒绝了 — 试着把 NamiNotch 移到「应用程序」。"
           }
         }
       }
@@ -4701,13 +3111,13 @@
         }
       }
     },
-    "Signs out of %@ — the session belongs to Codenotch.": {
+    "Signs out of %@ — the session belongs to NamiNotch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "会退出 %@ — 这个会话属于 Codenotch。"
+            "value": "会退出 %@ — 这个会话属于 NamiNotch。"
           }
         }
       }
@@ -4866,13 +3276,13 @@
         }
       }
     },
-    "Quit Codenotch": {
+    "Quit NamiNotch": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "退出 Codenotch"
+            "value": "退出 NamiNotch"
           }
         }
       }
@@ -4899,13 +3309,13 @@
         }
       }
     },
-    "Codenotch is set to Always show. Change it in Settings.": {
+    "NamiNotch is set to Always show. Change it in Settings.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 已设为「始终显示」。请在设置里更改。"
+            "value": "NamiNotch 已设为「始终显示」。请在设置里更改。"
           }
         }
       }
@@ -4921,13 +3331,13 @@
         }
       }
     },
-    "Codenotch is up to date.": {
+    "NamiNotch is up to date.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 已是最新版本。"
+            "value": "NamiNotch 已是最新版本。"
           }
         }
       }
@@ -4943,13 +3353,13 @@
         }
       }
     },
-    "Couldn't reach the update server. Codenotch will try again on its own — nothing is wrong with this copy.": {
+    "Couldn't reach the update server. NamiNotch will try again on its own — nothing is wrong with this copy.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "连不上更新服务器。Codenotch 会自己再试 — 这份安装没有问题。"
+            "value": "连不上更新服务器。NamiNotch 会自己再试 — 这份安装没有问题。"
           }
         }
       }
@@ -5273,13 +3683,13 @@
         }
       }
     },
-    "The figure came from a file Codex writes during a turn, so it was as old as the last time you used it — three days stale in one case. Codenotch now asks Codex itself, and matches its own panel.": {
+    "The figure came from a file Codex writes during a turn, so it was as old as the last time you used it — three days stale in one case. NamiNotch now asks Codex itself, and matches its own panel.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "数字来自 Codex 在一轮对话里写的文件，所以有多旧取决于你上次用它是什么时候 — 有一次旧了三天。Codenotch 现在直接问 Codex，并与它自己的面板一致。"
+            "value": "数字来自 Codex 在一轮对话里写的文件，所以有多旧取决于你上次用它是什么时候 — 有一次旧了三天。NamiNotch 现在直接问 Codex，并与它自己的面板一致。"
           }
         }
       }
@@ -5493,13 +3903,13 @@
         }
       }
     },
-    "Google will not answer Codenotch directly, so it asks Antigravity's own language server instead — the same place Antigravity's usage panel gets its figure.": {
+    "Google will not answer NamiNotch directly, so it asks Antigravity's own language server instead — the same place Antigravity's usage panel gets its figure.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google 不会直接回答 Codenotch，所以改问 Antigravity 自己的语言服务器 — 也就是 Antigravity 用量面板取数字的地方。"
+            "value": "Google 不会直接回答 NamiNotch，所以改问 Antigravity 自己的语言服务器 — 也就是 Antigravity 用量面板取数字的地方。"
           }
         }
       }
@@ -5658,24 +4068,24 @@
         }
       }
     },
-    "Each read from the tool already signed in on this Mac. Codenotch never asks for a password.": {
+    "Each read from the tool already signed in on this Mac. NamiNotch never asks for a password.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "各自读取这台 Mac 上已经登录的工具。Codenotch 从不问密码。"
+            "value": "各自读取这台 Mac 上已经登录的工具。NamiNotch 从不问密码。"
           }
         }
       }
     },
-    "Choose where Codenotch appears": {
+    "Choose where NamiNotch appears": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "选择 Codenotch 出现在哪里"
+            "value": "选择 NamiNotch 出现在哪里"
           }
         }
       }
@@ -5687,17 +4097,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "在程序坞、在菜单栏，或者哪里都不出现。"
-          }
-        }
-      }
-    },
-    "Codenotch": {
-      "extractionState": "manual",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Codenotch"
           }
         }
       }
@@ -5922,13 +4321,13 @@
         }
       }
     },
-    "Nothing on screen. The readings stay in the menu bar menu when App icon is Menu bar. Otherwise, open Codenotch again from Applications to bring these settings back.": {
+    "Nothing on screen. The readings stay in the menu bar menu when App icon is Menu bar. Otherwise, open NamiNotch again from Applications to bring these settings back.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "屏幕上什么都没有。应用图标选「菜单栏」时，读数仍在菜单栏菜单里。否则，从「应用程序」再打开 Codenotch，才能回到这些设置。"
+            "value": "屏幕上什么都没有。应用图标选「菜单栏」时，读数仍在菜单栏菜单里。否则，从「应用程序」再打开 NamiNotch，才能回到这些设置。"
           }
         }
       }
@@ -6472,13 +4871,13 @@
         }
       }
     },
-    "That display is disconnected. Codenotch follows the active window until it returns.": {
+    "That display is disconnected. NamiNotch follows the active window until it returns.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "那台显示器已断开。Codenotch 会跟随活动窗口，直到它回来。"
+            "value": "那台显示器已断开。NamiNotch 会跟随活动窗口，直到它回来。"
           }
         }
       }
@@ -6538,24 +4937,24 @@
         }
       }
     },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, GitHub Copilot or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, GitHub Copilot or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、GitHub Copilot 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
+            "value": "NamiNotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、GitHub Copilot 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
           }
         }
       }
     },
-    "macOS may ask before Codenotch reads Claude Code's, Antigravity's or cursor-agent's saved login. Background refreshes never show that question; it appears only when you click Allow access…, and Deny stops Codenotch reading that login until you ask again.": {
+    "macOS may ask before NamiNotch reads Claude Code's, Antigravity's or cursor-agent's saved login. Background refreshes never show that question; it appears only when you click Allow access…, and Deny stops NamiNotch reading that login until you ask again.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取 Claude Code、Antigravity 或 cursor-agent 保存的登录信息前，macOS 可能会先询问。后台刷新从不弹出这个询问；只有点击“允许访问…”时才会出现，选择“拒绝”后，在你再次请求之前 Codenotch 不会读取该登录信息。"
+            "value": "NamiNotch 读取 Claude Code、Antigravity 或 cursor-agent 保存的登录信息前，macOS 可能会先询问。后台刷新从不弹出这个询问；只有点击“允许访问…”时才会出现，选择“拒绝”后，在你再次请求之前 NamiNotch 不会读取该登录信息。"
           }
         }
       }
@@ -6857,13 +5256,13 @@
         }
       }
     },
-    "Codenotch uses this language even if the Mac does not.": {
+    "NamiNotch uses this language even if the Mac does not.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "即使 Mac 不是这种语言，Codenotch 也使用它。"
+            "value": "即使 Mac 不是这种语言，NamiNotch 也使用它。"
           }
         }
       }
@@ -6890,7 +5289,7 @@
         }
       }
     },
-    "It spends a request every time. A provider that rate-limits answers one request too many by refusing the next few minutes of them, and the figure then ages further than it would have. Worth turning on to check Codenotch against a provider's own dashboard, and worth turning off again after.": {
+    "It spends a request every time. A provider that rate-limits answers one request too many by refusing the next few minutes of them, and the figure then ages further than it would have. Worth turning on to check NamiNotch against a provider's own dashboard, and worth turning off again after.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
@@ -7209,13 +5608,13 @@
         }
       }
     },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
+            "value": "NamiNotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
           }
         }
       }
@@ -8111,13 +6510,13 @@
         }
       }
     },
-    "Codenotch already knows the moment an agent stops working or stops to ask you something. Clicking the notch while it is open brings that session's app to the front — the app, not the tab: only some terminals let anything outside them choose a tab, so the tooltip names the session instead.": {
+    "NamiNotch already knows the moment an agent stops working or stops to ask you something. Clicking the notch while it is open brings that session's app to the front — the app, not the tab: only some terminals let anything outside them choose a tab, so the tooltip names the session instead.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 已经知道助手何时停下来、或停下来问你。刘海展开时点一下，会把那个会话的应用带到前台 — 是应用，不是标签页：只有部分终端允许外部选定标签，所以提示里会写会话名称。"
+            "value": "NamiNotch 已经知道助手何时停下来、或停下来问你。刘海展开时点一下，会把那个会话的应用带到前台 — 是应用，不是标签页：只有部分终端允许外部选定标签，所以提示里会写会话名称。"
           }
         }
       }
@@ -8133,13 +6532,13 @@
         }
       }
     },
-    "Most readings are borrowed from a tool that already holds the account. DeepSeek is the exception: clicking Sign in opens its own Codenotch WebView, and signing out here clears only that session and its saved reading.": {
+    "Most readings are borrowed from a tool that already holds the account. DeepSeek is the exception: clicking Sign in opens its own NamiNotch WebView, and signing out here clears only that session and its saved reading.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "大多数读数借自已经持有该账号的工具。DeepSeek 是例外：点「登录」会打开 Codenotch 自己的 WebView，在这里退出只会清掉这次会话和已保存的读数。"
+            "value": "大多数读数借自已经持有该账号的工具。DeepSeek 是例外：点「登录」会打开 NamiNotch 自己的 WebView，在这里退出只会清掉这次会话和已保存的读数。"
           }
         }
       }
@@ -8551,13 +6950,13 @@
         }
       }
     },
-    "To measure responses, point your chat client to http://127.0.0.1:11435 and keep Codenotch open.": {
+    "To measure responses, point your chat client to http://127.0.0.1:11435 and keep NamiNotch open.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "要测量回复，把聊天客户端指向 http://127.0.0.1:11435，并保持 Codenotch 打开。"
+            "value": "要测量回复，把聊天客户端指向 http://127.0.0.1:11435，并保持 NamiNotch 打开。"
           }
         }
       }
@@ -8738,13 +7137,13 @@
         }
       }
     },
-    "Scan this code with the Codenotch app on your phone.": {
+    "Scan this code with the NamiNotch app on your phone.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "用手机上的 Codenotch 应用扫描此码。"
+            "value": "用手机上的 NamiNotch 应用扫描此码。"
           }
         }
       }
@@ -8782,13 +7181,13 @@
         }
       }
     },
-    "1. Open Codenotch on your phone": {
+    "1. Open NamiNotch on your phone": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "1. 在手机上打开 Codenotch"
+            "value": "1. 在手机上打开 NamiNotch"
           }
         }
       }
@@ -9728,13 +8127,13 @@
         }
       }
     },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
+            "value": "NamiNotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
           }
         }
       }
@@ -9783,13 +8182,13 @@
         }
       }
     },
-    "Most readings are borrowed from a tool that already holds the account. DeepSeek and MiniMax are the exceptions: clicking Sign in opens a Codenotch window for that account, and signing out here clears only that session and its saved reading.": {
+    "Most readings are borrowed from a tool that already holds the account. DeepSeek and MiniMax are the exceptions: clicking Sign in opens a NamiNotch window for that account, and signing out here clears only that session and its saved reading.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "大多数读数借自已经持有该账号的工具。DeepSeek 和 MiniMax 是例外：点「登录」会打开该账号的 Codenotch 窗口，在这里退出只会清掉这次会话和已保存的读数。"
+            "value": "大多数读数借自已经持有该账号的工具。DeepSeek 和 MiniMax 是例外：点「登录」会打开该账号的 NamiNotch 窗口，在这里退出只会清掉这次会话和已保存的读数。"
           }
         }
       }
@@ -9849,13 +8248,13 @@
         }
       }
     },
-    "Sign in to MiniMax in Codenotch, or paste a Coding Plan key. A Cookie header is optional. Codenotch never reads a browser's cookies.": {
+    "Sign in to MiniMax in NamiNotch, or paste a Coding Plan key. A Cookie header is optional. NamiNotch never reads a browser's cookies.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在 Codenotch 里登录 MiniMax，或粘贴 Coding Plan 密钥。Cookie 请求头可选。Codenotch 从不读取浏览器的 Cookie。"
+            "value": "在 NamiNotch 里登录 MiniMax，或粘贴 Coding Plan 密钥。Cookie 请求头可选。NamiNotch 从不读取浏览器的 Cookie。"
           }
         }
       }
@@ -9926,24 +8325,6 @@
         }
       }
     },
-    "Colour transition": {
-      "extractionState": "manual"
-    },
-    "Hard step": {
-      "extractionState": "manual"
-    },
-    "Colour ramp": {
-      "extractionState": "manual"
-    },
-    "Ample, watch and critical each stay one flat colour, jumping between them at the limits below.": {
-      "extractionState": "manual"
-    },
-    "The colour blends continuously from ample to critical across the full range, turning yellow at the watch limit below.": {
-      "extractionState": "manual"
-    },
-    "With the colour ramp on, this still marks critical elsewhere in the app, but the ring's own red only arrives at 100%.": {
-      "extractionState": "manual"
-    },
     "Reset to defaults": {
       "extractionState": "manual",
       "localizations": {
@@ -9977,13 +8358,13 @@
         }
       }
     },
-    "Asks macOS for %@'s saved login again. Deny stops Codenotch reading it until you ask again.": {
+    "Asks macOS for %@'s saved login again. Deny stops NamiNotch reading it until you ask again.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "再次向 macOS 请求 %@ 保存的登录信息。选择“拒绝”后，在你再次请求之前 Codenotch 不会读取它。"
+            "value": "再次向 macOS 请求 %@ 保存的登录信息。选择“拒绝”后，在你再次请求之前 NamiNotch 不会读取它。"
           }
         }
       }
@@ -10098,13 +8479,13 @@
         }
       }
     },
-    "What Codenotch tells you, and when.": {
+    "What NamiNotch tells you, and when.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 提醒你什么，以及何时提醒。"
+            "value": "NamiNotch 提醒你什么，以及何时提醒。"
           }
         }
       }
@@ -10142,13 +8523,13 @@
         }
       }
     },
-    "The update check didn't finish. Try again, or download the latest Codenotch from hivinz.com.": {
+    "The update check didn't finish. Try again, or download the latest NamiNotch from hivinz.com.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "更新检查未完成。请重试，或从 hivinz.com 下载最新的 Codenotch。"
+            "value": "更新检查未完成。请重试，或从 hivinz.com 下载最新的 NamiNotch。"
           }
         }
       }
@@ -10208,9 +8589,6 @@
         }
       }
     },
-    "Adds a compact weekly-usage ring around each chosen provider that publishes it.": {
-      "extractionState": "manual"
-    },
     "Show limit information in menu bar": {
       "extractionState": "manual",
       "localizations": {
@@ -10221,9 +8599,6 @@
           }
         }
       }
-    },
-    "Show weekly limit in menu bar": {
-      "extractionState": "manual"
     },
     "Swaps the icon for each chosen provider's five-hour limit — how much is used and how long until it resets.": {
       "extractionState": "manual",
@@ -10236,35 +8611,35 @@
         }
       }
     },
-    "Shows %@'s five-hour limit in the menu bar. Codenotch reads it either way.": {
+    "Shows %@'s five-hour limit in the menu bar. NamiNotch reads it either way.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在菜单栏显示 %@ 的 5 小时额度。无论是否显示，Codenotch 都会读取它。"
+            "value": "在菜单栏显示 %@ 的 5 小时额度。无论是否显示，NamiNotch 都会读取它。"
           }
         }
       }
     },
-    "Nothing Codenotch reads has a five-hour limit to show yet. Claude and Codex do — switch one on in Accounts.": {
+    "Nothing NamiNotch reads has a five-hour limit to show yet. Claude and Codex do — switch one on in Accounts.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取的服务中还没有可显示的 5 小时额度。Claude 和 Codex 有——在“账号”中打开其中一个。"
+            "value": "NamiNotch 读取的服务中还没有可显示的 5 小时额度。Claude 和 Codex 有——在“账号”中打开其中一个。"
           }
         }
       }
     },
-    "Leaving a provider out keeps it off the menu bar only — Codenotch still reads it. With none chosen, the icon comes back.": {
+    "Leaving a provider out keeps it off the menu bar only — NamiNotch still reads it. With none chosen, the icon comes back.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "不选某个服务只会让它离开菜单栏——Codenotch 仍会读取它。一个都不选时，图标会回来。"
+            "value": "不选某个服务只会让它离开菜单栏——NamiNotch 仍会读取它。一个都不选时，图标会回来。"
           }
         }
       }
@@ -10286,19 +8661,19 @@
     "No more crash in Simplified Chinese": {
       "extractionState": "manual"
     },
-    "With the app in 简体中文, a provider past 80% crashed Codenotch a few seconds after launch. Every translation is now checked for this.": {
+    "With the app in 简体中文, a provider past 80% crashed NamiNotch a few seconds after launch. Every translation is now checked for this.": {
       "extractionState": "manual"
     },
     "Deny means no": {
       "extractionState": "manual"
     },
-    "Answering Deny when macOS asks about a saved login now stops Codenotch reading that account from any source, until you choose Allow access… again.": {
+    "Answering Deny when macOS asks about a saved login now stops NamiNotch reading that account from any source, until you choose Allow access… again.": {
       "extractionState": "manual"
     },
     "Fewer file access prompts": {
       "extractionState": "manual"
     },
-    "Renewing Claude's login no longer starts your MCP servers and hooks, and Kimi sessions are matched without looking inside your folders, so macOS no longer asks about Documents, Desktop or network volumes on Codenotch's behalf.": {
+    "Renewing Claude's login no longer starts your MCP servers and hooks, and Kimi sessions are matched without looking inside your folders, so macOS no longer asks about Documents, Desktop or network volumes on NamiNotch's behalf.": {
       "extractionState": "manual"
     },
     "Smaller fixes": {
@@ -10313,7 +8688,7 @@
     "Lighter on the battery": {
       "extractionState": "manual"
     },
-    "Codenotch idles at a fraction of the CPU it used, and moving the pointer costs less than half as much. The working spinner is drawn by the system instead of redrawing the notch every frame, and full-screen apps are checked every two seconds rather than on every movement.": {
+    "NamiNotch idles at a fraction of the CPU it used, and moving the pointer costs less than half as much. The working spinner is drawn by the system instead of redrawing the notch every frame, and full-screen apps are checked every two seconds rather than on every movement.": {
       "extractionState": "manual"
     },
     "Windows Settings opens again": {
@@ -10340,10 +8715,10 @@
     "An installer for Windows, Ukrainian, Dark glass, and limits you set yourself.": {
       "extractionState": "manual"
     },
-    "Codenotch for Windows, installable": {
+    "NamiNotch for Windows, installable": {
       "extractionState": "manual"
     },
-    "Every release now carries Codenotch-Setup.exe, which installs for the current user without administrator rights. It is not signed yet, so Windows asks once. The port also gains the Mac's settings window, Small, Medium and Large sizes, a ring for the weekly limit, and Chinese, Japanese, Korean and Ukrainian.": {
+    "Every release now carries NamiNotch-Setup.exe, which installs for the current user without administrator rights. It is not signed yet, so Windows asks once. The port also gains the Mac's settings window, Small, Medium and Large sizes, a ring for the weekly limit, and Chinese, Japanese, Korean and Ukrainian.": {
       "extractionState": "manual"
     },
     "Українська": {
@@ -10385,7 +8760,7 @@
     "Kiro and MiniMax": {
       "extractionState": "manual"
     },
-    "Kiro reads the kiro-cli sign-in already on this Mac. MiniMax signs in from Codenotch, with a choice of international or China region.": {
+    "Kiro reads the kiro-cli sign-in already on this Mac. MiniMax signs in from NamiNotch, with a choice of international or China region.": {
       "extractionState": "manual"
     },
     "Deutsch": {
@@ -10451,7 +8826,7 @@
     "A quit action in the Settings sidebar, for when the menu bar icon is switched off.": {
       "extractionState": "manual"
     },
-    "A web page cannot reach Codenotch's local servers": {
+    "A web page cannot reach NamiNotch's local servers": {
       "extractionState": "manual"
     },
     "The Ollama relay and the Windows event server now refuse browser requests from other sites, and raw responses are kept out of the system log. Reading DeepSeek also checks the page's address exactly, where a lookalike domain could have passed before.": {
@@ -10586,235 +8961,16 @@
     "A ready-made download, no Xcode needed": {
       "extractionState": "manual"
     },
-    "Every build now produces an app bundle you can run, so trying Codenotch no longer starts with a developer setup.": {
-      "extractionState": "manual"
-    },
-    "Authorization": {
-      "extractionState": "manual"
-    },
-    "Appearance & Icon": {
-      "extractionState": "manual"
-    },
-    "Test": {
-      "extractionState": "manual"
-    },
-    "Monthly Budget ($)": {
-      "extractionState": "manual"
-    },
-    "Configured Endpoints": {
-      "extractionState": "manual"
-    },
-    "Monthly Budget": {
-      "extractionState": "manual"
-    },
-    "Hide Templates": {
-      "extractionState": "manual"
-    },
-    "No custom endpoints yet. Click 'Add Endpoint' or pick a Quick Template to get started.": {
-      "extractionState": "manual"
-    },
-    "Icon": {
-      "extractionState": "manual"
-    },
-    "Add Endpoint": {
-      "extractionState": "manual"
-    },
-    "Choose a preset to pre-fill settings:": {
-      "extractionState": "manual"
-    },
-    "Scan Local Engines": {
-      "extractionState": "manual"
-    },
-    "Online": {
-      "extractionState": "manual"
-    },
-    "e.g. 20.00 (leave empty for unlimited)": {
-      "extractionState": "manual"
-    },
-    "URL must start with http:// or https:// and have a valid host.": {
-      "extractionState": "manual"
-    },
-    "Name": {
-      "extractionState": "manual"
-    },
-    "Auth Header": {
-      "extractionState": "manual"
-    },
-    "Base URL": {
-      "extractionState": "manual"
-    },
-    "Model": {
-      "extractionState": "manual"
-    },
-    "New Custom Endpoint": {
-      "extractionState": "manual"
-    },
-    "Discovered Local Services:": {
-      "extractionState": "manual"
-    },
-    "e.g. 4.25": {
-      "extractionState": "manual"
-    },
-    "Select a model...": {
-      "extractionState": "manual"
-    },
-    "Edit": {
-      "extractionState": "manual"
-    },
-    "Upload Custom Image...": {
-      "extractionState": "manual"
-    },
-    "Save Endpoint": {
-      "extractionState": "manual"
-    },
-    "Configure endpoint details and credentials in Settings.": {
-      "extractionState": "manual"
-    },
-    "Edit Endpoint": {
-      "extractionState": "manual"
-    },
-    "API Key": {
-      "extractionState": "manual"
-    },
-    "Model name (e.g. gpt-4o, llama-3.3)": {
-      "extractionState": "manual"
-    },
-    "Custom Endpoints": {
-      "extractionState": "manual"
-    },
-    "e.g. My OpenRouter, Local vLLM": {
-      "extractionState": "manual"
-    },
-    "Custom Endpoint": {
-      "extractionState": "manual"
-    },
-    "sk-... (optional for local)": {
-      "extractionState": "manual"
-    },
-    "Current Spend ($)": {
+    "Every build now produces an app bundle you can run, so trying NamiNotch no longer starts with a developer setup.": {
       "extractionState": "manual"
     },
     "Monthly Budget & Spend Tracking": {
       "extractionState": "manual"
     },
-    "Not Checked": {
-      "extractionState": "manual"
-    },
-    "Spend: $%.2f": {
-      "extractionState": "manual"
-    },
-    "Slow": {
-      "extractionState": "manual"
-    },
-    "Test Connection & Fetch Models": {
-      "extractionState": "manual"
-    },
-    "Ring Accent": {
-      "extractionState": "manual"
-    },
-    "Unreachable": {
-      "extractionState": "manual"
-    },
-    "Add to Endpoints": {
-      "extractionState": "manual"
-    },
-    "Connect any OpenAI-compatible API, local inference runtime, or custom proxy.": {
-      "extractionState": "manual"
-    },
-    "Total Spend": {
-      "extractionState": "manual"
-    },
-    "https://api.openai.com/v1": {
-      "extractionState": "manual"
-    },
-    "Quick Templates": {
-      "extractionState": "manual"
-    },
-    "Reset Spend": {
-      "extractionState": "manual"
-    },
-    "Cancel": {
-      "extractionState": "manual"
-    },
     "Show remaining budget (%) instead of spent": {
       "extractionState": "manual"
     },
-    "Remaining Budget": {
-      "extractionState": "manual"
-    },
-    "%@ / %@ remaining": {
-      "extractionState": "manual"
-    },
-    "%@ / %@ left": {
-      "extractionState": "manual"
-    },
-    "Show dollar amount ($) instead of percentage (%)": {
-      "extractionState": "manual"
-    },
-    "Tracking Unit": {
-      "extractionState": "manual"
-    },
-    "Tokens (Millions)": {
-      "extractionState": "manual"
-    },
-    "Monthly Budget (M tokens)": {
-      "extractionState": "manual"
-    },
-    "Tokens Used (M tokens)": {
-      "extractionState": "manual"
-    },
-    "Tokens Used": {
-      "extractionState": "manual"
-    },
-    "Tokens: %@": {
-      "extractionState": "manual"
-    },
-    "%@ / %@ tokens remaining": {
-      "extractionState": "manual"
-    },
-    "%@ / %@ tokens": {
-      "extractionState": "manual"
-    },
-    "%@ tokens": {
-      "extractionState": "manual"
-    },
-    "Remaining Tokens": {
-      "extractionState": "manual"
-    },
-    "Monthly Tokens": {
-      "extractionState": "manual"
-    },
-    "Reset Tokens": {
-      "extractionState": "manual"
-    },
-    "Show token count instead of percentage (%)": {
-      "extractionState": "manual"
-    },
-    "e.g. 10.0 (leave empty for unlimited)": {
-      "extractionState": "manual"
-    },
-    "e.g. 2.5": {
-      "extractionState": "manual"
-    },
-    "The address must start with http:// or https://": {
-      "extractionState": "manual"
-    },
-    "Not an HTTP endpoint": {
-      "extractionState": "manual"
-    },
     "The endpoint answered %lld": {
-      "extractionState": "manual"
-    },
-    "The endpoint did not answer in time": {
-      "extractionState": "manual"
-    },
-    "Could not reach the endpoint": {
-      "extractionState": "manual"
-    },
-    "Show remaining budget instead of spent": {
-      "extractionState": "manual"
-    },
-    "USD ($)": {
       "extractionState": "manual"
     },
     "Windows updates itself, five-hour limits in the menu bar, and a notch you can fold away.": {
@@ -10898,7 +9054,7 @@
     "QianwenAI": {
       "extractionState": "manual"
     },
-    "A ring for QianwenAI's Token Plan, signed into from Codenotch.": {
+    "A ring for QianwenAI's Token Plan, signed into from NamiNotch.": {
       "extractionState": "manual"
     },
     "繁體中文, and every language complete": {
@@ -10919,19 +9075,10 @@
     "MiniMax, QianwenAI, Z.ai, Kimi, OpenCode and Command Code now show their own marks.": {
       "extractionState": "manual"
     },
-    "OpenAI-compatible APIs, local runtimes and custom proxies.": {
-      "extractionState": "manual"
-    },
     "The ring no longer answers \"HTTP 0\" on every refresh, and says so plainly when QianwenAI refuses a request.": {
       "extractionState": "manual"
     },
     "Checking for updates can no longer hang on \"Checking…\", a small context reading still draws an arc, Claude's account file is only read again when it changes, and the Traditional Chinese uses Taiwan's own words.": {
-      "extractionState": "manual"
-    },
-    "Name this account": {
-      "extractionState": "manual"
-    },
-    "What the notch, the menu bar and notifications call this account. Empty goes back to %@.": {
       "extractionState": "manual"
     },
     "Your own endpoints, 한국어 and Oʻzbekcha, and a notch that knows whose account it is.": {
@@ -10961,7 +9108,7 @@
     "Quieter": {
       "extractionState": "manual"
     },
-    "Opening Codenotch no longer announces a limit that was reached long before: a reading kept from last time is no longer mistaken for something that just happened. Clicking the notch to hold it open lasts the session rather than for good, so the full-screen fold is never disabled behind your back.": {
+    "Opening NamiNotch no longer announces a limit that was reached long before: a reading kept from last time is no longer mistaken for something that just happened. Clicking the notch to hold it open lasts the session rather than for good, so the full-screen fold is never disabled behind your back.": {
       "extractionState": "manual"
     },
     "The menu bar shows more": {
@@ -10974,12 +9121,6 @@
       "extractionState": "manual"
     },
     "A Theme row — System, Light or Dark — that the notch, the settings window and the drag overlay all follow. Português (Brasil) joins the Windows port, and the move handle stays on screen while you drag it.": {
-      "extractionState": "manual"
-    },
-    "Weekly limit as the main ring": {
-      "extractionState": "manual"
-    },
-    "For every provider with a weekly limit beside a shorter one, the main ring shows the week. The shorter window moves to the thin ring and the card. Alerts, the menu bar and providers with no weekly limit are unchanged, and Claude's daily pace ring still leads when it is on.": {
       "extractionState": "manual"
     },
     "%@ of %@": {
@@ -11081,350 +9222,44 @@
         }
       }
     },
-    "Apify CLI": {
-      "extractionState": "manual"
-    },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp, Apify or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp, Apify or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro、Amp、Apify 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
+            "value": "NamiNotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro、Amp、Apify 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
           }
         }
       }
     },
-    "Usage source": {
-      "extractionState": "manual"
-    },
-    "Manual": {
-      "extractionState": "manual"
-    },
-    "JSON endpoint": {
-      "extractionState": "manual"
-    },
-    "Usage URL": {
-      "extractionState": "manual"
-    },
-    "Records path": {
-      "extractionState": "manual"
-    },
-    "Model field": {
-      "extractionState": "manual"
-    },
-    "Token field": {
-      "extractionState": "manual"
-    },
-    "Model filter (optional)": {
-      "extractionState": "manual"
-    },
-    "Usage authentication": {
-      "extractionState": "manual"
-    },
-    "API key": {
-      "extractionState": "manual"
-    },
-    "Public": {
-      "extractionState": "manual"
-    },
     "Usage tracking": {
-      "extractionState": "manual"
-    },
-    "Usage preset": {
-      "extractionState": "manual"
-    },
-    "Custom JSON fields": {
       "extractionState": "manual"
     },
     "Detect usage": {
       "extractionState": "manual"
     },
-    "LiteLLM": {
-      "extractionState": "manual"
-    },
-    "OpenRouter": {
-      "extractionState": "manual"
-    },
-    "New-API": {
-      "extractionState": "manual"
-    },
-    "vLLM": {
-      "extractionState": "manual"
-    },
-    "llama.cpp": {
-      "extractionState": "manual"
-    },
-    "Usage URL: %@": {
-      "extractionState": "manual"
-    },
-    "No usage URL for this base URL": {
-      "extractionState": "manual"
-    },
-    "Tokens since server start": {
-      "extractionState": "manual"
-    },
-    "USD spend": {
-      "extractionState": "manual"
-    },
-    "Quota units": {
-      "extractionState": "manual"
-    },
-    "Abacus.AI": {
-      "extractionState": "manual"
-    },
-    "Subscription credits": {
-      "extractionState": "manual"
-    },
-    "%@ credits left · %@ monthly + %@ extra": {
-      "extractionState": "manual"
-    },
-    "%@ of %@ monthly credits left": {
-      "extractionState": "manual"
-    },
-    "LiteLLM key info may require a management credential; use Manual USD entry if unavailable.": {
-      "extractionState": "manual"
-    },
-    "Requires --metrics on llama-server": {
-      "extractionState": "manual"
-    },
-    "Detected usage format: %@. Save Endpoint to apply.": {
-      "extractionState": "manual"
-    },
-    "Authentication required to inspect usage route": {
-      "extractionState": "manual"
-    },
-    "Usage route unavailable or unreachable": {
-      "extractionState": "manual"
-    },
-    "No supported usage schema detected": {
-      "extractionState": "manual"
-    },
-    "Import Custom JSON...": {
-      "extractionState": "manual"
-    },
-    "Save JSON template...": {
-      "extractionState": "manual"
-    },
-    "Other usage source": {
-      "extractionState": "manual"
-    },
-    "Retry detection": {
-      "extractionState": "manual"
-    },
-    "Tokens Since Server Start": {
-      "extractionState": "manual"
-    },
     "Spend This Month": {
       "extractionState": "manual"
     },
-    "Quota Used": {
-      "extractionState": "manual"
-    },
-    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, the Kilo CLI or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+    "NamiNotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, the Kilo CLI or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
       "extractionState": "manual",
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Codenotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
+            "value": "NamiNotch 读取这台 Mac 上已经登录的工具的用量 — 从不问你的密码。安装并登录 Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro 或 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes）中的任意一个，刘海里就会出现对应的圆环。"
           }
         }
       }
     },
-    "Usage rides on the account Kilo CLI signs into — run `kilo` once and sign in, and the notch reads it.": {
-      "extractionState": "manual"
-    },
-    "This Kilo account has no usage to read yet — top up credits or subscribe to a coding plan.": {
-      "extractionState": "manual"
-    },
-    "Hourly limit": {
-      "extractionState": "manual"
-    },
-    "Daily limit": {
-      "extractionState": "manual"
-    },
-    "Plan limit": {
-      "extractionState": "manual"
-    },
-    "Credit balance": {
-      "extractionState": "manual"
-    },
-    "Kilo Cloud rejected the request": {
-      "extractionState": "manual"
-    },
-    "%@h limit": {
-      "extractionState": "manual"
-    },
-    "In the notch": {
-      "extractionState": "manual"
-    },
-    "Mac notifications": {
-      "extractionState": "manual"
-    },
-    "The notch opens for a moment or shows a card, with the sound you chose. Nothing reaches Notification Center.": {
-      "extractionState": "manual"
-    },
-    "A banner in Notification Center, which reaches you on another display or with the notch hidden. The notch stays quiet; sounds still play.": {
-      "extractionState": "manual"
-    },
-    "Where to notify": {
-      "extractionState": "manual"
-    },
-    "Channel": {
-      "extractionState": "manual"
-    },
-    "Send a test": {
-      "extractionState": "manual"
-    },
-    "Opens System Settings when banners are off for Codenotch.": {
-      "extractionState": "manual"
-    },
-    "The notch opens for a moment, with the session sound.": {
-      "extractionState": "manual"
-    },
-    "Codenotch test": {
-      "extractionState": "manual"
-    },
-    "This is what one looks like.": {
-      "extractionState": "manual"
-    },
-    "%@ is waiting on you": {
-      "extractionState": "manual"
-    },
-    "%@ finished": {
-      "extractionState": "manual"
-    },
-    "The agent stopped to ask you something.": {
-      "extractionState": "manual"
-    },
-    "The agent's turn is done.": {
-      "extractionState": "manual"
-    },
     "%lld%% used": {
-      "extractionState": "manual"
-    },
-    "Install the %@ CLI first; Sign in opens its install page.": {
-      "extractionState": "manual"
-    },
-    "Runs %@ in your terminal; it opens the browser to sign in and saves the session this reads.": {
-      "extractionState": "manual"
-    },
-    "Runs %@ in your terminal; sign in there with /login and the notch reads the session.": {
-      "extractionState": "manual"
-    },
-    "1 USD = %@": {
-      "extractionState": "manual"
-    },
-    "API key (per token)": {
-      "extractionState": "manual"
-    },
-    "Active time": {
-      "extractionState": "manual"
-    },
-    "Activity": {
-      "extractionState": "manual"
-    },
-    "Activity…": {
-      "extractionState": "manual"
-    },
-    "All": {
-      "extractionState": "manual"
-    },
-    "All accounts": {
-      "extractionState": "manual"
-    },
-    "All time": {
-      "extractionState": "manual"
-    },
-    "Billing": {
-      "extractionState": "manual"
-    },
-    "Cycle": {
-      "extractionState": "manual"
-    },
-    "Day": {
       "extractionState": "manual"
     },
     "Detected from each login once a day. A week of the plan costs the price ÷ 4.35; a project that used 4% of the weekly allowance spent 4% of that. Amounts in %@, your Mac's currency. Type the amount you actually pay to override the list price.": {
       "extractionState": "manual"
     },
-    "Elsewhere": {
-      "extractionState": "manual"
-    },
-    "Estimated cost": {
-      "extractionState": "manual"
-    },
-    "Estimated cost per day; hover a bar for active time": {
-      "extractionState": "manual"
-    },
-    "Exchange rate": {
-      "extractionState": "manual"
-    },
-    "Loading…": {
-      "extractionState": "manual"
-    },
-    "Market data": {
-      "extractionState": "manual"
-    },
-    "Month": {
-      "extractionState": "manual"
-    },
-    "Monthly plan": {
-      "extractionState": "manual"
-    },
-    "No sessions on this day": {
-      "extractionState": "manual"
-    },
-    "Not fetched yet": {
-      "extractionState": "manual"
-    },
-    "Open catalog": {
-      "extractionState": "manual"
-    },
     "Other (%lld)": {
-      "extractionState": "manual"
-    },
-    "Per-token prices": {
-      "extractionState": "manual"
-    },
-    "Plan": {
-      "extractionState": "manual"
-    },
-    "Plan catalog": {
-      "extractionState": "manual"
-    },
-    "Plan not detected yet": {
-      "extractionState": "manual"
-    },
-    "Refreshed once a day, no account needed: exchange rate from open.er-api.com, per-token prices from OpenRouter. Plans live in plans.json, editable.": {
-      "extractionState": "manual"
-    },
-    "Session": {
-      "extractionState": "manual"
-    },
-    "Sessions": {
-      "extractionState": "manual"
-    },
-    "This month": {
-      "extractionState": "manual"
-    },
-    "This session": {
-      "extractionState": "manual"
-    },
-    "This week": {
-      "extractionState": "manual"
-    },
-    "Total": {
-      "extractionState": "manual"
-    },
-    "Turns": {
-      "extractionState": "manual"
-    },
-    "Turns are read from the transcripts each account writes; the first ones show up a few minutes after a session starts.": {
-      "extractionState": "manual"
-    },
-    "Week": {
       "extractionState": "manual"
     },
     "%lld plans": {
@@ -11434,12 +9269,6 @@
       "extractionState": "manual"
     },
     "%lld h %lld min": {
-      "extractionState": "manual"
-    },
-    "%@ · %@/month (catalog)": {
-      "extractionState": "manual"
-    },
-    "%@ · price unknown, set it here": {
       "extractionState": "manual"
     },
     "%lld models": {
@@ -11452,24 +9281,6 @@
       "extractionState": "manual"
     },
     "%lld turns · %lld files · %lld skipped": {
-      "extractionState": "manual"
-    },
-    "Costs": {
-      "extractionState": "manual"
-    },
-    "What each project spent of each login's allowance.": {
-      "extractionState": "manual"
-    },
-    "How the money is worked out": {
-      "extractionState": "manual"
-    },
-    "Monthly price": {
-      "extractionState": "manual"
-    },
-    "Open Activity…": {
-      "extractionState": "manual"
-    },
-    "Day, week and month per login: sessions per project with what each cost.": {
       "extractionState": "manual"
     }
   },

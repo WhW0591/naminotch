@@ -230,7 +230,7 @@ final class ApifyProviderTests: XCTestCase {
                        "the file is re-read on every fetch, so a new login needs no relaunch")
     }
 
-    func testSwitchingOffForgetsOnlyTheTokenCodenotchHolds() async throws {
+    func testSwitchingOffForgetsOnlyTheTokenNamiNotchHolds() async throws {
         var deleted = 0
         let provider = provider(sources: sources(settings: "pasted", deleteSettingsToken: { deleted += 1 }))
         await provider.signOut()

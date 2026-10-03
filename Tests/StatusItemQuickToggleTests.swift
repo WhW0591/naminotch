@@ -120,7 +120,7 @@ final class StatusItemQuickToggleTests: XCTestCase {
         XCTAssertTrue(menu.items[index - 1].isSeparatorItem, joined)
         let refresh = try XCTUnwrap(titles.firstIndex(of: L10n.t("Refresh all")), joined)
         let settings = try XCTUnwrap(titles.firstIndex(of: L10n.t("Settings…")), joined)
-        let quit = try XCTUnwrap(titles.firstIndex(of: L10n.t("Quit Codenotch")), joined)
+        let quit = try XCTUnwrap(titles.firstIndex(of: L10n.t("Quit NamiNotch")), joined)
         XCTAssertTrue(index < refresh && refresh < settings && settings < quit, joined)
         XCTAssertTrue(titles.contains { $0.hasPrefix("Claude — ") }, "the readings are still there: \(joined)")
     }

@@ -5,7 +5,7 @@ import AppKit
 /// The surfaces a change has to keep in step, held to it by a test rather than
 /// by a note somebody has to remember to read.
 ///
-/// Both of these are registration surfaces in the Codenotch sense: a glyph and a
+/// Both of these are registration surfaces in the NamiNotch sense: a glyph and a
 /// document are declared in one place and referenced from another, and a
 /// mismatch is silent. A document with no front matter is a document nothing
 /// routes to; a glyph with neither an asset nor an outline is a mark that draws

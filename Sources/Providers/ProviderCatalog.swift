@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Every provider Codenotch can read, as data.
+/// Every provider NamiNotch can read, as data.
 ///
 /// The list was implicit until now: a case in `ProviderGlyph`, a line in
 /// `AppDelegate.allProviders`, a row in the README, a note under `docs/`, and a

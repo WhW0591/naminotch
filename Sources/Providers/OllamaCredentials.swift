@@ -3,7 +3,7 @@ import Foundation
 /// The Ollama cloud API key, read from the environment first and the keychain
 /// second.
 ///
-/// Unlike every other provider, Codenotch owns this credential: the user types
+/// Unlike every other provider, NamiNotch owns this credential: the user types
 /// it into Settings, and it is stored in the login keychain under a service
 /// name no other app uses. The environment variable `OLLAMA_API_KEY` is checked
 /// first, so a shell that already exports one works without any setup.

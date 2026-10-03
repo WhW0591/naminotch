@@ -47,7 +47,7 @@ final class DSHSessionMonitor: ObservableObject, AgentActivityMonitor {
         sessions = found
 
         // A session is marked read the first time it is seen, whatever it is
-        // doing. Without that, everything that finished before Codenotch
+        // doing. Without that, everything that finished before NamiNotch
         // launched would arrive unread and the card would open onto a backlog
         // of work nobody was waiting on. A session first seen *busy* is marked
         // at its busy time, so the turn it is in the middle of still counts as

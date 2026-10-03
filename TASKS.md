@@ -1,5 +1,11 @@
 # Codenotch — Tasks
 
+> **This project was called Codenotch until the rename.** It began as a fork of
+> [vinzdg/codenotch](https://github.com/vinzdg/codenotch) (MIT), and the entries
+> below are kept as they were written — a decision archive rewritten to match the
+> present is no longer a record of anything.
+
+
 Full detail in [`docs/plans/2026-08-28-usage-notch-plan.md`](docs/plans/2026-08-28-usage-notch-plan.md).
 Design spec in [`docs/specs/2026-08-28-usage-notch-design.md`](docs/specs/2026-08-28-usage-notch-design.md).
 

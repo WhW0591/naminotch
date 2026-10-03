@@ -7,22 +7,22 @@ read_when:
 
 # DeepSeek Harness
 
-Codenotch for macOS reads the DeepSeek Platform account through the grant
+NamiNotch for macOS reads the DeepSeek Platform account through the grant
 **DeepSeek Harness** already holds, and follows the sessions Harness is running.
 Enable or disable it in **Settings → Accounts** like any other provider — it is
 off until switched on, the way every provider but Claude and Codex is.
-Disabling it stops polling, forgets Codenotch's readings and touches nothing in
+Disabling it stops polling, forgets NamiNotch's readings and touches nothing in
 Harness: the grant belongs to Harness, and signing out is Harness's business.
 
 Discovered automatically. A Mac with no Harness install gets no ring, and
-because there is no sign-in Codenotch could perform on Harness's behalf, it
+because there is no sign-in NamiNotch could perform on Harness's behalf, it
 draws no placeholder asking for one either.
 
 ## Readings
 
 - **Account usage:** the headline ring is `spent / (spent + balance)` from the
   account's normal wallet, with `.derived` fidelity — the money is Platform's
-  own, the percentage is Codenotch's. The card shows the amounts and the
+  own, the percentage is NamiNotch's. The card shows the amounts and the
   outstanding balance. This is the same window, read from the same endpoint, as
   the signed-in **DeepSeek** provider; the two differ only in whose credential
   they use.
@@ -50,7 +50,7 @@ because the obvious readings of it are both wrong, and each one was measured:
   comes back cut at local 06:00.
 
 So the platform has no opinion about the reader's day. It cuts wherever it is
-asked to, and Codenotch has always asked for local midnight, which is why the
+asked to, and NamiNotch has always asked for local midnight, which is why the
 buckets have always looked like local calendar days. **Moving the boundary is a
 matter of moving that one line** — the constants in `amountQuery` — and of
 looking the day up the same way; nothing has to be asked of the platform.
@@ -64,13 +64,13 @@ move together or the row reads "Pending" forever.
 
 ## Activity
 
-Harness publishes more than any other agent Codenotch follows, and in a form
+Harness publishes more than any other agent NamiNotch follows, and in a form
 that needs no guessing:
 
 - **Liveness** is the session's own `session.lock`. Harness takes an exclusive
   `flock` on it for the life of the session and the kernel drops it when the
   process exits, so "is this session running" is answered by the kernel rather
-  than by a timestamp a long think would age out. Codenotch takes and
+  than by a timestamp a long think would age out. NamiNotch takes and
   immediately releases the lock to ask — it never holds it.
 - **State** is the Host's own projection cache,
   `~/.dsh/storages/session_projcache/sessions/<session>.json`. `pendingCalls`
@@ -80,7 +80,7 @@ that needs no guessing:
   the amber pulse rather than the spinning arc.
 
 Nothing is decompressed: the `session.v4.jsonl.zstd` transcript is never read,
-so no prompt, reply or tool output ever passes through Codenotch.
+so no prompt, reply or tool output ever passes through NamiNotch.
 
 The session's own title names the cell once the model has written one, and the
 working directory is the second line until then. The peek click raises the
@@ -102,7 +102,7 @@ records:
       issuer: https://platform.deepseek.com
 ```
 
-That file is YAML and Swift ships no YAML reader, so Codenotch reads the one
+That file is YAML and Swift ships no YAML reader, so NamiNotch reads the one
 shape it needs — nested block mappings of plain scalars — and treats anything it
 does not recognise as no credential rather than as a wrong one. The store holds
 a browser session and a device identity alongside the account grant; only the
@@ -130,8 +130,8 @@ HTTP 401, or a top-level `code: 40003` under HTTP 200, is the owning package's
 own "this grant is no longer good" and becomes `needsAuth`; everything else
 keeps the last reading and degrades to a visible status rather than clearing it.
 
-## Codenotch never writes
+## NamiNotch never writes
 
 The grant is read and never refreshed, rewritten or deleted — it has no expiry
 and no refresh flow of its own. Signing out is done in Harness, which clears the
-local grant before revoking it remotely; Codenotch's switch only stops polling.
+local grant before revoking it remotely; NamiNotch's switch only stops polling.

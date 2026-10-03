@@ -221,7 +221,7 @@ final class Preferences: ObservableObject {
     /// when the cache was written seconds ago — and on a provider that rate
     /// limits, one request too many is answered with a back-off that then holds
     /// a number older than the cache would have been. Worth having for somebody
-    /// comparing Codenotch against a vendor's own dashboard figure by figure;
+    /// comparing NamiNotch against a vendor's own dashboard figure by figure;
     /// not worth making everybody pay for.
     @Published var asksProviderOnLook: Bool {
         didSet { defaults.set(asksProviderOnLook, forKey: Keys.asksProviderOnLook) }
@@ -350,7 +350,7 @@ final class Preferences: ObservableObject {
     /// stays out of the bar until someone puts it there.
     ///
     /// Never written alongside `connectedProviders`: one is what the menu bar
-    /// shows, the other what Codenotch reads, and `MenuBarLimits` says why the
+    /// shows, the other what NamiNotch reads, and `MenuBarLimits` says why the
     /// two stay apart.
     @Published private(set) var menuBarProviders: Set<String>? {
         didSet {
@@ -703,7 +703,7 @@ final class Preferences: ObservableObject {
     /// at all.
     let isFirstLaunch: Bool
 
-    /// The bundle identifier before the app was renamed to Codenotch.
+    /// The bundle identifier before the app was renamed to NamiNotch.
     ///
     /// A bundle id is the name of the defaults domain, so renaming the app
     /// silently moved every setting to a new, empty one — connection choices,
@@ -882,7 +882,7 @@ final class Preferences: ObservableObject {
             .flatMap(AntigravityHeadlineLimit.init(rawValue:)) ?? .automatic
         self.antigravityHeadlineModel = defaults.string(forKey: Keys.antigravityHeadlineModel)
             .flatMap(AntigravityHeadlineModel.init(rawValue:)) ?? .gemini
-        // Follow the Mac unless the user explicitly chooses a Codenotch colour.
+        // Follow the Mac unless the user explicitly chooses a NamiNotch colour.
         // Off by default: an extra arc in a 44pt circle is a change to how
         // every reading looks, and nobody asked for it on their behalf.
         self.weeklyRingDashed = defaults.object(forKey: Keys.weeklyRingDashed) as? Bool ?? false
@@ -1212,7 +1212,7 @@ final class Preferences: ObservableObject {
             // Commonly refused for an app running from a build directory rather
             // than /Applications, which is worth saying plainly.
             Log.usage.error("launch at login failed: \(error.localizedDescription, privacy: .public)")
-            launchAtLoginProblem = L10n.t("macOS refused this — try moving Codenotch to /Applications.")
+            launchAtLoginProblem = L10n.t("macOS refused this — try moving NamiNotch to /Applications.")
             launchAtLogin = Self.isRegisteredForLogin
         }
     }

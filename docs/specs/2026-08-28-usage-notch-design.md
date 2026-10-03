@@ -5,9 +5,9 @@ read_when:
   - Changing the notch's shape, the ring's geometry or the card's layout
 ---
 
-# Codenotch — Design Spec
+# NamiNotch — Design Spec
 
-> Working name. `Codenotch` is a placeholder, same as `NotchApp` in the other repo.
+> Working name. `NamiNotch` is a placeholder, same as `NotchApp` in the other repo.
 > Source of truth for the UI: `docs/design/frame-124-hover-tooltip.png` and
 > `docs/design/frame-125-detail.png`.
 

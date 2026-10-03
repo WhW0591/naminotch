@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CodenotchMain: App {
+struct NamiNotchMain: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {

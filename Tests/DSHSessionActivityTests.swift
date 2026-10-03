@@ -297,7 +297,7 @@ final class DSHSessionActivityTests: XCTestCase {
             .busy)
     }
 
-    /// **A session that finished before Codenotch was watching is not unread.**
+    /// **A session that finished before NamiNotch was watching is not unread.**
     ///
     /// The marks start empty, so without the seed every session that had ever
     /// settled would arrive as a completion and the card would open onto a

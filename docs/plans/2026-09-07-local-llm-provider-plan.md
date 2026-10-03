@@ -44,7 +44,7 @@ Local inventory polling runs every second independently of cloud quota polling,
 so a model stopped through the ordinary Ollama address leaves the UI on the next
 poll. Speed still requires a completed native response through port 11435;
 direct requests to 11434 cannot be observed. The separate Ollama page exposes
-this requirement and the listener's current status. Closing Codenotch closes
+this requirement and the listener's current status. Closing NamiNotch closes
 the measurement connection too.
 
 The 2026-09-09 correction passed 816 tests (815 passed, one opt-in live listing
@@ -132,7 +132,7 @@ models, the managed Ollama service was restarted with
 was restored immediately afterward; the Homebrew service file was unchanged.
 
 All five models then remained present in the same `/api/ps` response. The
-unlocked Mac's running Codenotch UI showed five distinct brand icons and their
+unlocked Mac's running NamiNotch UI showed five distinct brand icons and their
 RAM readings, alongside the existing Codex cell. This directly verifies the
 brand-specific display in the running app as well as the provider render tests.
 
@@ -153,7 +153,7 @@ Default to `http://127.0.0.1:11434`, with a loopback address
 and port setting. The user selected Ollama first.
 LM Studio can follow through the same display model.
 
-This interpretation follows the current product: Codenotch monitors other tools.
+This interpretation follows the current product: NamiNotch monitors other tools.
 A prompt composer, choosing a model to run, and tool execution remain outside
 the app. The later-approved thinking relay forwards client requests with its
 own lifecycle, as recorded below.
@@ -194,7 +194,7 @@ model unloading, not a subscription reset. Optional unload-time display can wait
 These are the implemented display states. RAM has no quota arc; unknown RAM
 shows a dash. Values use binary units with at most one decimal, using the app's
 GB/MB convention. Context limit is capacity, not current token consumption.
-Refresh animation only means Codenotch is fetching a reading. Model names take
+Refresh animation only means NamiNotch is fetching a reading. Model names take
 up to two tooltip lines, with middle truncation and the full accessibility label.
 The standard notch spacing is retained when it fits; vertical stacks reduce
 their gaps on smaller displays. Extremely long stacks can still exceed a small

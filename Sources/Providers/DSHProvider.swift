@@ -19,8 +19,8 @@ import os
 /// (`via DeepSeek Harness`).
 ///
 /// A machine with no Harness install gets no ring rather than a row asking for
-/// a sign-in Codenotch cannot perform: the grant is the only way in, and
-/// Codenotch does not own it.
+/// a sign-in NamiNotch cannot perform: the grant is the only way in, and
+/// NamiNotch does not own it.
 actor DSHProvider: UsageProvider {
     /// The id this provider registers under, named once so the places that have
     /// to know it without building one — the default-on rule in `Preferences` —

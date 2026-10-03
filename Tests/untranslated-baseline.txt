@@ -1,9 +1,0 @@
-# Keys the source asks for that have no zh-Hans yet.
-#
-# **Empty, and that is the goal.** Every string the source asks for has a
-# Chinese translation; this file exists so that the next one to be added cannot
-# quietly go without. `LocalizationCoverageTests` reads it, and a new key that
-# is not translated fails there — which is the whole of "remember to do it",
-# expressed as something that cannot be forgotten.
-#
-# Adding a line is a regression, not a plan. Translate the string instead.

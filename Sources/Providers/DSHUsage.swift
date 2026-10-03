@@ -43,7 +43,7 @@ enum DSHUsage {
         return code == "zh" ? "zh_CN" : "en_US"
     }
 
-    /// The calling build's version, which is what the header means. Codenotch
+    /// The calling build's version, which is what the header means. NamiNotch
     /// is the client making the request, so it reports its own.
     static var clientVersion: String {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String)

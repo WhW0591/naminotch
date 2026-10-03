@@ -882,7 +882,7 @@ private struct CodexUsageSection: View {
     /// Codex reports only the tokens, and its day is its own server's — so
     /// nothing is printed in the brackets for it, because a boundary this app
     /// did not set is one it cannot vouch for. DeepSeek's platform is cut by
-    /// the window Codenotch asks for, so it says which.
+    /// the window NamiNotch asks for, so it says which.
     private var todayText: String {
         guard let tokens = usage.usageToday(now: now) else { return L10n.t("Pending") }
         var text = UsageFormat.tokens(tokens)
@@ -1069,7 +1069,7 @@ struct TooltipCard: View {
     /// sitting at its prompt is not news, and the card is clipped rather than
     /// scrolled — so every idle row it lists pushes a *working* one off the
     /// bottom, which is the half worth the space. Harness is the provider where
-    /// this bites: it is the one Codenotch is used through, so it is the one
+    /// this bites: it is the one NamiNotch is used through, so it is the one
     /// with a dozen sessions open at once, and `DSHSessionActivity` only ever
     /// reports `.busy`, `.waiting` or `.idle` — the filter is exactly
     /// "working or blocked on you".

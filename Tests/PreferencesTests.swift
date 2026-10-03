@@ -1,7 +1,7 @@
 import XCTest
 @testable import Codenotch
 
-/// The rename from UsageNotch to Codenotch moved every setting into a new,
+/// The rename from UsageNotch to NamiNotch moved every setting into a new,
 /// empty defaults domain — the migration is the difference between a rename
 /// and what looks like a reset, so it is pinned here. (Round-trip and
 /// first-launch basics live with the other PreferencesTests.)
@@ -141,7 +141,7 @@ final class PreferencesMigrationTests: XCTestCase {
     ///
     /// It is the one provider that asks for no sign-in *and* draws nothing while
     /// it is off: it reads a grant the Mac already has, and a machine without
-    /// Harness gets no cell rather than a row asking for a sign-in Codenotch
+    /// Harness gets no cell rather than a row asking for a sign-in NamiNotch
     /// cannot perform. Off by default, it would therefore be invisible to
     /// exactly the people it can serve.
     func testDeepSeekHarnessDefaultsOn() {
