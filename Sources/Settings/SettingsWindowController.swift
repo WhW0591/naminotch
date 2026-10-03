@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import SwiftUI
 
 /// Hosts the settings sheet in its own window.
@@ -7,11 +8,43 @@ import SwiftUI
 /// you go, not something you glance at, and a floating panel that follows the
 /// notch would be one more thing hovering over the screen edge.
 @MainActor
+
+/// Which appearance the settings window is drawn in.
+///
+/// The notch has its own answer to this and is not governed by it: that surface
+/// is dark by design whatever the Mac is doing — see `NotchSurfaceStyle` — and
+/// this decides the window, not the notch.
+enum AppearanceTheme: String, CaseIterable, Identifiable {
+    case system
+    case light
+    case dark
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .system: return L10n.t("Follow the System")
+        case .light:  return L10n.t("Light")
+        case .dark:   return L10n.t("Dark")
+        }
+    }
+
+    /// `nil` for `.system`, which is what hands the decision back to the Mac.
+    var appearance: NSAppearance? {
+        switch self {
+        case .system: return nil
+        case .light:  return NSAppearance(named: .aqua)
+        case .dark:   return NSAppearance(named: .darkAqua)
+        }
+    }
+}
+
 final class SettingsWindowController: NSObject, NSWindowDelegate {
     private var window: NSWindow?
     /// Ends text editing when a click lands anywhere but a text field.
     private var clickAwayMonitor: Any?
     private let preferences: Preferences
+    private var cancellables = Set<AnyCancellable>()
     /// A closure, not a snapshot. Read once at launch, the account shown here
     /// went stale the moment someone switched account in Cursor — and stayed
     /// stale until the app was restarted.
@@ -251,7 +284,21 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         // This is the first time the pane is drawn in light mode, so anything
         // in it that assumed a dark backdrop is now visible as such. Revert
         // this one commit if the result is worse than the pinning was.
-        window.appearance = nil
+        // This is a nonisolated context — the window is built off the main
+        // actor — while `preferences` and the window it is asking about are
+        // both main-actor. `assumeIsolated` is the honest form of "we are on
+        // the main thread here, the compiler just cannot see it": AppKit
+        // builds this window on the main thread or not at all.
+        MainActor.assumeIsolated {
+            window.appearance = preferences.appearanceTheme.appearance
+            // Live, because the picker that sets it lives in this very window.
+            preferences.$appearanceTheme
+                .receive(on: RunLoop.main)
+                .sink { [weak window] theme in
+                    MainActor.assumeIsolated { window?.appearance = theme.appearance }
+                }
+                .store(in: &cancellables)
+        }
         window.hasShadow = true
         window.delegate = self
         watchForClicksAway(in: window)

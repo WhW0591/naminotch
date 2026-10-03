@@ -278,6 +278,11 @@ final class Preferences: ObservableObject {
     }
 
     /// The material the expanded notch, tooltip and settings orb are painted with.
+    /// Which appearance the settings window follows. See `AppearanceTheme`.
+    @Published var appearanceTheme: AppearanceTheme {
+        didSet { defaults.set(appearanceTheme.rawValue, forKey: Keys.appearanceTheme) }
+    }
+
     @Published var notchSurfaceStyle: NotchSurfaceStyle {
         didSet { defaults.set(notchSurfaceStyle.rawValue, forKey: Keys.notchSurfaceStyle) }
     }
@@ -524,6 +529,7 @@ final class Preferences: ObservableObject {
         static let claudeDailyPaceRing = "claudeDailyPaceRing"
         static let weeklyHeadline = "weeklyHeadline"
         static let notchSurfaceStyle = "notchSurfaceStyle"
+        static let appearanceTheme = "appearanceTheme"
         static let watchLimit = "watchLimit"
         static let criticalLimit = "criticalLimit"
         static let colorTransitionStyle = "colorTransitionStyle"
@@ -868,6 +874,8 @@ final class Preferences: ObservableObject {
             .flatMap(AccentColorChoice.init(rawValue:)) ?? .system
         self.notchSurfaceStyle = defaults.string(forKey: Keys.notchSurfaceStyle)
             .flatMap(NotchSurfaceStyle.init(rawValue:)) ?? .glass
+        self.appearanceTheme = defaults.string(forKey: Keys.appearanceTheme)
+            .flatMap(AppearanceTheme.init(rawValue:)) ?? .system
         let storedWatchLimit = defaults.object(forKey: Keys.watchLimit) as? Double ?? 0.50
         let storedCriticalLimit = defaults.object(forKey: Keys.criticalLimit) as? Double ?? 0.70
         // `didSet` does the clamping, and it does not run for these assignments,

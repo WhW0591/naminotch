@@ -885,6 +885,16 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
+                Picker(L10n.t("Appearance"), selection: $preferences.appearanceTheme) {
+                    ForEach(AppearanceTheme.allCases) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.segmented)
+
+                Text(L10n.t("Which appearance the settings window is drawn in. The notch is dark by design whatever this is set to — its own Surface choice above decides how dark."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+
                 // Two ways to answer the same question, because they suit
                 // different people: three named sizes for anyone who wants a
                 // decision made for them, and a slider for anyone who has a
