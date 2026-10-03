@@ -169,6 +169,12 @@ struct ProviderGlyphView: View {
         // single grid — every row still reserves the same width — while the ink
         // is evened out within it.
         .scaleEffect(glyph.opticalScale)
+        // **The DeepSeek mark turns over at the peak rate**: off-peak is the
+        // glyph as drawn, peak is the same shape reflected across a horizontal
+        // line. One asset and two states, so there is no second drawing to keep
+        // in step with the first, and the difference reads at a glance without
+        // being a colour anybody has to learn.
+        .scaleEffect(y: glyph == .deepseek && DeepSeekPricing.isPeak() ? -1 : 1)
         .frame(width: size, height: size)
     }
 }
