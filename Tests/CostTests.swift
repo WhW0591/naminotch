@@ -61,4 +61,34 @@ final class CostTests: XCTestCase {
         let model = CostModel(account: account, directory: directory)
         XCTAssertNotEqual(model.range, .allTime)
     }
+
+    /// A reading that has not moved is not a new row: the endpoint is polled
+    /// far faster than its whole percents change, and the table grew by one row
+    /// per poll before this.
+    func testUnchangedSamplesAreNotRecorded() throws {
+        let directory = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("cost-samples-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let store = try XCTUnwrap(CostStore(url: directory.appendingPathComponent("store.sqlite")))
+        store.recordSample(window: .session, pct: 10, at: Date(timeIntervalSince1970: 1_000_000))
+        store.recordSample(window: .session, pct: 10, at: Date(timeIntervalSince1970: 1_000_060))
+        XCTAssertEqual(store.sampleCount(window: .session), 1)
+        store.recordSample(window: .session, pct: 11, at: Date(timeIntervalSince1970: 1_000_120))
+        XCTAssertEqual(store.sampleCount(window: .session), 2)
+    }
+
+    /// Anything older than the retention window is dropped; what is inside it
+    /// stays, so the Activity timeline keeps the resets it can still draw.
+    func testPruneDropsSamplesOutsideTheRetentionWindow() throws {
+        let directory = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("cost-prune-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let store = try XCTUnwrap(CostStore(url: directory.appendingPathComponent("store.sqlite")))
+        let now = Date()
+        store.recordSample(window: .session, pct: 5, at: now.addingTimeInterval(-20 * 86_400))
+        store.recordSample(window: .session, pct: 6, at: now)
+        XCTAssertEqual(store.sampleCount(window: .session), 2)
+        store.prune(olderThanDays: 14)
+        XCTAssertEqual(store.sampleCount(window: .session), 1)
+    }
 }

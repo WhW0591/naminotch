@@ -1,8 +1,6 @@
 import XCTest
 import SwiftUI
-import NIOCore
-import NIOHTTP1
-import NIOPosix
+import Network
 @testable import Codenotch
 
 final class OllamaThinkingStreamTests: XCTestCase {
@@ -279,44 +277,113 @@ final class OllamaRelayTransportTests: XCTestCase {
     }
 }
 
+/// A one-answer HTTP server for the relay tests, on Network.framework so the
+/// test target no longer drags SwiftNIO in behind the app.
 private final class RelayStub {
-    let group: MultiThreadedEventLoopGroup
-    let channel: Channel
-    var children: [Channel] = []
-    var url: URL { URL(string: "http://127.0.0.1:\(channel.localAddress!.port!)")! }
-    init(group: MultiThreadedEventLoopGroup, channel: Channel) { self.group = group; self.channel = channel }
-    static func start(payload: Data, holdOpen: Bool = false) async throws -> RelayStub {
-        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        let channel = try await ServerBootstrap(group: group).childChannelInitializer { channel in
-            channel.pipeline.configureHTTPServerPipeline().flatMap {
-                channel.pipeline.addHandler(RelayStubHandler(payload: payload, holdOpen: holdOpen))
-            }
-        }.bind(host: "127.0.0.1", port: 0).get()
-        return RelayStub(group: group, channel: channel)
-    }
-    func stop() async { try? await channel.close().get(); try? await group.shutdownGracefully() }
-}
+    let listener: NWListener
+    let queue = DispatchQueue(label: "codenotch.relay-stub")
+    private var connections: [NWConnection] = []
+    var url: URL { URL(string: "http://127.0.0.1:\(listener.port!.rawValue)")! }
 
-private final class RelayStubHandler: ChannelInboundHandler {
-    typealias InboundIn = HTTPServerRequestPart
-    let payload: Data
-    let holdOpen: Bool
-    init(payload: Data, holdOpen: Bool) { self.payload = payload; self.holdOpen = holdOpen }
-    func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-        guard case .end = unwrapInboundIn(data) else { return }
-        context.write(NIOAny(HTTPServerResponsePart.head(HTTPResponseHead(version: .http1_1, status: .ok,
-            headers: ["content-type": "application/x-ndjson", "x-fixture": "kept"]))), promise: nil)
-        // Split inside UTF-8/JSON boundaries just as a real TCP stream can.
-        for chunk in stride(from: 0, to: payload.count, by: 7) {
-            var buffer = context.channel.allocator.buffer(capacity: 7)
-            buffer.writeBytes(payload[chunk..<min(chunk + 7, payload.count)])
-            context.write(NIOAny(HTTPServerResponsePart.body(.byteBuffer(buffer))), promise: nil)
+    private init(listener: NWListener) { self.listener = listener }
+
+    static func start(payload: Data, holdOpen: Bool = false) async throws -> RelayStub {
+        let parameters = NWParameters.tcp
+        parameters.allowLocalEndpointReuse = true
+        parameters.requiredLocalEndpoint = .hostPort(host: "127.0.0.1", port: .any)
+        let listener = try NWListener(using: parameters)
+        let stub = RelayStub(listener: listener)
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            var resumed = false
+            listener.stateUpdateHandler = { state in
+                guard !resumed else { return }
+                switch state {
+                case .ready:
+                    resumed = true
+                    continuation.resume()
+                case .failed(let error):
+                    resumed = true
+                    continuation.resume(throwing: error)
+                default:
+                    break
+                }
+            }
+            listener.newConnectionHandler = { [weak stub] connection in
+                stub?.accept(connection, payload: payload, holdOpen: holdOpen)
+            }
+            listener.start(queue: stub.queue)
         }
-        if holdOpen { context.flush() }
-        else {
-            context.writeAndFlush(NIOAny(HTTPServerResponsePart.end(nil))).whenComplete { _ in
-                context.close(promise: nil)
+        return stub
+    }
+
+    func stop() async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            queue.async {
+                for connection in self.connections { connection.cancel() }
+                self.connections.removeAll()
+                self.listener.cancel()
+                continuation.resume()
             }
         }
+    }
+
+    private func accept(_ connection: NWConnection, payload: Data, holdOpen: Bool) {
+        connections.append(connection)
+        connection.start(queue: queue)
+        pump(connection, buffer: Data(), payload: payload, holdOpen: holdOpen)
+    }
+
+    /// Read the request before answering: closing on a client still writing its
+    /// body would surface as a reset instead of a response.
+    private func pump(_ connection: NWConnection, buffer: Data, payload: Data, holdOpen: Bool) {
+        connection.receive(minimumIncompleteLength: 1, maximumLength: 64 * 1024) { [weak self] data, _, isComplete, error in
+            guard let self else { return }
+            var buffer = buffer
+            if let data { buffer.append(data) }
+            if error != nil || isComplete { connection.cancel(); return }
+            if Self.requestComplete(buffer) {
+                self.respond(connection, payload: payload, holdOpen: holdOpen)
+            } else {
+                self.pump(connection, buffer: buffer, payload: payload, holdOpen: holdOpen)
+            }
+        }
+    }
+
+    private static func requestComplete(_ buffer: Data) -> Bool {
+        let marker = Data([13, 10, 13, 10])
+        guard let separator = buffer.range(of: marker) else { return false }
+        let head = String(decoding: buffer[..<separator.lowerBound], as: UTF8.self)
+        var contentLength = 0
+        for line in head.components(separatedBy: "\r\n").dropFirst() {
+            guard let colon = line.firstIndex(of: ":") else { continue }
+            if line[..<colon].lowercased() == "content-length",
+               let value = Int(line[line.index(after: colon)...].trimmingCharacters(in: .whitespaces)) {
+                contentLength = value
+            }
+        }
+        return buffer.count >= separator.upperBound + contentLength
+    }
+
+    /// No `Content-Length` and no chunking: the body is delimited by the close,
+    /// which is exactly what a real streaming runtime does.
+    private func respond(_ connection: NWConnection, payload: Data, holdOpen: Bool) {
+        let head = "HTTP/1.1 200 OK\r\ncontent-type: application/x-ndjson\r\nx-fixture: kept\r\n\r\n"
+        connection.send(content: Data(head.utf8), completion: .contentProcessed { [weak self] _ in
+            self?.sendChunks(connection, payload: payload, index: 0, holdOpen: holdOpen)
+        })
+    }
+
+    /// Split inside UTF-8/JSON boundaries just as a real TCP stream can.
+    private func sendChunks(_ connection: NWConnection, payload: Data, index: Int, holdOpen: Bool) {
+        guard index < payload.count else {
+            guard !holdOpen else { return }
+            connection.send(content: nil, contentContext: .finalMessage, isComplete: true,
+                            completion: .contentProcessed { _ in connection.cancel() })
+            return
+        }
+        let end = min(index + 7, payload.count)
+        connection.send(content: Data(payload[index..<end]), completion: .contentProcessed { [weak self] _ in
+            self?.sendChunks(connection, payload: payload, index: end, holdOpen: holdOpen)
+        })
     }
 }

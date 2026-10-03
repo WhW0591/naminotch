@@ -109,6 +109,11 @@ final class CostStore {
     static let kCacheWrite: Double = 1.25
     static let kCacheRead: Double = 0.1
 
+    /// How long quota samples and attribution survive. Every figure a view can
+    /// still draw is from the current window; two weeks covers each reset the
+    /// tooltip and the Activity timeline can show.
+    static let retentionDays = 14
+
     init?(url: URL) {
         try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(),
                                                  withIntermediateDirectories: true)
@@ -118,7 +123,15 @@ final class CostStore {
                               nil) == SQLITE_OK, let handle else { return nil }
         db = handle
         var ok = false
-        queue.sync { ok = migrate() }
+        queue.sync {
+            ok = migrate()
+            guard ok else { return }
+            // Retention and the WAL are settled once per launch: the store
+            // lives for the app's life, so this is the one guaranteed point at
+            // which a long-running install gets its history trimmed.
+            pruneConfined(olderThanDays: Self.retentionDays)
+            checkpointConfined()
+        }
         guard ok else { sqlite3_close(db); return nil }
     }
 
@@ -192,6 +205,22 @@ final class CostStore {
         // Databases from 0.6.0-dev predate resets_at; a no-op once the column exists.
         exec("ALTER TABLE quota_sample ADD COLUMN resets_at INTEGER;")
         return true
+    }
+
+    /// Drops what no view can still draw. Usage events are the record and are
+    /// never pruned; only the readings the endpoint is polled for are.
+    private func pruneConfined(olderThanDays days: Int) {
+        guard days > 0 else { return }
+        let cutoff = Int(Date().timeIntervalSince1970) - days * 86_400
+        exec("DELETE FROM quota_sample WHERE ts < \(cutoff);")
+        exec("DELETE FROM attribution WHERE t1 < \(cutoff);")
+        exec("DELETE FROM parse_error WHERE ts < \(cutoff);")
+    }
+
+    /// A prune can leave the WAL holding everything it deleted. Fold it back
+    /// into the database file so the two shrink together.
+    private func checkpointConfined() {
+        exec("PRAGMA wal_checkpoint(TRUNCATE);")
     }
 
     // MARK: Low-level helpers (queue-confined)
@@ -308,8 +337,15 @@ final class CostStore {
         queue.sync {
             let ts = Int(date.timeIntervalSince1970)
             let prev = lastSample(window)
-            insertSample(window: window, pct: pct, ts: ts, resetsAt: resetsAt)
+            let resets = resetsAt.map { Int($0.timeIntervalSince1970) }
 
+            // The endpoint reports whole percents and is polled far faster than
+            // they move. Writing an unchanged reading again bought nothing and
+            // grew the table by one row per poll, so only a moved percentage or
+            // a new window becomes a row.
+            if let prev, prev.pct == pct, prev.resetsAt == resets { return }
+
+            insertSample(window: window, pct: pct, ts: ts, resetsAt: resetsAt)
             guard let prev else { return }             // first sample: nothing to compare
             let delta = pct - prev.pct
 
@@ -548,6 +584,21 @@ final class CostStore {
             return (count("SELECT COUNT(*) FROM usage_event"),
                     count("SELECT COUNT(*) FROM file_cursor"),
                     count("SELECT COUNT(*) FROM parse_error"))
+        }
+    }
+
+    /// Exposed so a test can hold the retention window to what it claims.
+    func prune(olderThanDays days: Int) {
+        queue.sync { pruneConfined(olderThanDays: days) }
+    }
+
+    /// Exposed for tests and diagnostics: how many rows one window holds.
+    func sampleCount(window: CostWindow) -> Int {
+        queue.sync {
+            guard let st = prepare("SELECT COUNT(*) FROM quota_sample WHERE window=?1") else { return 0 }
+            defer { sqlite3_finalize(st) }
+            bind(st, 1, window.rawValue)
+            return sqlite3_step(st) == SQLITE_ROW ? Int(sqlite3_column_int64(st, 0)) : 0
         }
     }
 }

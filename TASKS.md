@@ -27,6 +27,7 @@ you are about to make.
 | a local LLM runtime, its speed or its context ring | [`docs/plans/2026-09-07-local-llm-provider-plan.md`](docs/plans/2026-09-07-local-llm-provider-plan.md) |
 | LM Studio's log parsing or the local token ledger | [`docs/plans/2026-09-10-lm-studio-provider-plan.md`](docs/plans/2026-09-10-lm-studio-provider-plan.md) |
 | adding a provider at all | [`docs/providers/README.md`](docs/providers/README.md) — the registration contract |
+| what is left to optimise, or why a performance item was deferred | [`docs/plans/2026-10-04-performance-backlog.md`](docs/plans/2026-10-04-performance-backlog.md) |
 
 ## Tripwires
 

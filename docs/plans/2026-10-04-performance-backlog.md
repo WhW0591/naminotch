@@ -1,8 +1,15 @@
+---
+summary: "The size and idle-cost work deliberately left for later, with the evidence behind each item."
+read_when:
+  - Choosing what to optimise next for size or idle cost
+  - Revisiting SwiftNIO, cost-database retention, the DeepSeek holidays, or the DMG history
+---
+
 # Codenotch — performance & size backlog
 
-Opened 2026-10-04, out of the evaluation of the finished project. Items 1-3 are
-deliberately deferred; item 4 records the decision not to act. The rest of that
-review is done and committed in `main`.
+Opened 2026-10-04, out of the evaluation of the finished project. Items 1 and 2
+were done the same day; item 3 is deferred; item 4 records the decision not to
+act. The rest of that review is done and committed in `main`.
 
 Evidence for all of this was taken from the running Debug build on the
 maintainer's Mac: `sample`/`footprint`/vmmap, a `CGWindowListCopyWindowInfo`
@@ -10,7 +17,7 @@ benchmark, and the real `Application Support/NamiNotch/costs` databases.
 
 ## 1. Replace SwiftNIO with Network.framework
 
-**Status:** deferred, awaiting a decision on scheduling.
+**Status:** done 2026-10-04 — replaced with `Network.framework`.
 
 SwiftNIO is pulled in by exactly one file,
 `Sources/Sessions/OllamaRelayServer.swift`, which is a loopback HTTP relay used
@@ -29,11 +36,17 @@ request, forward it to the real Ollama port, stream the response back, and tap
 the SSE body for thinking/performance. A rewrite is self-contained but needs a
 regression pass over the thinking-stream and performance parsers.
 
-**Open question:** worth it now, or once the binary/bundle size matters?
+**Done 2026-10-04.** The relay is `NWListener` on the client side and
+`NWConnection` upstream, with a small incremental HTTP/1.1 response decoder for
+the three framings a local runtime uses (length-delimited, chunked, closed).
+SwiftNIO is gone from `project.yml` and `Package.resolved` is empty, so
+`DerivedData/SourcePackages` no longer exists and its ~121 MB is neither
+downloaded nor compiled. The relay's live-socket tests were rewritten on the
+same framework, so the test target does not pull NIO in behind the app.
 
 ## 2. Cost database: sample dedup, retention, WAL checkpoint
 
-**Status:** deferred, to discuss.
+**Status:** done 2026-10-04 — two-week retention, per the review.
 
 `CostStore.recordSample` inserts a row on **every** usage publication, even when
 the percentage has not moved, and nothing is ever pruned. On the maintainer's
@@ -54,11 +67,11 @@ Notes already applied in the same review that make this cheaper: `snapshots`
 publication is deduped, so the *rate* of inserts dropped; `PRAGMA cache_size` is
 capped at 512 KiB.
 
-**Proposed:** skip the insert when `pct` is unchanged; add a retention window
-(e.g. 90 days) for `quota_sample`/`attribution`/`parse_error`; checkpoint WAL on
-close / periodically.
-
-**Open question:** how much history does the Activity timeline want to keep?
+**Done 2026-10-04.** `recordSample` returns without inserting when both the
+percentage and the reset time are unchanged; `prune(olderThanDays: 14)` drops
+older `quota_sample`/`attribution`/`parse_error` rows and the WAL is folded back
+with `wal_checkpoint(TRUNCATE)` once per launch. `usage_event` is the record and
+is never pruned.
 
 ## 3. DeepSeek holiday list is never refreshed
 
