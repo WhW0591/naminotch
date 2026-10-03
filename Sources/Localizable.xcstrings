@@ -1,6 +1,1392 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ / %@ remaining": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还剩 %@ / %@"
+          }
+        }
+      }
+    },
+    "%@ / %@ tokens": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ / %@ token"
+          }
+        }
+      }
+    },
+    "%@ / %@ tokens remaining": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还剩 %@ / %@ token"
+          }
+        }
+      }
+    },
+    "%@ credits left · %@ monthly + %@ extra": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还剩 %@ 额度 · 每月 %@ + 额外 %@"
+          }
+        }
+      }
+    },
+    "%@ of %@ monthly credits left": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每月 %@ 额度还剩 %@"
+          }
+        }
+      }
+    },
+    "%@ tokens": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ token"
+          }
+        }
+      }
+    },
+    "Configure endpoint details and credentials in Settings.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在设置里配置端点详情和凭据。"
+          }
+        }
+      }
+    },
+    "Could not reach the endpoint": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法连接到该端点"
+          }
+        }
+      }
+    },
+    "Custom Endpoint": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自定义端点"
+          }
+        }
+      }
+    },
+    "Monthly Budget": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每月预算"
+          }
+        }
+      }
+    },
+    "Monthly Tokens": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每月 token"
+          }
+        }
+      }
+    },
+    "Not an HTTP endpoint": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不是 HTTP 端点"
+          }
+        }
+      }
+    },
+    "Quota Used": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已用额度"
+          }
+        }
+      }
+    },
+    "Remaining Budget": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "剩余预算"
+          }
+        }
+      }
+    },
+    "Remaining Tokens": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "剩余 token"
+          }
+        }
+      }
+    },
+    "The address must start with http:// or https://": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "地址必须以 http:// 或 https:// 开头"
+          }
+        }
+      }
+    },
+    "The endpoint answered %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "端点返回了 %@"
+          }
+        }
+      }
+    },
+    "The endpoint did not answer in time": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "端点未及时响应"
+          }
+        }
+      }
+    },
+    "Tokens Since Server Start": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自服务器启动以来的 token"
+          }
+        }
+      }
+    },
+    "Tokens Used": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已用 token"
+          }
+        }
+      }
+    },
+    "Total Spend": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "总花费"
+          }
+        }
+      }
+    },
+    "%@ h": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 小时"
+          }
+        }
+      }
+    },
+    "%@ h %@ min": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 小时 %@ 分"
+          }
+        }
+      }
+    },
+    "%@ min": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 分钟"
+          }
+        }
+      }
+    },
+    "%@ turns": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 轮"
+          }
+        }
+      }
+    },
+    "Active time": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动时间"
+          }
+        }
+      }
+    },
+    "Activity": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动"
+          }
+        }
+      }
+    },
+    "All accounts": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所有账号"
+          }
+        }
+      }
+    },
+    "Day": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日"
+          }
+        }
+      }
+    },
+    "Estimated cost": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "预估花费"
+          }
+        }
+      }
+    },
+    "Estimated cost per day; hover a bar for active time": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每日预估花费；悬停柱条可看活动时间"
+          }
+        }
+      }
+    },
+    "Loading…": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "载入中…"
+          }
+        }
+      }
+    },
+    "Month": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月"
+          }
+        }
+      }
+    },
+    "No sessions on this day": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这一天没有会话"
+          }
+        }
+      }
+    },
+    "Sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会话"
+          }
+        }
+      }
+    },
+    "Total": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合计"
+          }
+        }
+      }
+    },
+    "Turns": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轮次"
+          }
+        }
+      }
+    },
+    "Turns are read from the transcripts each account writes; the first ones show up a few minutes after a session starts.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轮次读自各账号写入的记录；一场会话开始几分钟后才会出现第一批。"
+          }
+        }
+      }
+    },
+    "Week": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "周"
+          }
+        }
+      }
+    },
+    "All": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部"
+          }
+        }
+      }
+    },
+    "All time": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部时间"
+          }
+        }
+      }
+    },
+    "Elsewhere": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其它"
+          }
+        }
+      }
+    },
+    "Other (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其它（%@）"
+          }
+        }
+      }
+    },
+    "Session": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会话"
+          }
+        }
+      }
+    },
+    "This month": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本月"
+          }
+        }
+      }
+    },
+    "This session": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本次会话"
+          }
+        }
+      }
+    },
+    "This week": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本周"
+          }
+        }
+      }
+    },
+    "%@ finished": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已完成"
+          }
+        }
+      }
+    },
+    "%@ is waiting on you": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 在等你"
+          }
+        }
+      }
+    },
+    "A banner in Notification Center, which reaches you on another display or with the notch hidden. The notch stays quiet; sounds still play.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通知中心里的横幅——在另一块显示器上、或刘海被隐藏时也能送到。刘海那边保持安静；提示音照常播放。"
+          }
+        }
+      }
+    },
+    "Codenotch test": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codenotch 测试"
+          }
+        }
+      }
+    },
+    "In the notch": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在刘海内"
+          }
+        }
+      }
+    },
+    "Mac notifications": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac 通知"
+          }
+        }
+      }
+    },
+    "The agent stopped to ask you something.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "智能体停下来要问你一件事。"
+          }
+        }
+      }
+    },
+    "The agent's turn is done.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "智能体这一轮做完了。"
+          }
+        }
+      }
+    },
+    "The notch opens for a moment or shows a card, with the sound you chose. Nothing reaches Notification Center.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刘海会打开一下或显示一张卡片，并播放你选的提示音。不会送到通知中心。"
+          }
+        }
+      }
+    },
+    "This is what one looks like.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这就是它长什么样。"
+          }
+        }
+      }
+    },
+    "%@h %@m": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 小时 %@ 分"
+          }
+        }
+      }
+    },
+    "%@m": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 分钟"
+          }
+        }
+      }
+    },
+    "Resets in %@ Day %@h": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 天 %@ 小时后重置"
+          }
+        }
+      }
+    },
+    "Resets in %@ Days %@h": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 天 %@ 小时后重置"
+          }
+        }
+      }
+    },
+    "Resets in %@ min": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 分钟后重置"
+          }
+        }
+      }
+    },
+    "Resets in %@ sec": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 秒后重置"
+          }
+        }
+      }
+    },
+    "Resets in %@h %@m": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 小时 %@ 分钟后重置"
+          }
+        }
+      }
+    },
+    "%@h limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 小时限额"
+          }
+        }
+      }
+    },
+    "Credit balance": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "额度余额"
+          }
+        }
+      }
+    },
+    "Daily limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每日限额"
+          }
+        }
+      }
+    },
+    "Hourly limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每小时限额"
+          }
+        }
+      }
+    },
+    "Kilo Cloud rejected the request": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilo Cloud 拒绝了该请求"
+          }
+        }
+      }
+    },
+    "Plan limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "方案限额"
+          }
+        }
+      }
+    },
+    "%@ Limit Reached": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已达限额"
+          }
+        }
+      }
+    },
+    "%@ Reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已重置"
+          }
+        }
+      }
+    },
+    "%@ Weekly Limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 周限额"
+          }
+        }
+      }
+    },
+    "%@ limit is spent": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 的限额已用完"
+          }
+        }
+      }
+    },
+    "%@ limit refreshed": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 的限额已刷新"
+          }
+        }
+      }
+    },
+    "Ample, watch and critical each stay one flat colour, jumping between them at the limits below.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "充裕、留意、危急各用一种固定颜色，在下面的界限处直接跳变。"
+          }
+        }
+      }
+    },
+    "Colour ramp": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "颜色渐变"
+          }
+        }
+      }
+    },
+    "Hard step": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "硬跳变"
+          }
+        }
+      }
+    },
+    "The colour blends continuously from ample to critical across the full range, turning yellow at the watch limit below.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "颜色在整个区间内从充裕连续过渡到危急，并在下面的留意界限处转为黄色。"
+          }
+        }
+      }
+    },
+    "%@ is at %@%%": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已达 %@%%"
+          }
+        }
+      }
+    },
+    "%@%% used": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已用 %@%%"
+          }
+        }
+      }
+    },
+    "%@ has reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已重置"
+          }
+        }
+      }
+    },
+    "%@%% of its %@ limit used.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已用其 %2$@ 限额的 %1$@%%。"
+          }
+        }
+      }
+    },
+    "Its %@ limit is available again.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "它的 %@ 限额又可用了。"
+          }
+        }
+      }
+    },
+    "Not Checked": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未检查"
+          }
+        }
+      }
+    },
+    "Online": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在线"
+          }
+        }
+      }
+    },
+    "Slow": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "缓慢"
+          }
+        }
+      }
+    },
+    "Unreachable": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法访问"
+          }
+        }
+      }
+    },
+    "Activity…": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动…"
+          }
+        }
+      }
+    },
+    "Context %@%%": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上下文 %@%%"
+          }
+        }
+      }
+    },
+    "Today %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日 %@"
+          }
+        }
+      }
+    },
+    "%@d limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 天限额"
+          }
+        }
+      }
+    },
+    "%@m limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 分钟限额"
+          }
+        }
+      }
+    },
+    "Install the %@ CLI first; Sign in opens its install page.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请先安装 %@ CLI；「登录」会打开它的安装页。"
+          }
+        }
+      }
+    },
+    "Runs %@ in your terminal; it opens the browser to sign in and saves the session this reads.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在你的终端里运行 %@；它会打开浏览器登录，并保存本工具读取的会话。"
+          }
+        }
+      }
+    },
+    "Runs %@ in your terminal; sign in there with /login and the notch reads the session.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在你的终端里运行 %@；在其中用 /login 登录，刘海即可读取该会话。"
+          }
+        }
+      }
+    },
+    "%@ days ago": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 天前"
+          }
+        }
+      }
+    },
+    "~%@ request today": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日约 %@ 次请求"
+          }
+        }
+      }
+    },
+    "~%@ requests today": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日约 %@ 次请求"
+          }
+        }
+      }
+    },
+    "%@ hr": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 小时"
+          }
+        }
+      }
+    },
+    "%@ hr %@ min": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 小时 %@ 分"
+          }
+        }
+      }
+    },
+    "%@ in · %@ out": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入 %@ · 输出 %@"
+          }
+        }
+      }
+    },
+    "%@ · %@ queued": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ 排队中"
+          }
+        }
+      }
+    },
+    "Claude Code emptied this profile's saved login — it does that to every profile at once after it updates itself. Sign in again to %@ to read your usage.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude Code 清空了此配置里已保存的登录——它每次自我更新后都会对所有配置这么做一次。请重新登录 %@ 以读取用量。"
+          }
+        }
+      }
+    },
+    "Sign in with the Kilo CLI to read your usage": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 Kilo CLI 登录即可读取用量"
+          }
+        }
+      }
+    },
+    "macOS refused Codenotch access to %@'s saved login. Use Allow access… in Settings to ask again.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 拒绝了 Codenotch 访问 %@ 已保存的登录。请在设置里用「允许访问…」重新申请。"
+          }
+        }
+      }
+    },
+    "API key (per token)": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API 密钥（按 token 计）"
+          }
+        }
+      }
+    },
+    "Monthly plan": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "包月方案"
+          }
+        }
+      }
+    },
+    "%@ turns · %@ files": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 轮 · %@ 个文件"
+          }
+        }
+      }
+    },
+    "%@ turns · %@ files · %@ skipped": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 轮 · %@ 个文件 · %@ 个跳过"
+          }
+        }
+      }
+    },
+    "Usage (%@ h)": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用量（%@ 小时）"
+          }
+        }
+      }
+    },
+    "Usage (%@ wk)": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用量（%@ 周）"
+          }
+        }
+      }
+    },
+    "This Kilo account has no usage to read yet — top up credits or subscribe to a coding plan.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这个 Kilo 账号还没有可读取的用量——充值额度或订阅编程方案。"
+          }
+        }
+      }
+    },
+    "Usage rides on the account Kilo CLI signs into — run `kilo` once and sign in, and the notch reads it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用量跟着 Kilo CLI 登录的那个账号走——运行一次 `kilo` 并登录，刘海即可读取。"
+          }
+        }
+      }
+    },
+    "%@ unused resets": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 次未使用的重置"
+          }
+        }
+      }
+    },
+    "and %@ more": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还有 %@ 个"
+          }
+        }
+      }
+    },
+    "DeepSeek Harness": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DeepSeek Harness"
+          }
+        }
+      }
+    },
+    "Harness session": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harness 会话"
+          }
+        }
+      }
+    },
+    "Cycle": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "周期"
+          }
+        }
+      }
+    },
+    "$%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "$%@"
+          }
+        }
+      }
+    },
+    "About %@ days": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "约 %@ 天"
+          }
+        }
+      }
+    },
+    "No OpenCode Go subscription on this account": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此账号没有 OpenCode Go 订阅"
+          }
+        }
+      }
+    },
+    "Apify CLI": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apify CLI"
+          }
+        }
+      }
+    },
+    "Connected · %@ loaded": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已连接 · 已载入 %@"
+          }
+        }
+      }
+    },
+    "No tokens today": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日无 token"
+          }
+        }
+      }
+    },
+    "Loaded in %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "载入于 %@。"
+          }
+        }
+      }
+    },
     "%@ / %@ left": {
       "extractionState": "manual",
       "localizations": {
