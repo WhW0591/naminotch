@@ -690,7 +690,11 @@ final class PreferencesTests: XCTestCase {
 /// Both are pinned on the enum so the views cannot drift apart.
 final class NotchSurfaceStyleTests: XCTestCase {
     func testTheStylesAreOfferedGlassFirst() {
-        XCTAssertEqual(NotchSurfaceStyle.allCases, [.glass, .darkGlass, .solid])
+        // `solid` is the fallback for a Mac without `glassEffect` — the deployment
+        // target is macOS 15 — and not a third look to choose between. It keeps
+        // its case for `effective` to reach for and loses its place here.
+        XCTAssertEqual(NotchSurfaceStyle.allCases, [.glass, .darkGlass])
+        XCTAssertFalse(NotchSurfaceStyle.allCases.contains(.solid))
     }
 
     func testOnlyDarkGlassCarriesADimBeneathTheGlass() {
