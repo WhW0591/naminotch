@@ -1,6 +1,567 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ %@ · via %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@ · 来自 %@"
+          }
+        }
+      }
+    },
+    "Adds a compact weekly-usage ring around each chosen provider that publishes it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为每个公开发布周用量的已选 provider，加一圈紧凑的周用量环。"
+          }
+        }
+      }
+    },
+    "Channel": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "渠道"
+          }
+        }
+      }
+    },
+    "Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp, Apify, the Kilo CLI or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codenotch 从这台 Mac 上已经登录的工具里读取用量——它从不索要密码。安装并登录以下任意一个：Claude Code（终端工具，不是 Claude 应用）、Cursor（编辑器或 cursor-agent）、Codex、Antigravity、GLM、Grok、OpenCode、Command Code、GitHub Copilot、Kimi Code、Kiro、Amp、Apify、Kilo CLI，或一个 Gemini API 密钥（经由 Gemini CLI、OpenCode 或 Hermes），它的环就会出现在刘海里。"
+          }
+        }
+      }
+    },
+    "Colour transition": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "颜色渐变"
+          }
+        }
+      }
+    },
+    "Costs": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "花费"
+          }
+        }
+      }
+    },
+    "Custom Endpoints": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自定义端点"
+          }
+        }
+      }
+    },
+    "Day starts at": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每日起始于"
+          }
+        }
+      }
+    },
+    "Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "天"
+          }
+        }
+      }
+    },
+    "For every provider with a weekly limit beside a shorter one, the main ring shows the week. The shorter window moves to the thin ring and the card. Alerts, the menu bar and providers with no weekly limit are unchanged, and Claude's daily pace ring still leads when it is on.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对于同时有周限额和更短窗口的 provider，主环显示周用量。较短的窗口移到细环和卡片上。提醒、菜单栏，以及没有周限额的 provider 都不受影响；Claude 的每日进度环开启时仍居首位。"
+          }
+        }
+      }
+    },
+    "Hidden from the notch · Loaded in %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已从刘海隐藏 · 载入于 %@"
+          }
+        }
+      }
+    },
+    "Merged into your Mac's own notch the bar is exactly as deep as the cutout, so a ring and a percentage under it have to share that depth — showing it draws the rings smaller. Turn it off for the largest rings the cutout has room for.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "与 Mac 自带刘海合并时，条带高度正好等于挖孔，因此环和它下方的百分比必须共用这点高度——显示百分比会把环画得更小。关掉它，就能得到挖孔容得下的最大环。"
+          }
+        }
+      }
+    },
+    "Name": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名称"
+          }
+        }
+      }
+    },
+    "Name this account": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为此账号命名"
+          }
+        }
+      }
+    },
+    "On this edge your notch is merged into your Mac's own cutout, and the cutout sets its size. This has no effect here — it is waiting for you to move the notch to another edge.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在这一边缘，刘海与 Mac 自带的挖孔合并，尺寸由挖孔决定。此设置在这里不生效——等你把刘海移到别的边缘才会用上。"
+          }
+        }
+      }
+    },
+    "OpenAI-compatible APIs, local runtimes and custom proxies.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "兼容 OpenAI 的 API、本地运行时和自定义代理。"
+          }
+        }
+      }
+    },
+    "Opens System Settings when banners are off for Codenotch.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当 Codenotch 的横幅被关闭时，打开系统设置。"
+          }
+        }
+      }
+    },
+    "Percentage under each ring": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每个环下方的百分比"
+          }
+        }
+      }
+    },
+    "Send a test": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送测试"
+          }
+        }
+      }
+    },
+    "Show or hide this model in the notch. It stays loaded in %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在刘海里显示或隐藏此模型。它仍会载入在 %@ 中。"
+          }
+        }
+      }
+    },
+    "Show weekly limit in menu bar": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在菜单栏显示周限额"
+          }
+        }
+      }
+    },
+    "The figure under each ring. Turn it off for rings alone; the number is still a hover away in the card.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每个环下方的数字。关掉后只剩环；数字仍可在卡片上悬停查看。"
+          }
+        }
+      }
+    },
+    "The notch opens for a moment, with the session sound.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刘海会打开一下，并播放会话提示音。"
+          }
+        }
+      }
+    },
+    "The same boundary is used everywhere a day is counted: the local model ledger, the cost log, and the DeepSeek Harness card, whose daily figures the platform cuts wherever Codenotch asks it to.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "凡是按天计数的地方都用同一个边界：本地模型账本、花费日志，以及 DeepSeek Harness 卡片——后者的每日数据由平台按 Codenotch 指定的位置切分。"
+          }
+        }
+      }
+    },
+    "Weekly limit as the main ring": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "以周限额作为主环"
+          }
+        }
+      }
+    },
+    "What each project spent of each login's allowance.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每个项目花掉了各登录账号额度的多少。"
+          }
+        }
+      }
+    },
+    "What the notch, the menu bar and notifications call this account. Empty goes back to %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刘海、菜单栏和通知如何称呼此账号。留空则回到 %@。"
+          }
+        }
+      }
+    },
+    "Where to notify": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通知方式"
+          }
+        }
+      }
+    },
+    "Which appearance the settings window is drawn in. The notch is dark by design whatever this is set to — its own Surface choice above decides how dark.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置窗口以哪种外观绘制。无论这里选什么，刘海按设计恒为深色——它的深浅由上面那个 Surface 选项决定。"
+          }
+        }
+      }
+    },
+    "With the colour ramp on, this still marks critical elsewhere in the app, but the ring's own red only arrives at 100%.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启颜色渐变后，它在 App 其它地方仍会标出危急；但环自身的红色只在 100% 时出现。"
+          }
+        }
+      }
+    },
+    "Work is counted from this hour rather than from midnight, so a session that runs past it belongs to the day it was started in — a reading taken at two in the morning is about the evening that produced it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作从这一小时起算，而不是从午夜起算——这样跨过它的会话仍属于它开始的那一天，凌晨两点看到的读数是关于产生它的那个晚上。"
+          }
+        }
+      }
+    },
+    "%@ models": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 个模型"
+          }
+        }
+      }
+    },
+    "%@ plans": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 个方案"
+          }
+        }
+      }
+    },
+    "%@ · %@/month (catalog)": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@/月（目录价）"
+          }
+        }
+      }
+    },
+    "%@ · price unknown, set it here": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · 价格未知，请在此填写"
+          }
+        }
+      }
+    },
+    "1 USD = %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 美元 = %@"
+          }
+        }
+      }
+    },
+    "Billing": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "计费方式"
+          }
+        }
+      }
+    },
+    "Day, week and month per login: sessions per project with what each cost.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按登录账号看日、周、月：每个项目的会话数，以及各自的花费。"
+          }
+        }
+      }
+    },
+    "Detected from each login once a day. A week of the plan costs the price ÷ 4.35; a project that used 4%% of the weekly allowance spent 4%% of that. Amounts in %@, your Mac's currency. Type the amount you actually pay to override the list price.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天从各登录账号读取一次。一周的方案成本是月费 ÷ 4.35；某项目用了周额度的 4%%，就花了那一周的 4%%。金额以 %@ 计，即你这台 Mac 的货币。填写你实际支付的金额即可覆盖标价。"
+          }
+        }
+      }
+    },
+    "Exchange rate": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "汇率"
+          }
+        }
+      }
+    },
+    "How the money is worked out": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "金额是怎么算出来的"
+          }
+        }
+      }
+    },
+    "Market data": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市场数据"
+          }
+        }
+      }
+    },
+    "Monthly price": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每月价格"
+          }
+        }
+      }
+    },
+    "Not fetched yet": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "尚未获取"
+          }
+        }
+      }
+    },
+    "Open Activity…": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开活动…"
+          }
+        }
+      }
+    },
+    "Open catalog": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开目录"
+          }
+        }
+      }
+    },
+    "Per-token prices": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按 token 价格"
+          }
+        }
+      }
+    },
+    "Plan": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "方案"
+          }
+        }
+      }
+    },
+    "Plan catalog": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "方案目录"
+          }
+        }
+      }
+    },
+    "Plan not detected yet": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "尚未识别方案"
+          }
+        }
+      }
+    },
+    "Refreshed once a day, no account needed: exchange rate from open.er-api.com, per-token prices from OpenRouter. Plans live in plans.json, editable.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天刷新一次，无需账号：汇率来自 open.er-api.com，按 token 价格来自 OpenRouter。方案存放在 plans.json 里，可编辑。"
+          }
+        }
+      }
+    },
     "Follow the System": {
       "extractionState": "manual",
       "localizations": {

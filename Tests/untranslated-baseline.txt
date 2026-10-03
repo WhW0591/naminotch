@@ -6,7 +6,6 @@
 # nothing ever looks up. Both halves are pinned in `CatalogFormatTests`.
 # The list may only shrink: translate a string, delete its line.
 $%@
-%@ %@ · via %@
 %@ / %@ left
 %@ / %@ remaining
 %@ / %@ tokens
@@ -28,17 +27,13 @@ $%@
 %@ limit is spent
 %@ limit refreshed
 %@ min
-%@ models
 %@ of %@ monthly credits left
-%@ plans
 %@ tokens
 %@ turns
 %@ turns · %@ files
 %@ turns · %@ files · %@ skipped
 %@ unused resets
 %@ · %@ queued
-%@ · %@/month (catalog)
-%@ · price unknown, set it here
 %@%% of its %@ limit used.
 %@%% used
 %@d limit
@@ -46,7 +41,6 @@ $%@
 %@h limit
 %@m
 %@m limit
-1 USD = %@
 A banner in Notification Center, which reaches you on another display or with the notch hidden. The notch stays quiet; sounds still play.
 API Key
 API key
@@ -58,7 +52,6 @@ Activity
 Activity…
 Add Endpoint
 Add to Endpoints
-Adds a compact weekly-usage ring around each chosen provider that publishes it.
 All
 All accounts
 All time
@@ -69,36 +62,26 @@ Auth Header
 Authentication required to inspect usage route
 Authorization
 Base URL
-Billing
 Cancel
-Channel
 Checking usage route...
 Choose a preset to pre-fill settings:
 Claude Code emptied this profile's saved login — it does that to every profile at once after it updates itself. Sign in again to %@ to read your usage.
-Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp, Apify, the Kilo CLI or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.
 Codenotch test
 Colour ramp
-Colour transition
 Configure endpoint details and credentials in Settings.
 Configured Endpoints
 Connect any OpenAI-compatible API, local inference runtime, or custom proxy.
 Connected · %@ loaded
 Context %@%%
-Costs
 Could not reach the endpoint
 Credit balance
 Current Spend ($)
 Custom Endpoint
-Custom Endpoints
 Custom JSON fields
 Cycle
 Daily limit
 Day
-Day starts at
-Day, week and month per login: sessions per project with what each cost.
-Days
 DeepSeek Harness
-Detected from each login once a day. A week of the plan costs the price ÷ 4.35; a project that used 4%% of the weekly allowance spent 4%% of that. Amounts in %@, your Mac's currency. Type the amount you actually pay to override the list price.
 Detected usage format: %@. Save Endpoint to apply.
 Discovered Local Services:
 Edit
@@ -106,15 +89,11 @@ Edit Endpoint
 Elsewhere
 Estimated cost
 Estimated cost per day; hover a bar for active time
-Exchange rate
 File contains malformed JSON.
-For every provider with a weekly limit beside a shorter one, the main ring shows the week. The shorter window moves to the thin ring and the card. Alerts, the menu bar and providers with no weekly limit are unchanged, and Claude's daily pace ring still leads when it is on.
 Hard step
 Harness session
-Hidden from the notch · Loaded in %@
 Hide Templates
 Hourly limit
-How the money is worked out
 Icon
 Import Custom JSON...
 Imported custom JSON preset mapping.
@@ -129,8 +108,6 @@ Loaded in %@.
 Loading…
 Mac notifications
 Manual
-Market data
-Merged into your Mac's own notch the bar is exactly as deep as the cutout, so a ring and a percentage under it have to share that depth — showing it draws the rings smaller. Turn it off for the largest rings the cutout has room for.
 Model
 Model field
 Model filter (optional)
@@ -141,9 +118,6 @@ Monthly Budget ($)
 Monthly Budget (M tokens)
 Monthly Tokens
 Monthly plan
-Monthly price
-Name
-Name this account
 New Custom Endpoint
 New-API
 No OpenCode Go subscription on this account
@@ -154,28 +128,16 @@ No tokens today
 No usage URL for this base URL
 Not Checked
 Not an HTTP endpoint
-Not fetched yet
-On this edge your notch is merged into your Mac's own cutout, and the cutout sets its size. This has no effect here — it is waiting for you to move the notch to another edge.
 Online
-Open Activity…
-Open catalog
-OpenAI-compatible APIs, local runtimes and custom proxies.
 OpenRouter
-Opens System Settings when banners are off for Codenotch.
 Other (%@)
 Other usage source
-Per-token prices
-Percentage under each ring
-Plan
-Plan catalog
 Plan limit
-Plan not detected yet
 Public
 Quick Templates
 Quota Used
 Quota units
 Records path
-Refreshed once a day, no account needed: exchange rate from open.er-api.com, per-token prices from OpenRouter. Plans live in plans.json, editable.
 Remaining Budget
 Remaining Tokens
 Requires --metrics on llama-server
@@ -195,14 +157,11 @@ Save JSON template...
 Saved template. Edit it and click Import Custom JSON to load.
 Scan Local Engines
 Select a model...
-Send a test
 Session
 Sessions
 Show dollar amount ($) instead of percentage (%)
-Show or hide this model in the notch. It stays loaded in %@.
 Show remaining budget instead of spent
 Show token count instead of percentage (%)
-Show weekly limit in menu bar
 Sign in with the Kilo CLI to read your usage
 Slow
 Spend: $%.2f
@@ -215,10 +174,7 @@ The agent's turn is done.
 The colour blends continuously from ample to critical across the full range, turning yellow at the watch limit below.
 The endpoint answered %@
 The endpoint did not answer in time
-The figure under each ring. Turn it off for rings alone; the number is still a hover away in the card.
 The notch opens for a moment or shows a card, with the sound you chose. Nothing reaches Notification Center.
-The notch opens for a moment, with the session sound.
-The same boundary is used everywhere a day is counted: the local model ledger, the cost log, and the DeepSeek Harness card, whose daily figures the platform cuts wherever Codenotch asks it to.
 The sound plays on the ordinary output, not the interface sound-effects channel — so it is still heard with u{201C}Play user interface sound effectsu{201D} switched off in System Settings → Sound.
 This Kilo account has no usage to read yet — top up credits or subscribe to a coding plan.
 This is what one looks like.
@@ -253,13 +209,6 @@ Usage rides on the account Kilo CLI signs into — run `kilo` once and sign in, 
 Usage route unavailable or unreachable
 Usage source
 Week
-Weekly limit as the main ring
-What each project spent of each login's allowance.
-What the notch, the menu bar and notifications call this account. Empty goes back to %@.
-Where to notify
-Which appearance the settings window is drawn in. The notch is dark by design whatever this is set to — its own Surface choice above decides how dark.
-With the colour ramp on, this still marks critical elsewhere in the app, but the ring's own red only arrives at 100%.
-Work is counted from this hour rather than from midnight, so a session that runs past it belongs to the day it was started in — a reading taken at two in the morning is about the evening that produced it.
 and %@ more
 e.g. 10.0 (leave empty for unlimited)
 e.g. 2.5
