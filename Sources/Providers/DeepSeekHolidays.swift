@@ -2,14 +2,18 @@ import Foundation
 
 /// The Chinese statutory holidays, so a weekday inside one is not billed as peak.
 ///
-/// The list is an annual announcement by the State Council and cannot be
-/// derived, so it is read from `holiday-cn`, which republishes that announcement
-/// as JSON and updates it daily by CI. Two things the source's own notes warn
-/// about are handled here: a year is named by the *document* rather than by the
-/// dates in it, so December reads next year's file as well; and weekends joined
-/// onto a holiday are not in the data at all, which is fine — weekends are
-/// already off-peak, and a make-up workday is a weekend day, so it stays
-/// off-peak exactly as the platform says it should.
+/// The rule it feeds is DeepSeek's, and current as of its 2026-08-23 adjustment:
+/// peak is Monday-Friday 09:00-12:00 and 14:00-18:00 Beijing time, excluding
+/// Chinese statutory holidays, and off-peak is half of that. Weekends are
+/// off-peak all day, make-up workdays included — a make-up Saturday is still a
+/// Saturday.
+///
+/// The list is an annual State Council announcement and cannot be derived, so it
+/// is read from `holiday-cn`, which republishes that announcement as JSON. Two
+/// things the source's own notes warn about are handled here: a year is named by
+/// the *document* rather than by the dates in it, so December reads next year's
+/// file as well; and weekends joined onto a holiday are not in the data at all,
+/// which is fine — weekends are already off-peak.
 ///
 /// The cached copy is what gets used. A fetch that fails leaves the last good
 /// list in place rather than emptying it, because an empty list is not neutral:
@@ -18,6 +22,17 @@ import Foundation
 @MainActor
 final class DeepSeekHolidays: ObservableObject {
     static let shared = DeepSeekHolidays()
+
+    /// How old the cached list may get before it is fetched again.
+    ///
+    /// The list is an annual announcement, so a month is already far more often
+    /// than it can change. The refresh is not chasing the source's daily
+    /// re-publication; it is there so a Mac that never restarts still picks up
+    /// next year's file.
+    static let refreshInterval: TimeInterval = 30 * 86_400
+    /// How soon a failed fetch may be tried again. Without this, an offline Mac
+    /// would ask once a minute for a month.
+    static let retryInterval: TimeInterval = 86_400
 
     /// Whether the platform is at its peak rate right now.
     ///
@@ -31,23 +46,38 @@ final class DeepSeekHolidays: ObservableObject {
 
     private var timer: Timer?
     private let defaults: UserDefaults
+    private var fetchedAt: Date?
+    private var lastAttempt: Date?
+    private var refreshing = false
+
     private static let cacheKey = "deepSeekHolidayDays"
+    private static let fetchedAtKey = "deepSeekHolidayFetchedAt"
+    private static let lastAttemptKey = "deepSeekHolidayLastAttempt"
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         days = Self.load(from: defaults)
+        fetchedAt = defaults.object(forKey: Self.fetchedAtKey) as? Date
+        lastAttempt = defaults.object(forKey: Self.lastAttemptKey) as? Date
         recompute()
     }
 
-    /// Loads the cache and refreshes it. Safe to call more than once.
+    /// Loads the cache, fetches it when due, and keeps the peak answer in step
+    /// with the clock. Safe to call more than once.
     func start() {
-        refresh()
+        refreshIfDue()
         guard timer == nil else { return }
         // A minute is finer than any boundary it has to notice — the windows
         // close on the hour — and coarse enough to cost nothing.
-        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.recompute() }
+        let timer = Timer(timeInterval: 60, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.recompute()
+                self?.refreshIfDue()
+            }
         }
+        timer.tolerance = 5
+        RunLoop.main.add(timer, forMode: .common)
+        self.timer = timer
     }
 
     func stop() {
@@ -57,6 +87,22 @@ final class DeepSeekHolidays: ObservableObject {
 
     private func recompute() {
         isPeak = DeepSeekPricing.isPeak(holidays: days)
+    }
+
+    /// Whether the cached list is old enough to fetch again.
+    ///
+    /// Pure, so a test can name both clocks instead of waiting a month.
+    nonisolated static func refreshIsDue(fetchedAt: Date?, lastAttempt: Date?, now: Date) -> Bool {
+        if let fetchedAt, now.timeIntervalSince(fetchedAt) < refreshInterval { return false }
+        if let lastAttempt, now.timeIntervalSince(lastAttempt) < retryInterval { return false }
+        return true
+    }
+
+    private func refreshIfDue() {
+        guard !refreshing,
+              Self.refreshIsDue(fetchedAt: fetchedAt, lastAttempt: lastAttempt, now: Date()) else { return }
+        refreshing = true
+        refresh()
     }
 
     // MARK: - The list
@@ -81,10 +127,18 @@ final class DeepSeekHolidays: ObservableObject {
                     from: Self.url(for: year)).0 else { continue }
                 found.formUnion(Self.holidays(inJSON: data))
             }
-            guard let self, !found.isEmpty else { return }
-            self.days = found
-            self.defaults.set(found.map(\.timeIntervalSince1970), forKey: Self.cacheKey)
-            self.recompute()
+            guard let self else { return }
+            let now = Date()
+            self.lastAttempt = now
+            self.defaults.set(now, forKey: Self.lastAttemptKey)
+            if !found.isEmpty {
+                self.days = found
+                self.fetchedAt = now
+                self.defaults.set(found.map { $0.timeIntervalSince1970 }, forKey: Self.cacheKey)
+                self.defaults.set(now, forKey: Self.fetchedAtKey)
+                self.recompute()
+            }
+            self.refreshing = false
         }
     }
 

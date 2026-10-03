@@ -208,6 +208,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 }
                 .store(in: &cancellables)
             Costs.attach(to: store)
+            // The DeepSeek glyph turns over at the platform's peak rate, which
+            // depends on the Chinese statutory holidays. Started here so the
+            // list is loaded before the first glyph draws; it re-checks itself
+            // monthly from then on.
+            DeepSeekHolidays.shared.start()
             deepSeek.onAuthenticated = { [weak store] in
                 store?.providerAuthenticationChanged(providerID: "deepseek")
             }

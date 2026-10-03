@@ -7,9 +7,9 @@ read_when:
 
 # Codenotch — performance & size backlog
 
-Opened 2026-10-04, out of the evaluation of the finished project. Items 1 and 2
-were done the same day; item 3 is deferred; item 4 records the decision not to
-act. The rest of that review is done and committed in `main`.
+Opened 2026-10-04, out of the evaluation of the finished project. Items 1-3 were
+done the same day; item 4 records the decision not to act. The rest of that
+review is done and committed in `main`.
 
 Evidence for all of this was taken from the running Debug build on the
 maintainer's Mac: `sample`/`footprint`/vmmap, a `CGWindowListCopyWindowInfo`
@@ -75,7 +75,7 @@ is never pruned.
 
 ## 3. DeepSeek holiday list is never refreshed
 
-**Status:** deferred, to discuss (functional bug, found while auditing timers).
+**Status:** done 2026-10-04 — started at launch, refreshed monthly.
 
 `DeepSeekHolidays.start()` is **never called** anywhere in `Sources`. So the
 60-second `isPeak` recompute and the network fetch of
@@ -83,14 +83,14 @@ is never pruned.
 `UserDefaults` (`deepSeekHolidayDays`), which on a fresh install is empty, so
 Chinese statutory holidays are billed at the peak rate.
 
-The class comment says the announcement "updates it daily by CI" and cannot be
-derived — which reads as "once a year, plus the source's daily re-publication".
-So the fix is probably: call `start()` from the app (e.g. in `AppDelegate`), or
-make it observable-driven by `ProviderGlyphView`, and confirm the cache TTL is
-the intended one year.
-
-**Open question:** was `start()` dropped on purpose (to avoid a background
-fetch), or is this a regression?
+**Done 2026-10-04.** The rules were checked against DeepSeek's current
+announcement (the 2026-08-23 adjustment): peak is Monday-Friday 09:00-12:00 and
+14:00-18:00 Beijing time, excluding Chinese statutory holidays; weekends are
+off-peak all day, make-up workdays included; off-peak is half. `DeepSeekPricing`
+already matched that and now states it. `DeepSeekHolidays` is started from
+`AppDelegate`, records when it last fetched, re-checks monthly rather than never,
+and backs a failed fetch off a day so an offline Mac does not ask once a minute.
+The 60-second tick that turns the glyph over at a boundary is unchanged.
 
 ## 4. Git history still carries the release DMGs (~180 MB)
 

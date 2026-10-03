@@ -52,4 +52,19 @@ final class DeepSeekHolidaysTests: XCTestCase {
         XCTAssertEqual(DeepSeekHolidays.url(for: 2026).absoluteString,
                        "https://cdn.jsdelivr.net/gh/NateScarlet/holiday-cn@master/2026.json")
     }
+
+    /// The list is an annual announcement, so it is fetched once a month — and a
+    /// failure backs off a day rather than asking once a minute.
+    func testTheListIsFetchedMonthlyAndRetriedDaily() {
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        XCTAssertTrue(DeepSeekHolidays.refreshIsDue(fetchedAt: nil, lastAttempt: nil, now: now))
+        XCTAssertFalse(DeepSeekHolidays.refreshIsDue(
+            fetchedAt: now.addingTimeInterval(-10 * 86_400), lastAttempt: nil, now: now))
+        XCTAssertTrue(DeepSeekHolidays.refreshIsDue(
+            fetchedAt: now.addingTimeInterval(-31 * 86_400), lastAttempt: nil, now: now))
+        XCTAssertFalse(DeepSeekHolidays.refreshIsDue(
+            fetchedAt: nil, lastAttempt: now.addingTimeInterval(-3600), now: now))
+        XCTAssertTrue(DeepSeekHolidays.refreshIsDue(
+            fetchedAt: nil, lastAttempt: now.addingTimeInterval(-2 * 86_400), now: now))
+    }
 }
