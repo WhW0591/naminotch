@@ -84,6 +84,17 @@ private struct CostAccountRows: View {
             LabeledContent(L10n.t("Plan")) {
                 Text(planDetail).foregroundStyle(.secondary)
             }
+            // What the plan has been worth. Only a monthly plan has a multiple
+            // to show — an API-key account is billed per token, so there is no
+            // period for its usage to be a multiple *of*. See `MonthMultiple`.
+            if let times = MonthMultiple.times(for: account, monthly: auto),
+               let usage = MonthMultiple.usageCost(for: account) {
+                LabeledContent(L10n.t("Subscription")) {
+                    Text("\(MoneyFormat.string(usage, currency: prices.currency)) · "
+                         + L10n.t("\(Int(times.rounded()))× the plan"))
+                        .foregroundStyle(times >= 1 ? Palette.ample : Color.secondary)
+                }
+            }
         }
     }
 
