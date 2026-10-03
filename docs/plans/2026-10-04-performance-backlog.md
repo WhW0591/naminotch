@@ -1,8 +1,8 @@
 # Codenotch — performance & size backlog
 
-Opened 2026-10-04, out of the evaluation of the finished project. Three items
-were deliberately deferred rather than fixed; the rest of that review is done
-and committed in `main`.
+Opened 2026-10-04, out of the evaluation of the finished project. Items 1-3 are
+deliberately deferred; item 4 records the decision not to act. The rest of that
+review is done and committed in `main`.
 
 Evidence for all of this was taken from the running Debug build on the
 maintainer's Mac: `sample`/`footprint`/vmmap, a `CGWindowListCopyWindowInfo`
@@ -81,7 +81,7 @@ fetch), or is this a regression?
 
 ## 4. Git history still carries the release DMGs (~180 MB)
 
-**Status:** deferred — needs a maintainer decision; not done unilaterally.
+**Status:** decided 2026-10-04 — history kept as it is; the purge was not done.
 
 `.git` is **202 MB**, of which **179.8 MB** is 19 committed
 `site/Codenotch*.dmg` release binaries (12.5 MB / 12.4 MB / 11.9 MB ... down to
@@ -110,8 +110,10 @@ git push --force origin main
 git push --force origin --tags           # destructive for anyone who has cloned
 ```
 
-This permanently diverges the fork from `upstream`, so it is only worth doing if
-upstream merges are no longer wanted, or as a coordinated upstream change.
-A local-only rewrite is not durable: the next `git fetch` re-adds the objects
-from `origin`.
+**Decision (2026-10-04):** keep the history. The releases are already published
+on GitHub, the fork carries an `upstream` remote and 22 tags, and rewriting all
+of them would diverge the fork permanently for a one-time ~180 MB saving. The
+local clone keeps its full history so `pull`/`push` behave normally; the ~180 MB
+is part of the shared history, not a disposable cache. Only genuinely disposable
+local artefacts were removed (build products, caches, scratch), about 1.15 GB.
 
