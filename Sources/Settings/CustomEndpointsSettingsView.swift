@@ -592,7 +592,7 @@ struct CustomEndpointsSettingsView: View {
                                 .overlay {
                                     if editingEndpoint?.accentColorHex == hex {
                                         Circle()
-                                            .stroke(Color.white, lineWidth: 2)
+                                            .stroke(Color.primary, lineWidth: 2)
                                     }
                                 }
                                 .onTapGesture {

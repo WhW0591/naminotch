@@ -156,8 +156,11 @@ private enum SettingsPalette {
     /// why changing the theme moved the window's shadow and nothing else.
     static let window = Color(nsColor: .windowBackgroundColor)
     static let sidebar = Color(nsColor: .underPageBackgroundColor)
-    static let hairline = Color.primary.opacity(0.07)
-    static let edge = Color.primary.opacity(0.09)
+    /// The system's own separator, not a fixed wash: seven per cent of black is
+    /// invisible on a white pane, and seven per cent of white is faint on a dark
+    /// one. This is the colour the system uses for exactly this, in both.
+    static let hairline = Color(nsColor: .separatorColor)
+    static let edge = Color(nsColor: .separatorColor)
     static let selected = Color.primary.opacity(0.10)
     static let hovered = Color.primary.opacity(0.05)
 }
@@ -585,7 +588,7 @@ struct SettingsView: View {
                     .frame(width: 22, height: 22)
                 Text("Codenotch")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primary)
             }
             .padding(.horizontal, 18)
             .padding(.bottom, 16)
@@ -662,7 +665,7 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(section.title)
                     .font(.system(size: 19, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primary)
                 Text(section.subtitle)
                     .font(.system(size: 12, weight: .regular))
                     .foregroundStyle(.primary.opacity(0.5))

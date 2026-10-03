@@ -36,16 +36,16 @@ private struct SettingsButtonBody: View {
         let pressed = configuration.isPressed
         switch kind {
         case .standard:
-            return .white.opacity(pressed ? 0.20 : isHovered ? 0.14 : 0.08)
+            return .primary.opacity(pressed ? 0.20 : isHovered ? 0.14 : 0.08)
         case .prominent:
-            return .white.opacity(pressed ? 0.72 : isHovered ? 0.86 : 0.96)
+            return .primary.opacity(pressed ? 0.72 : isHovered ? 0.86 : 0.96)
         }
     }
 
     private var foreground: Color {
         if configuration.role == .destructive { return Self.destructiveRed }
         switch kind {
-        case .standard:  return .white.opacity(isHovered ? 1 : 0.9)
+        case .standard:  return .primary.opacity(isHovered ? 1 : 0.9)
         case .prominent: return .black
         }
     }
@@ -59,7 +59,7 @@ private struct SettingsButtonBody: View {
             .background(Capsule().fill(fill))
             .overlay {
                 if kind == .standard {
-                    Capsule().strokeBorder(.white.opacity(isHovered ? 0.16 : 0.09), lineWidth: 1)
+                    Capsule().strokeBorder(.primary.opacity(isHovered ? 0.16 : 0.09), lineWidth: 1)
                 }
             }
             .contentShape(Capsule())
@@ -89,9 +89,9 @@ private struct SettingsIconButtonBody: View {
         configuration.label
             .foregroundStyle(configuration.role == .destructive
                              ? Color(red: 1, green: 0.42, blue: 0.4)
-                             : Color.white.opacity(isHovered ? 0.95 : 0.6))
+                             : Color.primary.opacity(isHovered ? 0.95 : 0.6))
             .frame(width: 24, height: 24)
-            .background(Circle().fill(.white.opacity(configuration.isPressed ? 0.16 : isHovered ? 0.09 : 0)))
+            .background(Circle().fill(.primary.opacity(configuration.isPressed ? 0.16 : isHovered ? 0.09 : 0)))
             .contentShape(Circle())
             .scaleEffect(configuration.isPressed ? 0.92 : 1)
             .opacity(isEnabled ? 1 : 0.4)
