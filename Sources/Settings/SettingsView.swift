@@ -1248,6 +1248,24 @@ struct SettingsView: View {
                 SoundRow(label: L10n.t("Waiting on you"), name: $preferences.sessionBlockedSoundName,
                          pickerEnabled: preferences.sessionEndSound)
 
+                // The two that run side by side get their own voices. A
+                // binding rather than a `@Published` each: writing one stores
+                // the choice for that provider, and reading gives back whatever
+                // is in force — the hand-picked sound, or the one that suits it.
+                SoundRow(label: L10n.t("Codex"), name: Binding(
+                    get: { preferences.sessionFinishedSound(for: "codex") },
+                    set: { preferences.sessionFinishedSoundOverrides["codex"] = $0 }
+                ), pickerEnabled: preferences.sessionEndSound)
+                SoundRow(label: L10n.t("DeepSeek Harness"), name: Binding(
+                    get: { preferences.sessionFinishedSound(for: "dsh") },
+                    set: { preferences.sessionFinishedSoundOverrides["dsh"] = $0 }
+                ), pickerEnabled: preferences.sessionEndSound)
+
+                Text(L10n.t("Codex and DeepSeek Harness keep a finished sound each, so two agents running at once can be told apart by ear. The Finished sound above covers every other provider."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+
                 Text(L10n.t("Codenotch already knows the moment an agent stops working or stops to ask you something. Clicking the notch while it is open brings that session's app to the front — the app, not the tab: only some terminals let anything outside them choose a tab, so the tooltip names the session instead."))
                     .font(.caption)
                     .foregroundStyle(.secondary)

@@ -1,6 +1,28 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Codex": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex"
+          }
+        }
+      }
+    },
+    "Codex and DeepSeek Harness keep a finished sound each, so two agents running at once can be told apart by ear. The Finished sound above covers every other provider.": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex 和 DeepSeek Harness 各有自己的结束提示音，这样同时跑两个智能体时，不用看也能听出是哪一个完成了。上面那个「已完成」覆盖其余所有 provider。"
+          }
+        }
+      }
+    },
     "%@ / %@ remaining": {
       "extractionState": "manual",
       "localizations": {

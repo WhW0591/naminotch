@@ -19,6 +19,22 @@ enum SessionChime {
     /// the ordinary one without being an alarm.
     static let defaultBlocked = "Funk"
 
+    /// The finished sound for a provider that would rather be told apart by
+    /// ear, or nil for one with no opinion.
+    ///
+    /// A busy afternoon has several agents finishing, and one sound for all of
+    /// them says "something is done" and nothing about which. Codex and the
+    /// Harness are the two that run side by side here, so they are the two that
+    /// are given different voices; everything else falls back to whichever
+    /// sound the reader chose.
+    static func finished(for providerID: String) -> String? {
+        switch providerID {
+        case "codex": return defaultFinished
+        case "dsh":   return "Ping"
+        default:      return nil
+        }
+    }
+
     /// Where macOS keeps alert sounds, most specific first, so a user's own
     /// file shadows a system one of the same name.
     private static let directories = [

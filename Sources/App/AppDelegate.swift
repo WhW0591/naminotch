@@ -918,9 +918,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Log.usage.info("session \(event.session.name, privacy: .public) \(String(describing: event.reason), privacy: .public)")
 
         if preferences.sessionEndSound {
+            // Per provider on the finished side, so two agents running at once
+            // can be told apart with your eyes elsewhere.
             SessionChime.play(event.reason == .blocked
                               ? preferences.sessionBlockedSoundName
-                              : preferences.sessionEndSoundName)
+                              : preferences.sessionFinishedSound(for: event.providerID))
         }
         guard preferences.announceSessionEnd else { return }
         if preferences.notificationChannel == .mac {

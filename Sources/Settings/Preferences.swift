@@ -402,6 +402,28 @@ final class Preferences: ObservableObject {
     /// A separate choice because the two say different things — one is "that's
     /// done", the other is "you are the hold-up" — and a single sound for both
     /// makes the second one easy to ignore.
+    /// Sounds chosen for one provider, by provider id. Absent means "use the
+    /// one that fits this provider, or else the `Finished` sound above".
+    @Published var sessionFinishedSoundOverrides: [String: String] {
+        didSet { defaults.set(sessionFinishedSoundOverrides, forKey: Keys.sessionFinishedSoundOverrides) }
+    }
+
+    /// The sound a provider's finished session makes.
+    ///
+    /// Three answers in order: a sound chosen for this provider by hand, then
+    /// the one that suits it — `SessionChime.finished(for:)` gives Codex and the
+    /// Harness different voices, because the two run side by side and one sound
+    /// for both says "something is done" and not which — and finally `Finished`
+    /// above, which stays the answer for every provider with no opinion.
+    ///
+    /// The blocked sound is deliberately not per provider: it means "you are the
+    /// hold-up", which is about you rather than about who is waiting.
+    func sessionFinishedSound(for providerID: String) -> String {
+        sessionFinishedSoundOverrides[providerID]
+            ?? SessionChime.finished(for: providerID)
+            ?? sessionEndSoundName
+    }
+
     @Published var sessionBlockedSoundName: String {
         didSet { defaults.set(sessionBlockedSoundName, forKey: Keys.sessionBlockedSoundName) }
     }
@@ -541,6 +563,7 @@ final class Preferences: ObservableObject {
         static let peekDuration = "peekDuration"
         static let sessionEndSoundName = "sessionEndSoundName"
         static let sessionBlockedSoundName = "sessionBlockedSoundName"
+        static let sessionFinishedSoundOverrides = "sessionFinishedSoundOverrides"
         static let announceUsageReset = "announceUsageReset"
         static let usageResetSound = "usageResetSound"
         static let usageResetSoundName = "usageResetSoundName"
@@ -904,6 +927,8 @@ final class Preferences: ObservableObject {
             ?? SessionChime.defaultFinished
         self.sessionBlockedSoundName = defaults.string(forKey: Keys.sessionBlockedSoundName)
             ?? SessionChime.defaultBlocked
+        self.sessionFinishedSoundOverrides =
+            defaults.dictionary(forKey: Keys.sessionFinishedSoundOverrides) as? [String: String] ?? [:]
         self.announceUsageReset = defaults.object(forKey: Keys.announceUsageReset) as? Bool ?? true
         self.usageResetSound = defaults.object(forKey: Keys.usageResetSound) as? Bool ?? true
         self.usageResetSoundName = defaults.string(forKey: Keys.usageResetSoundName)
