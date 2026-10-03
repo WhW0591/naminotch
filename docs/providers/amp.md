@@ -1,3 +1,9 @@
+---
+summary: "How Amp's balance and free allowance are read."
+read_when:
+  - Changing the Amp provider or its credential lookup
+---
+
 # Amp
 
 Codenotch for macOS reads the Amp CLI login from

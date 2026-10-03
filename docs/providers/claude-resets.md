@@ -1,3 +1,9 @@
+---
+summary: "Claude's unused rate-limit resets, and what may be concluded from them."
+read_when:
+  - Changing the Claude provider, its reset credits or the alerts built on them
+---
+
 # Claude unused resets
 
 On September 23, 2026, Claude's web and Desktop Settings → Usage pages showed

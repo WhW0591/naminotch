@@ -1,3 +1,10 @@
+---
+summary: "The plan for reading local LLM runtimes (Ollama, LM Studio)."
+read_when:
+  - Changing anything under Sources/Providers/*Local*, or the local ledger
+  - Reworking local model cells, their speed or their context ring
+---
+
 # Local LLM monitoring plan
 
 Prepared 2026-09-07 against `60bafc292d087938edee278f6f9b5e491560bbe6`.

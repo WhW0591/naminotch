@@ -1,6 +1,28 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@× the plan": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 倍月费"
+          }
+        }
+      }
+    },
+    "Subscription": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "订阅"
+          }
+        }
+      }
+    },
     "%@ · %@": {
       "extractionState": "manual",
       "localizations": {
@@ -11,6 +33,9 @@
           }
         }
       }
+    },
+    "No tokens today": {
+      "extractionState": "manual"
     },
     "Spend limit": {
       "extractionState": "manual",

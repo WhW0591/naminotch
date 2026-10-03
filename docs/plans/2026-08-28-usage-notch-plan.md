@@ -1,3 +1,10 @@
+---
+summary: "The original implementation plan. A record of what was intended, not of what shipped."
+read_when:
+  - Looking for why an early decision was made
+  - Checking whether a milestone's intent was met — read TASKS.md for the outcome
+---
+
 # Codenotch — Implementation Plan
 
 Spec: `docs/specs/2026-08-28-usage-notch-design.md`

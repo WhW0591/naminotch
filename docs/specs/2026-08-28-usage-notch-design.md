@@ -1,3 +1,10 @@
+---
+summary: "The design spec: the frame, its proportions, and every measurement taken from it."
+read_when:
+  - Changing any number in Design.swift, NotchLayout.swift or Typography.swift
+  - Changing the notch's shape, the ring's geometry or the card's layout
+---
+
 # Codenotch — Design Spec
 
 > Working name. `Codenotch` is a placeholder, same as `NotchApp` in the other repo.

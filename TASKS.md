@@ -3,6 +3,89 @@
 Full detail in [`docs/plans/2026-08-28-usage-notch-plan.md`](docs/plans/2026-08-28-usage-notch-plan.md).
 Design spec in [`docs/specs/2026-08-28-usage-notch-design.md`](docs/specs/2026-08-28-usage-notch-design.md).
 
+## Where to look
+
+Each document under `docs/` opens with front matter saying what it is and when it
+has to be read; the entry below is the same routing in one place, for the change
+you are about to make.
+
+| Changing… | Read first |
+|---|---|
+| any number in `Design.swift`, `NotchLayout.swift` or `Typography.swift`; the notch's shape, the ring's geometry, the card's layout | [`docs/specs/2026-08-28-usage-notch-design.md`](docs/specs/2026-08-28-usage-notch-design.md) |
+| a provider glyph, icon or brand colour | [`docs/design/provider-assets.md`](docs/design/provider-assets.md) |
+| the Claude provider, its reset credits or the alerts over them | [`docs/providers/claude-resets.md`](docs/providers/claude-resets.md) |
+| the Apify provider or its credential | [`docs/providers/apify.md`](docs/providers/apify.md) |
+| the Amp provider or its credential | [`docs/providers/amp.md`](docs/providers/amp.md) |
+| the DeepSeek Harness provider, its credential, its daily figures, the session monitor, or anything that files by day | [`docs/providers/dsh.md`](docs/providers/dsh.md) |
+| a local LLM runtime, its speed or its context ring | [`docs/plans/2026-09-07-local-llm-provider-plan.md`](docs/plans/2026-09-07-local-llm-provider-plan.md) |
+| LM Studio's log parsing or the local token ledger | [`docs/plans/2026-09-10-lm-studio-provider-plan.md`](docs/plans/2026-09-10-lm-studio-provider-plan.md) |
+| adding a provider at all | [`docs/providers/README.md`](docs/providers/README.md) — the registration contract |
+
+## Tripwires
+
+Constraints that a change has already broken once, or would break without
+noticing. Each one names the failure, because the rule alone reads like a
+preference and the failure is the reason it is not.
+
+- **The tooltip's size is bounded, not chosen.** `Design.tooltipScale` is 1.09
+  because that is the largest value that keeps the session list on a 13-inch Air.
+  1.34 was tried and read beautifully, and `SessionCapTests` caught what it cost.
+  See `Design.tooltipScale` and "The card's size against the screen" below.
+- **`cardBudget`'s stack term is load-bearing.** It looks like room the placement
+  was already free to use — `cardAlong` clamps the card rather than keeping it
+  centred — and removing it produced **44 failures**, headed by a card taller
+  than the screen. It bounds the *whole* card, including the parts no session cap
+  governs. Do not remove it without answering `testTheCardStillFitsTheScreenAtEverySize`
+  and `testLedgerRowsGrowTheCardAndStillFitEveryEdge`.
+- **`NotchSize` does not scale the tooltip**, and its comment claimed for years
+  that it did ("rings, text, tooltip and all"). `NotchRootView` applies that scale
+  to the notch and to nothing else. The card's size is a separate decision — see
+  `Design.tooltipScale`.
+- **The day is one app-wide value.** `UsageDay.startHour` is written in exactly
+  one place, from `Preferences`. A test that moves it must put it back in
+  `tearDown`, or the next class to file a day inherits this one's boundary.
+- **A test that reads the wall clock near the day's boundary passes all day and
+  fails at night.** This has happened twice: once at midnight, once when the
+  boundary moved to six. Pin the clock — and pin the *model's* clock too, because
+  a cell computes "today" against `NotchViewModel.now`, not against the dates in
+  a fixture. `NotchFleet.setSnapshots` sets that clock to the real one, so a pin
+  placed before it is overwritten.
+- **`NotchLayout.cardHeight` is measured, not automatic.** Every change to the
+  card's contents has to be mirrored in the height formula, and tests pin the
+  result. A row added to the view and not to the formula is a card that clips its
+  own title.
+- **`AgentActivityMonitor` is `@MainActor`.** A test that builds a monitor, or
+  touches one, has to be annotated; the compiler says so, but the error reads as
+  an isolation problem rather than as the protocol's doing.
+- **The DeepSeek platform cuts its buckets wherever `start` says**, and the `tz`
+  parameter and `x-client-timezone-offset` header both do nothing — measured, not
+  assumed. The window must be thirty days or the endpoint answers
+  `INVALID_PARAM`. See [`docs/providers/dsh.md`](docs/providers/dsh.md).
+- **The DSH session monitor reads the Host's fold state and never the
+  transcript.** A transcript is tens of megabytes per session; the projection
+  cache already answers liveness, state and questions. Do not add a transcript
+  reader to answer something the fold state already knows.
+- **A glyph asset is named after the case's raw value** —
+  `ProviderGlyph.assetName` is `"glyph-\(rawValue)"`, with `ollamaLocal` the one
+  exception (it draws `glyph-ollama`). Most cases survive a missing asset,
+  because `ProviderGlyph.outline` traces them and `GlyphShape` fills that in.
+  **Ten do not**: `.devin, .qwen, .gemma, .meta, .deepseek, .mistral, .lmstudio,
+  .qianwenAI, .amp, .apify` return an empty outline, so the asset is their only
+  artwork and its absence draws *nothing* — silently, because an empty path is a
+  valid shape. `ProviderRegistryTests` holds them to it.
+- **Check what the app already models before designing a type for it.** The
+  subscription feature was built twice: once as a new `SubscriptionRecord` with
+  its own store, currency and period, and then again as a read of `CostAccount`
+  — which had carried `billing`, `monthlyPrice` and a `PlanCatalog`-detected
+  `planTier` all along, and detects the plan rather than asking for it. The first
+  version was deleted rather than kept beside the second. The cost of not looking
+  was two rounds of work and a store that would have drifted from the one the
+  Costs pane already writes.
+- **An append-only file is not identified by its inode.** APFS reuses the number,
+  so a replacement at the same path can arrive looking like a continuation.
+  `CodexRolloutUsage` fingerprints the bytes behind its cursor for this reason;
+  dropping that check is silently wrong rather than loudly wrong.
+
 ## M0 — Project skeleton
 - [x] `project.yml` (XcodeGen: app + unit test target, `LSUIElement`)
 - [x] `Makefile` (`gen` / `build` / `test` / `run` / `clean`)
@@ -1838,7 +1921,141 @@ nevertheless stale:
   second — at a one-second step it let the timer wake having already skipped the
   figure it woke up to show.
 
+## What "today" means
+
+Three different days, and it matters which one a number came out of. Written
+down because each of these was established by measurement, and re-deriving them
+costs an afternoon of probing endpoints.
+
+**1. The app's own day is six-to-six, in the reader's zone** — `UsageDay`. Work
+that runs past midnight belongs to the day it was started in; a reading taken at
+two in the morning is about the evening that produced it. The local ledger files
+by it and the cost log is ranged by it, from one definition, because the two are
+read side by side and a boundary that differed between them would put two
+different numbers under one word.
+
+`UsageDay.start` is *calendar* arithmetic (`bySettingHour`) rather than six hours
+subtracted from the epoch: on the morning a zone moves its clocks those differ by
+an hour, and six on the clock is what was meant. `Tests/UsageDayTests.swift` pins
+that with Warsaw's 29 March 2026, a day twenty-three hours long that still starts
+at six.
+
+Things that deliberately keep `Calendar.startOfDay`, because they are about
+calendar days rather than about which day work belongs to: `ResetCopy.daysApart`
+("how many days until this resets"), `AntigravityActivity`'s "how long ago",
+`KiroUsage`'s parsing of a reset month and day, and `TokenUsage`'s normalising of
+already-stored key dates back into instants.
+
+**2. The platform's day is whatever `start` we send it** — see
+[`docs/providers/dsh.md`](docs/providers/dsh.md#what-decides-the-platforms-day).
+Neither the `tz` query parameter nor `x-client-timezone-offset` changes it;
+the window's first instant does, exactly. Codenotch sends local midnight, which
+is why DSH's Today row has always looked like a local calendar day. **A
+six-to-six day for DSH is therefore available for the price of moving that one
+line** — and the lookup in `AccountTokenUsage` has to move with it, or the row
+reads "Pending".
+
+Shelved for now, deliberately: the platform's Today stays on local midnight so
+that it agrees with Codex's row beside it, and because a boundary the card cannot
+explain is worse than one it never mentions. Nothing about it needs re-verifying
+if it is picked up again — the endpoint behaviour above is settled.
+
+**3. Codex's day is Codex's.** Its buckets arrive as server-written `start_date`
+strings from `/wham/profiles/me`, and the endpoint takes no timezone or window we
+could move. Nothing in this app can shift it, and the two "Today" rows on the
+same card can therefore disagree by some hours. The only honest fix, if it ever
+matters, is to stop calling the platform's bucket "today" — but the platform's
+bucket *is* local midnight today, so there is nothing to correct.
+
+A false trail worth recording, so it is not walked again: an early probe reported
+the platform's boundary as a fixed 14:00 UTC and concluded it was unreachable.
+Both halves were wrong. The 14:00 was this app's own local midnight being echoed
+back through `start`, and the probe's timezone arithmetic was itself broken —
+`-time.timezone if not time.daylight else -time.altzone` returns +11 in Sydney
+all year, because `time.daylight` means "this zone observes DST", not "DST is in
+effect". The offset that mattered was +10, and local midnight was exactly right.
+
+## The card's size against the screen
+
+`Design.tooltipScale` moved the hover card off the ring's anchor and onto one
+chosen for reading. Everything the card is measured by goes through
+`Design.cardPx`, so the card grows by that factor — and choosing it turned out to
+be a question about screens, not about type.
+
+**Settled at 1.09, which is the ceiling rather than a preference.** 1.34 was the
+first attempt: it put the body at 12.7pt, which is where a card wants to be, and
+it stopped fitting screens. `SessionCapTests` caught it, and the numbers are
+below. Solving for the largest value that keeps every guarantee gives 1.097, so
+1.09 is taken for the margin — a body of **10.3pt**, better than the 9.5pt the
+card shipped with and short of the 12.7pt it was for. There is no larger value
+that keeps a legible card *and* the session list on the smallest display; going
+further means the card's scale following the screen it is drawn on, which is the
+third option below and is not done.
+
+**The conflict, measured.** On a 13-inch Air (1470 x 956) with the notch on a
+side edge and four providers, at the 1.34 that was tried:
+
+| | |
+|---|---|
+| screen, in stack space | 956pt |
+| the notch's own length, four cells | 501pt |
+| `2 x cardCorner` | 50pt |
+| **what is left for a card** | **405pt** |
+| the card at one session row, four windows and a Today row | **506pt** |
+| the same card with no session rows at all | ~460pt |
+
+So it is not the session rows that overflow: the card's fixed chrome does, on its
+own. At the shipped scale, four providers on the smallest laptop cannot be shown
+without clipping the top of the card, and `sessionsFitting` answers 0 because
+even one row is over budget.
+
+**Why the budget is not the thing to loosen.** `cardBudget`'s side-edge form
+looks conservative — it subtracts the whole stack, and `cardAlong` clamps the card
+into the visible slice rather than keeping it centred on its ring, so reserving
+the stack looks like room the placement was already free to use. That argument is
+wrong, and it was **tried rather than argued**: removing the term produced 44
+failures, headed by
+
+```
+testTheCardStillFitsTheScreenAtEverySize        small: a 966pt card on a 900pt screen
+testLedgerRowsGrowTheCardAndStillFitEveryEdge            1127pt vs 982pt
+```
+
+The term bounds the *whole* card, including the parts no session cap governs — a
+local model's ledger rows, a reset-credits block — so it is load-bearing beyond
+the centring argument that seems to justify it. The note on `cardBudget` says so
+where the next person will read it. The algebra agrees, incidentally:
+`stack + cardHeight + 2 x cardCorner <= screen / sizeScale` is the panel's own
+length constraint, and `panelSize` is what the window is sized from.
+
+**What fits instead.** Solving for the scale on that screen gives `tooltipScale`
+of **1.097**, so the shipped value is **1.09** and the body is **10.3pt**. There
+is no value in between that keeps both the enlargement and the four-window card on
+a 13-inch Air: at the original scale the card was 377pt against a 417pt budget, so
+about 40pt of slack was all there ever was, and any real enlargement spends it.
+
+**What is left, if the card wants to be bigger than 10.3pt on a big screen:**
+
+1. **Adapt the scale to the screen** — the original idea, and the evidence above
+   is what argues for it. Card geometry would have to leave `NotchLayout`'s
+   `static let`s and become per-model, because the scale would differ per display;
+   that is roughly twenty constants and every reader of them. This is the only
+   route to 12.7pt, and it is a refactor rather than a constant.
+2. **Shrink something else.** The stack is 501pt of the 956 before a card is
+   drawn, and it is `NotchSize` that controls it. A smaller notch on a small
+   screen buys the card room without touching the type.
+
+Worth knowing: the four-window card is Claude's. Codex and DeepSeek Harness carry
+two windows, and their cards are far shorter — this binds only on the busiest card
+on the smallest screen.
+
 ## Decisions needed
+- [ ] **Does the card want to be bigger than 10.3pt on a big screen?**
+      `Design.tooltipScale` is 1.09 because that is the largest value that keeps
+      the session list on a 13-inch Air; reaching the 12.7pt it was designed for
+      means letting the card's scale follow the display, which is written up in
+      "The card's size against the screen" below. Not urgent — 1.09 is a strict
+      improvement on the 9.5pt the card shipped with.
 - [ ] Final app name (`Codenotch` is a placeholder)
 - [x] ~~Which service is the third glyph in the mockup?~~ Perplexity — its mark,
       traced off the frame, matches. Wired up as `ProviderGlyph.third`.

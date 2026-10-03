@@ -1,3 +1,10 @@
+---
+summary: "Where each provider's artwork comes from, and why a mark is traced rather than borrowed."
+read_when:
+  - Replacing or adding a provider glyph or icon
+  - Changing a brand colour or a glyph's optical size
+---
+
 # Provider asset sources
 
 ## Ollama

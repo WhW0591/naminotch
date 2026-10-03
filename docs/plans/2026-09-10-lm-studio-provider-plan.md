@@ -1,3 +1,9 @@
+---
+summary: "The plan for reading LM Studio's server logs."
+read_when:
+  - Changing LM Studio log parsing, retention or the local token ledger
+---
+
 # LM Studio monitoring plan
 
 Prepared 2026-09-10 against `0a6c6fb` (Codenotch 1.7.0), as the

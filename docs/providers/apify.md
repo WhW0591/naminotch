@@ -1,3 +1,9 @@
+---
+summary: "How Apify's account limits are read and what they mean."
+read_when:
+  - Changing the Apify provider or its credential lookup
+---
+
 # Apify
 
 Codenotch for macOS reads the number Apify's Console shows under

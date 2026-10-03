@@ -1,3 +1,10 @@
+---
+summary: "DeepSeek Harness: the grant it files, the Platform endpoints it answers, and what decides the platform's day."
+read_when:
+  - Changing the DeepSeek Harness provider, its credential or its daily figures
+  - Changing the session monitor, or anything that files by day
+---
+
 # DeepSeek Harness
 
 Codenotch for macOS reads the DeepSeek Platform account through the grant
@@ -26,6 +33,34 @@ draws no placeholder asking for one either.
 There is no quota percentage to show, because DeepSeek Platform does not meter
 one: the account is funded and spent. Bonus wallets are a separate pot and stay
 off the ring rather than being folded into the balance.
+
+### What decides the platform's "day"
+
+The card's **Today** row comes from `/api/v0/usage/by_api_key/amount`, which
+answers in daily buckets. Where those buckets are cut is worth writing down,
+because the obvious readings of it are both wrong, and each one was measured:
+
+- **`tz` does nothing.** The same window asked for at `tz=0`, `+39600` and
+  `-39600` comes back with byte-identical bucket keys *and* values.
+- **`x-client-timezone-offset` does nothing either.** `+39600`, `0`, `+28800`
+  and `-18000` likewise change nothing. So the platform is not reading the
+  reader's zone off the request.
+- **`start` decides it.** A window beginning at 00:00, 14:00 and 18:00 UTC comes
+  back cut at 00:00, 14:00 and 18:00 UTC — and one beginning at local 06:00
+  comes back cut at local 06:00.
+
+So the platform has no opinion about the reader's day. It cuts wherever it is
+asked to, and Codenotch has always asked for local midnight, which is why the
+buckets have always looked like local calendar days. **Moving the boundary is a
+matter of moving that one line** — the constants in `amountQuery` — and of
+looking the day up the same way; nothing has to be asked of the platform.
+
+The window must be **thirty days**: a ten-day one is refused with
+`biz_code: 1, "INVALID_PARAM"`. Its alignment is not checked.
+
+`dayKey` labels each bucket with the local calendar date of the bucket's *start*,
+so whichever boundary is sent is also the one the card looks up. Those two must
+move together or the row reads "Pending" forever.
 
 ## Activity
 
