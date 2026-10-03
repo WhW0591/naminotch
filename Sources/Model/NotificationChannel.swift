@@ -70,7 +70,7 @@ enum ChannelNotifications {
                 }
             case .denied:
                 DispatchQueue.main.async {
-                    let id = Bundle.main.bundleIdentifier ?? "com.vinz.codenotch"
+                    let id = Bundle.main.bundleIdentifier ?? AppIdentity.bundleID
                     if let url = URL(string: "x-apple.systempreferences:com.apple.Notifications-Settings.extension?id=\(id)") {
                         NSWorkspace.shared.open(url)
                     }

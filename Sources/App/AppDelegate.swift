@@ -93,6 +93,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // replaces this a moment later, once preferences exist.
         NSApp.setActivationPolicy(.regular)
         guard !isRunningTests else { return }
+        // Before anything reads `UserDefaults.standard` — which the guard above
+        // is what keeps the tests from doing to the real domain.
+        AppIdentity.migrateIfNeeded()
         Self.retireOlderInstances()
         ChannelNotifications.installPresenter()
 
@@ -988,7 +991,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         if preferences.sessionEndSound { SessionChime.play(preferences.sessionEndSoundName) }
-        var notice = UsageResetEvent(providerID: "codenotch", providerName: "Codenotch",
+        var notice = UsageResetEvent(providerID: "codenotch", providerName: AppIdentity.name,
                                      windowLabel: "", glyph: .claude,
                                      previousFraction: 0, currentFraction: 0, resetsAt: nil)
         notice.noticeTitle = L10n.t("Codenotch test")

@@ -586,7 +586,7 @@ struct SettingsView: View {
                     .resizable()
                     .interpolation(.high)
                     .frame(width: 22, height: 22)
-                Text("Codenotch")
+                Text(AppIdentity.name)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(.primary)
             }

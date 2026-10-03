@@ -1,6 +1,28 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "NamiNotch": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NamiNotch"
+          }
+        }
+      }
+    },
+    "NamiNotch test": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NamiNotch 测试"
+          }
+        }
+      }
+    },
     "Codex": {
       "extractionState": "manual",
       "localizations": {

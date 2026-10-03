@@ -114,7 +114,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         item.button?.image = Self.icon()
-        item.button?.toolTip = L10n.t("Codenotch")
+        item.button?.toolTip = L10n.t("NamiNotch")
         // The pulse is a mask on the button's layer, and has to follow the
         // button's width as the item is laid out around a new image.
         item.button?.wantsLayer = true
@@ -223,7 +223,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             pulse.clear()
             item.length = NSStatusItem.squareLength
             button.image = Self.icon()
-            button.toolTip = L10n.t("Codenotch")
+            button.toolTip = L10n.t("NamiNotch")
             button.setAccessibilityLabel(nil)
             return
         }
