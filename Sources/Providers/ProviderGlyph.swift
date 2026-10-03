@@ -1,7 +1,12 @@
 import SwiftUI
 
 /// Which mark a provider cell draws.
-enum ProviderGlyph: String, Codable, Equatable {
+///
+/// `CaseIterable` for `ProviderRegistryTests`, which walks every case to check
+/// that the ones whose `outline` is empty have artwork to draw instead. Every
+/// case already appears in that switch, so the conformance costs nothing at the
+/// call sites and makes the enum's own completeness something a test can ask.
+enum ProviderGlyph: String, Codable, Equatable, CaseIterable {
     case claude
     case devin
     case openai
