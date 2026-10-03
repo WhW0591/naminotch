@@ -2,10 +2,15 @@
 
 ![NamiNotch](docs/design/codenotch-banner.png)
 
-[![CI](https://github.com/vinzdg/codenotch/actions/workflows/ci.yml/badge.svg)](https://github.com/vinzdg/codenotch/actions/workflows/ci.yml)
+[![CI](https://github.com/whw0591/naminotch/actions/workflows/ci.yml/badge.svg)](https://github.com/whw0591/naminotch/actions/workflows/ci.yml)
 ![Platform](https://img.shields.io/badge/platform-macOS%2026%2B-black)
 ![Swift](https://img.shields.io/badge/swift-5-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+> **A fork of [vinzdg/codenotch](https://github.com/vinzdg/codenotch)**, MIT.
+> It began there and carries that history; what has changed since — the features
+> removed, the providers added, the rename — is recorded in [TASKS.md](TASKS.md).
+> Not affiliated with, or endorsed by, the original author.
 
 **A macOS app that pins a small black notch to a screen edge, showing how much
 of each coding assistant's usage limit you have burned — and whether it is
