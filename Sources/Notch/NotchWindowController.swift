@@ -115,14 +115,19 @@ final class NotchWindowController {
     /// The last answer from WindowServer, and when it was asked.
     ///
     /// `cursorMoved` runs for every mouse event anywhere on screen, and the
-    /// question behind this is `CGWindowListCopyWindowInfo` — a copy of every
-    /// window's description. Asked afresh on each event it was nearly all of
-    /// the app's CPU while the pointer moved. A reading younger than the
-    /// cursor poll is as good as a new one: the poll would not have noticed
-    /// the change any sooner. A space or app switch drops it, so those
-    /// still answer at once.
+    /// question behind it is `CGWindowListCopyWindowInfo` — a synchronous copy
+    /// of every window's description, measured at ~1.5 ms on an ordinary
+    /// desktop and spiking far higher under load. Asked afresh on each event it
+    /// was nearly all of the app's CPU while the pointer moved.
+    ///
+    /// The lifetime is deliberately the whole `fullScreenPollInterval` rather
+    /// than a fraction of it. At the old 0.25s it was shorter than the 0.3s
+    /// cursor poll, so it never helped the idle case at all: every poll missed
+    /// the cache and the app asked WindowServer ~4 times a second while nothing
+    /// moved. At 2s the dedicated full-screen poll is what refreshes it, and a
+    /// space or app switch still clears it outright, so those answer at once.
     private var lastFullScreenReading: (at: Date, screen: NSScreen?, value: Bool)?
-    static let fullScreenReadingLifetime: TimeInterval = 0.25
+    static let fullScreenReadingLifetime: TimeInterval = 2
 
     private func fullScreenReading() -> Bool {
         let screen = currentScreen()
@@ -1337,6 +1342,7 @@ final class NotchWindowController {
                 self.handleActiveSpaceOrAppChange()
             }
         }
+        poll.tolerance = 0.5
         RunLoop.main.add(poll, forMode: .common)
         fullScreenTimer = poll
     }
@@ -1345,6 +1351,10 @@ final class NotchWindowController {
         let poll = Timer(timeInterval: 0.3, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.cursorMoved() }
         }
+        // The pointer's own events drive the responsive path; this poll only
+        // backs them up for a parked pointer, so it may be folded into another
+        // wake-up.
+        poll.tolerance = 0.05
         RunLoop.main.add(poll, forMode: .common)
         cursorTimer = poll
 

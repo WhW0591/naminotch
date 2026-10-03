@@ -129,6 +129,10 @@ final class CostStore {
     private func migrate() -> Bool {
         exec("PRAGMA journal_mode=WAL;")
         exec("PRAGMA synchronous=NORMAL;")
+        // One connection per account, always open. Half a megabyte is plenty
+        // for these queries and keeps a multi-account Mac from parking several
+        // megabytes of page cache it never reads.
+        exec("PRAGMA cache_size = -512;")
         let schema = """
         CREATE TABLE IF NOT EXISTS file_cursor(
           path   TEXT PRIMARY KEY,

@@ -1,5 +1,6 @@
 import AppKit
 import Combine
+import CoreServices
 import Darwin
 import Foundation
 
@@ -20,6 +21,25 @@ final class DSHSessionMonitor: ObservableObject, AgentActivityMonitor {
     private let home: URL
     private let interval: TimeInterval
     private var timer: Timer?
+    /// How many liveness ticks between two full re-listings of the tree.
+    ///
+    /// Structure is watched, so this is only a net under a missed event; the
+    /// point of the number is that the common tick never lists the tree.
+    private static let ticksBetweenDiscoveries = 15
+
+    /// The session directories seen at the last listing.
+    ///
+    /// The liveness tick walks this rather than the tree. The tree only ever
+    /// grows — a finished session keeps its directory for ever — so
+    /// re-enumerating it every two seconds was work proportional to every
+    /// session ever run.
+    private var candidates: [(name: String, directory: URL)] = []
+    /// FSEvents for structural changes: a session directory appearing or
+    /// disappearing. Process death releases the lock without touching the disk,
+    /// which is what the timer is still for.
+    private var stream: FSEventStreamRef?
+    private var pendingDiscovery: DispatchWorkItem?
+    private var tickCount = 0
 
     init(home: URL = DSHCredentials.homeURL, interval: TimeInterval = 2) {
         self.home = home
@@ -27,10 +47,20 @@ final class DSHSessionMonitor: ObservableObject, AgentActivityMonitor {
     }
 
     func start() {
+        // Not idempotent by construction: a second stream and a second timer
+        // would stack on the first pair.
+        stop()
+        rediscover()
         rescan()
+
         let timer = Timer(timeInterval: interval, repeats: true) { [weak self] _ in
-            MainActor.assumeIsolated { self?.rescan() }
+            MainActor.assumeIsolated {
+                guard let self else { return }
+                self.tickCount += 1
+                self.rescan(discover: self.tickCount % Self.ticksBetweenDiscoveries == 0)
+            }
         }
+        timer.tolerance = interval * 0.25
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer
     }
@@ -38,11 +68,36 @@ final class DSHSessionMonitor: ObservableObject, AgentActivityMonitor {
     func stop() {
         timer?.invalidate()
         timer = nil
+        pendingDiscovery?.cancel()
+        pendingDiscovery = nil
+        if let stream {
+            FSEventStreamStop(stream)
+            FSEventStreamInvalidate(stream)
+            FSEventStreamRelease(stream)
+        }
+        stream = nil
     }
 
-    private func rescan() {
+    /// Re-lists the session directories, and makes sure the watcher exists.
+    ///
+    /// Only structure needs this, so it runs on an FSEvent or every
+    /// `ticksBetweenDiscoveries` ticks rather than on every tick.
+    private func rediscover() {
+        candidates = DSHSessionActivity.sessionDirectories(home: home)
+        startWatching()
+    }
+
+    private func rescan(discover: Bool = false) {
+        if discover { rediscover() }
         let found = DSHSessionActivity.read(home: home, processID: Self.harnessPID(),
-                                            acknowledged: acknowledged)
+                                            acknowledged: acknowledged,
+                                            directories: candidates)
+        // Drop directories whose lock has gone, so the net grows only with the
+        // sessions actually alive. A session cannot be resumed in place: its
+        // lock is taken for the life of one run.
+        candidates = candidates.filter {
+            DSHSessionActivity.isHeld($0.directory.appendingPathComponent("session.lock"))
+        }
         guard found != sessions else { return }
         sessions = found
 
@@ -59,6 +114,48 @@ final class DSHSessionMonitor: ObservableObject, AgentActivityMonitor {
         // dictionary grows for the life of the app.
         let live = Set(found.map(\.id))
         acknowledged = acknowledged.filter { live.contains($0.key) }
+    }
+
+    /// Watches the sessions directory for the one thing the timer cannot
+    /// answer quickly: a session directory that has just appeared.
+    private func startWatching() {
+        guard stream == nil else { return }
+        let root = home.appendingPathComponent("sessions")
+        guard FileManager.default.fileExists(atPath: root.path) else { return }
+        var context = FSEventStreamContext(version: 0,
+                                           info: Unmanaged.passUnretained(self).toOpaque(),
+                                           retain: nil, release: nil, copyDescription: nil)
+        let callback: FSEventStreamCallback = { _, info, _, _, _, _ in
+            guard let info else { return }
+            let monitor = Unmanaged<DSHSessionMonitor>.fromOpaque(info).takeUnretainedValue()
+            Task { @MainActor in monitor.structureChanged() }
+        }
+        guard let stream = FSEventStreamCreate(nil, callback, &context,
+                                               [root.path] as CFArray,
+                                               FSEventStreamEventId(kFSEventStreamEventIdSinceNow),
+                                               0.2,
+                                               FSEventStreamCreateFlags(kFSEventStreamCreateFlagNoDefer)) else { return }
+        FSEventStreamSetDispatchQueue(stream, DispatchQueue.global(qos: .utility))
+        guard FSEventStreamStart(stream) else {
+            FSEventStreamInvalidate(stream)
+            FSEventStreamRelease(stream)
+            return
+        }
+        self.stream = stream
+    }
+
+    /// A directory appeared or vanished. Coalesced, because one session start
+    /// can produce several events and re-listing is a full walk.
+    private func structureChanged() {
+        pendingDiscovery?.cancel()
+        let work = DispatchWorkItem { [weak self] in
+            MainActor.assumeIsolated {
+                self?.pendingDiscovery = nil
+                self?.rescan(discover: true)
+            }
+        }
+        pendingDiscovery = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: work)
     }
 
     /// The card was open and has closed: everything it was showing has been
@@ -131,8 +228,9 @@ enum DSHSessionActivity {
     static func read(home: URL = DSHCredentials.homeURL,
                      processID: pid_t? = nil,
                      now: Date = Date(),
-                     acknowledged: [String: Date] = [:]) -> [AgentSession] {
-        sessionDirectories(home: home).compactMap { name, directory in
+                     acknowledged: [String: Date] = [:],
+                     directories: [(String, URL)]? = nil) -> [AgentSession] {
+        (directories ?? sessionDirectories(home: home)).compactMap { name, directory in
             guard isHeld(directory.appendingPathComponent("session.lock")) else { return nil }
             return session(name: name,
                            reading: reading(home: home, session: name),

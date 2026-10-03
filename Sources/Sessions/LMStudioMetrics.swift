@@ -163,6 +163,7 @@ final class LMStudioMetrics: ObservableObject {
         let timer = Timer(timeInterval: pollInterval, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.pollNow() }
         }
+        timer.tolerance = pollInterval * 0.25
         RunLoop.main.add(timer, forMode: .common)
         pollTimer = timer
         pollNow()
@@ -282,6 +283,7 @@ final class LMStudioMetrics: ObservableObject {
         let timer = Timer(timeInterval: logInterval, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.readLog() }
         }
+        timer.tolerance = logInterval * 0.25
         RunLoop.main.add(timer, forMode: .common)
         logTimer = timer
     }

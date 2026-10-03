@@ -9,6 +9,8 @@ import SwiftUI
 enum Costs {
     private static var subscription: AnyCancellable?
     private static var activityWindow: NSWindow?
+    /// Removed again the moment the window closes; see `showActivity`.
+    private static var activityCloseObserver: NSObjectProtocol?
 
     /// What a Claude login's card gains before the notch draws it: the daily
     /// token chart and summary the Codex server publishes for Codex, built
@@ -43,9 +45,24 @@ enum Costs {
             w.title = L10n.t("Activity")
             w.minSize = NSSize(width: 900, height: 560)
             w.contentViewController = NSHostingController(rootView: TimelinePane().frame(minWidth: 900, minHeight: 560))
+            // Held by ARC rather than released by AppKit, and dropped again
+            // when the window closes: the timeline is a large SwiftUI tree, and
+            // keeping it alive for the rest of the session bought only restored
+            // scroll position.
             w.isReleasedWhenClosed = false
             w.center()
             activityWindow = w
+            activityCloseObserver = NotificationCenter.default.addObserver(
+                forName: NSWindow.willCloseNotification, object: w, queue: .main
+            ) { _ in
+                MainActor.assumeIsolated {
+                    if let token = activityCloseObserver {
+                        NotificationCenter.default.removeObserver(token)
+                    }
+                    activityCloseObserver = nil
+                    activityWindow = nil
+                }
+            }
         }
         NSApp.activate(ignoringOtherApps: true)
         activityWindow?.makeKeyAndOrderFront(nil)

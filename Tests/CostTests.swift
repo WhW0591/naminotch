@@ -47,11 +47,18 @@ final class CostTests: XCTestCase {
     }
 
     /// The card's range follows the account's allowance, never "all time".
+    ///
+    /// The database goes to a temporary directory that the test removes: this
+    /// used to write `agentcost-test-x.sqlite` into the developer's real
+    /// Application Support folder, where it outlived the run.
     @MainActor func testCostRangeNeverStartsOnAllTime() {
         UserDefaults.standard.set("allTime", forKey: "costRange")
+        defer { UserDefaults.standard.removeObject(forKey: "costRange") }
+        let directory = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("cost-model-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
         let account = CostAccount(id: "test-x", provider: "claude", name: "Test", configDirectory: URL(fileURLWithPath: "/nonexistent"))
-        let model = CostModel(account: account)
+        let model = CostModel(account: account, directory: directory)
         XCTAssertNotEqual(model.range, .allTime)
-        UserDefaults.standard.removeObject(forKey: "costRange")
     }
 }

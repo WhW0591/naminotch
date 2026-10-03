@@ -91,6 +91,8 @@ final class UsageStore: ObservableObject {
             } else if providers.contains(where: { changed.contains($0.id) && $0.kind == .localRuntime }) {
                 refreshLocalRuntimes()
             }
+            // A local runtime was just switched on or off: arm or drop the poll.
+            syncLocalTimer()
         }
     }
 
@@ -318,14 +320,12 @@ final class UsageStore: ObservableObject {
         let timer = Timer(timeInterval: refreshInterval, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.tick() }
         }
+        // The tick only compares dates unless a fetch is owed, so it may be
+        // folded into another wake-up.
+        timer.tolerance = refreshInterval * 0.1
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer
-
-        let localTimer = Timer(timeInterval: localRefreshInterval, repeats: true) { [weak self] _ in
-            MainActor.assumeIsolated { self?.refreshLocalRuntimes() }
-        }
-        RunLoop.main.add(localTimer, forMode: .common)
-        self.localTimer = localTimer
+        syncLocalTimer()
 
         // Waking up is the one moment the numbers are guaranteed to be wrong —
         // and the one moment a cache is guaranteed to be wrong with them, having
@@ -595,6 +595,27 @@ final class UsageStore: ObservableObject {
         }
     }
 
+    /// Runs the local-runtime poll only while a local runtime is connected.
+    ///
+    /// It used to be armed for the app's whole life, so a Mac with no local
+    /// runtime still woke once a second to loop over an empty set.
+    private func syncLocalTimer() {
+        let wanted = providers.contains {
+            $0.kind == .localRuntime && !disconnected.contains($0.id)
+        }
+        if wanted, localTimer == nil {
+            let timer = Timer(timeInterval: localRefreshInterval, repeats: true) { [weak self] _ in
+                MainActor.assumeIsolated { self?.refreshLocalRuntimes() }
+            }
+            timer.tolerance = localRefreshInterval * 0.2
+            RunLoop.main.add(timer, forMode: .common)
+            localTimer = timer
+        } else if !wanted {
+            localTimer?.invalidate()
+            localTimer = nil
+        }
+    }
+
     func updateOllamaEndpoint(_ endpoint: URL) {
         guard let provider = providers.first(where: { $0.id == "ollama-local" }) as? OllamaLocalProvider,
               provider.endpoint != endpoint else { return }
@@ -648,7 +669,13 @@ final class UsageStore: ObservableObject {
         guard !disconnected.contains(snapshot.id) else { return }
         var current = Dictionary(uniqueKeysWithValues: snapshots.map { ($0.id, $0) })
         current[snapshot.id] = named(snapshot)
-        snapshots = orderedProviders.compactMap { disconnected.contains($0.id) ? nil : current[$0.id] }
+        let next = orderedProviders.compactMap { disconnected.contains($0.id) ? nil : current[$0.id] }
+        // A local runtime is re-read every second and usually answers with
+        // exactly what it said last time. Publishing that regardless woke every
+        // subscriber — the cost models' SQLite writes and re-reads, the account
+        // rediscovery, the menu bar redraw — once a second for no change.
+        guard next != snapshots else { return }
+        snapshots = next
     }
 
     /// Sign out of one provider: discard anything of its account that this app

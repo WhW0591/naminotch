@@ -49,7 +49,10 @@ final class CostModel: ObservableObject {
     private let store: CostStore?
     private let indexer: CostIndexer?
 
-    init(account: CostAccount) {
+    /// - Parameter directory: where this account's database lives. Injected by
+    ///   tests so they never write into the real Application Support folder;
+    ///   nil takes the app's own location.
+    init(account: CostAccount, directory: URL? = nil) {
         self.account = account
         isExpanded = UserDefaults.standard.bool(forKey: Self.expandedKey)
         let saved = CostRange(rawValue: UserDefaults.standard.string(forKey: Self.rangeKey) ?? "") ?? .session
@@ -57,7 +60,7 @@ final class CostModel: ObservableObject {
 
         // One database and one transcript watcher per account; the default
         // account keeps the original file name so history carries over.
-        let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let dir = directory ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
             .appendingPathComponent("\(AppIdentity.supportDirectory)/costs", isDirectory: true)
         // The original single-account database keeps its name for the default
         // Claude login; every other account (Codex included) gets its own file.

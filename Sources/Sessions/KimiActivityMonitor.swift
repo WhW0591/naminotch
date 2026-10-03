@@ -39,6 +39,7 @@ final class KimiActivityMonitor: ObservableObject, AgentActivityMonitor {
         let timer = Timer(timeInterval: interval, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.rescan() }
         }
+        timer.tolerance = interval * 0.25
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer
     }

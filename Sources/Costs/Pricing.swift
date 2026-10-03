@@ -67,9 +67,12 @@ final class PriceTable: ObservableObject {
         }
         loading = false
         refreshIfDue()
-        Timer.scheduledTimer(withTimeInterval: 6 * 3600, repeats: true) { [weak self] _ in
+        let refresher = Timer.scheduledTimer(withTimeInterval: 6 * 3600, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in self?.refreshIfDue() }
         }
+        // A price list refreshed at most once a day may drift to a convenient
+        // wake-up.
+        refresher.tolerance = 300
     }
 
     // MARK: Daily refresh from public sources (no keys)
@@ -275,9 +278,10 @@ final class PlanCatalog: ObservableObject {
         }
         load()
         refreshIfDue()
-        Timer.scheduledTimer(withTimeInterval: 6 * 3600, repeats: true) { [weak self] _ in
+        let refresher = Timer.scheduledTimer(withTimeInterval: 6 * 3600, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in self?.refreshIfDue() }
         }
+        refresher.tolerance = 300
     }
 
     private func load() {

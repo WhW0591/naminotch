@@ -29,6 +29,7 @@ final class CostIndexer {
     private var stream: FSEventStreamRef?
     private var gitRootCache: [String: String] = [:]
     private var scanScheduled = false
+    private var pendingPaths: Set<String> = []
 
     /// Called on the indexer queue after a pass that changed something.
     var onChange: (() -> Void)?
@@ -344,15 +345,23 @@ final class CostIndexer {
         var context = FSEventStreamContext(version: 0,
                                            info: Unmanaged.passUnretained(self).toOpaque(),
                                            retain: nil, release: nil, copyDescription: nil)
-        let callback: FSEventStreamCallback = { _, info, _, _, _, _ in
+        let callback: FSEventStreamCallback = { _, info, count, paths, _, _ in
             guard let info else { return }
-            Unmanaged<CostIndexer>.fromOpaque(info).takeUnretainedValue().coalescedScan()
+            let indexer = Unmanaged<CostIndexer>.fromOpaque(info).takeUnretainedValue()
+            let changed = unsafeBitCast(paths, to: NSArray.self) as? [String] ?? []
+            indexer.coalescedScan(Array(changed.prefix(count)))
         }
+        // `UseCFTypes` is what makes the changed paths readable, and
+        // `FileEvents` is what makes them files rather than the directories
+        // above them. Without both, every event walked the whole transcript
+        // tree — every session ever written — to find the one file appended to.
         guard let s = FSEventStreamCreate(nil, callback, &context,
                                           [root.path] as CFArray,
                                           FSEventStreamEventId(kFSEventStreamEventIdSinceNow),
                                           2.0,   // latency doubles as debounce
-                                          FSEventStreamCreateFlags(kFSEventStreamCreateFlagNoDefer)) else { return }
+                                          FSEventStreamCreateFlags(kFSEventStreamCreateFlagUseCFTypes
+                                              | kFSEventStreamCreateFlagFileEvents
+                                              | kFSEventStreamCreateFlagNoDefer)) else { return }
         FSEventStreamSetDispatchQueue(s, queue)
         FSEventStreamStart(s)
         stream = s
@@ -366,17 +375,32 @@ final class CostIndexer {
         self.stream = nil
     }
 
-    /// FSEvents can fire repeatedly while a session is being written; collapse
-    /// bursts into one pass.
-    private func coalescedScan() {
+    /// Only the files FSEvents named. The stream fires repeatedly while a
+    /// session is being written, so the paths accumulate and one pass runs
+    /// after the burst.
+    private func coalescedScan(_ paths: [String]) {
         queue.async { [weak self] in
-            guard let self, !self.scanScheduled else { return }
+            guard let self else { return }
+            self.pendingPaths.formUnion(paths.filter { $0.hasSuffix(".jsonl") })
+            guard !self.scanScheduled else { return }
             self.scanScheduled = true
             self.queue.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                 guard let self else { return }
                 self.scanScheduled = false
-                self.performScan()
+                let changed = self.pendingPaths
+                self.pendingPaths.removeAll()
+                self.index(paths: changed)
             }
         }
+    }
+
+    /// Indexes just the named files. Anything outside the root, or with no new
+    /// bytes, is a no-op inside `indexFile`.
+    private func index(paths: Set<String>) {
+        var changed = false
+        for path in paths where path.hasPrefix(root.path) {
+            if indexFile(URL(fileURLWithPath: path)) { changed = true }
+        }
+        if changed { onChange?() }
     }
 }
