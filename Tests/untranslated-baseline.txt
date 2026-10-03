@@ -1,10 +1,10 @@
 # Keys the source asks for that have no zh-Hans yet.
 #
-# Generated when the guard below was added, and regenerated once the scan
-# learned that an interpolated literal is stored as `%@` — the first version
-# read 101 of these as their own source text, which are not keys at all.
-# The list may only shrink: translate a string, delete its line. A key that is
-# not here and has no zh-Hans fails `LocalizationCoverageTests`.
+# Regenerated after the scan learned the second half of the format rule:
+# `%@%% deficit` is the key Swift makes from "\(value)% deficit" — a literal
+# percent beside an interpolation is doubled — so a key with it single is one
+# nothing ever looks up. Both halves are pinned in `CatalogFormatTests`.
+# The list may only shrink: translate a string, delete its line.
 $%@
 %@ %@ · via %@
 %@ / %@ left
@@ -23,7 +23,7 @@ $%@
 %@ hr
 %@ hr %@ min
 %@ in · %@ out
-%@ is at %@%
+%@ is at %@%%
 %@ is waiting on you
 %@ limit is spent
 %@ limit refreshed
@@ -39,11 +39,8 @@ $%@
 %@ · %@ queued
 %@ · %@/month (catalog)
 %@ · price unknown, set it here
-%@% Used · %@% left
-%@% deficit
-%@% of its %@ limit used.
-%@% reserved
-%@% used
+%@%% of its %@ limit used.
+%@%% used
 %@d limit
 %@h %@m
 %@h limit
@@ -62,7 +59,6 @@ Activity…
 Add Endpoint
 Add to Endpoints
 Adds a compact weekly-usage ring around each chosen provider that publishes it.
-Alert when %@ crosses 80% and 100% of a limit.
 All
 All accounts
 All time
@@ -87,7 +83,7 @@ Configure endpoint details and credentials in Settings.
 Configured Endpoints
 Connect any OpenAI-compatible API, local inference runtime, or custom proxy.
 Connected · %@ loaded
-Context %@%
+Context %@%%
 Costs
 Could not reach the endpoint
 Credit balance
@@ -102,7 +98,7 @@ Day starts at
 Day, week and month per login: sessions per project with what each cost.
 Days
 DeepSeek Harness
-Detected from each login once a day. A week of the plan costs the price ÷ 4.35; a project that used 4% of the weekly allowance spent 4% of that. Amounts in %@, your Mac's currency. Type the amount you actually pay to override the list price.
+Detected from each login once a day. A week of the plan costs the price ÷ 4.35; a project that used 4%% of the weekly allowance spent 4%% of that. Amounts in %@, your Mac's currency. Type the amount you actually pay to override the list price.
 Detected usage format: %@. Save Endpoint to apply.
 Discovered Local Services:
 Edit

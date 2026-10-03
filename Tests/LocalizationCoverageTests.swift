@@ -42,7 +42,10 @@ final class LocalizationCoverageTests: XCTestCase {
                     if ch == "\\", text.index(after: cursor) < text.endIndex {
                         let next = text[text.index(after: cursor)]
                         if next == "(" {
-                            key += "%@"
+                            // A sentinel, not `%@` yet: whether the literal
+                            // percent beside it needs doubling is only known
+                            // once the whole string has been read.
+                            key.append("\u{1}")
                             var depth = 1
                             cursor = text.index(cursor, offsetBy: 2)
                             while cursor < text.endIndex, depth > 0 {
@@ -60,6 +63,14 @@ final class LocalizationCoverageTests: XCTestCase {
                     key.append(ch)
                     cursor = text.index(after: cursor)
                 }
+                // `"\(value)% deficit"` becomes the key `%@%% deficit`: Swift
+                // doubles a literal percent beside an interpolation, and a key
+                // with it single is one nothing ever looks up. See
+                // `CatalogFormatTests`.
+                if key.contains("\u{1}") {
+                    key = key.replacingOccurrences(of: "%", with: "%%")
+                }
+                key = key.replacingOccurrences(of: "\u{1}", with: "%@")
                 found[key] = url.lastPathComponent
                 from = cursor
             }
