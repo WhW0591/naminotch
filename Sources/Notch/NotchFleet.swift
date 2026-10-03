@@ -79,6 +79,8 @@ final class NotchFleet {
     var onRefreshProvider: ((String) async -> Void)?
     var onOpenSettings: (() -> Void)?
     var onFocusSession: ((pid_t) -> Void)?
+    /// A tooltip closed, for this provider. See `NotchViewModel`.
+    var onTooltipDismissed: ((String) -> Void)?
     var signInItems: [(title: String, action: () -> Void)] = []
     /// An ⌥-drag on any one panel settled at a new offset. Persisting it is
     /// Preferences' job, same division `apply(edge:)` already keeps.
@@ -439,6 +441,7 @@ final class NotchFleet {
         controller.onOpenSettings = onOpenSettings
         controller.model.onOpenSettings = onOpenSettings
         controller.model.onFocusSession = onFocusSession
+        controller.model.onTooltipDismissed = onTooltipDismissed
         controller.onReposition = onReposition
         controller.onMoveToEdge = onMoveToEdge
         controller.signInItems = signInItems

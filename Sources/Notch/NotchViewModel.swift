@@ -74,7 +74,7 @@ final class NotchViewModel: ObservableObject {
     /// rather than SwiftUI's `.onHover`: the panel ignores mouse events until
     /// the cursor is over it, so SwiftUI cannot see the crossing that turns
     /// event handling on in the first place.
-    @Published var hoveredIndex: Int?
+    @Published var hoveredIndex: Int? { didSet { noteTooltipVisibility() } }
     /// Ticked on refresh so the "Resets in N min" copy stays honest.
     @Published var now: Date = Date()
     @Published var resetTimeFormat: ResetTimeFormat = .automatic
@@ -87,7 +87,7 @@ final class NotchViewModel: ObservableObject {
     }
 
     /// Whether the notch is open or folded away to its pill.
-    @Published var isExpanded = false
+    @Published var isExpanded = false { didSet { noteTooltipVisibility() } }
     /// Clicked open, so it stays open until clicked shut again. A gesture,
     /// not a setting: it lasts as long as this session of looking at it.
     @Published var isPinned = false
@@ -157,6 +157,16 @@ final class NotchViewModel: ObservableObject {
     /// A tap on a session row in the tooltip: jump to the terminal tab the
     /// session runs in. Takes the session's pid; wired to `SessionFocus`.
     var onFocusSession: ((pid_t) -> Void)?
+    /// A tooltip has just gone away, for this provider.
+    ///
+    /// A *look* is the whole visit — the card appearing and then closing again —
+    /// so this reports the end of one, not the start. Whoever is showing unread
+    /// work in that card takes it as read: see `DSHSessionMonitor.markSeen()`.
+    /// Moving between rings counts as closing the one left behind, because that
+    /// card is gone from the screen either way.
+    var onTooltipDismissed: ((String) -> Void)?
+    /// The provider whose tooltip was on screen at the last check.
+    private var shownTooltipProvider: String?
     /// Which screen edge the notch is welded to. Everything geometric reads
     /// this through `placement` rather than assuming an axis.
     @Published var edge: NotchEdge = .right
@@ -1173,6 +1183,26 @@ final class NotchViewModel: ObservableObject {
         return snapshots[hoveredIndex]
     }
 
+    /// The provider whose card is on screen right now, or nil when none is.
+    ///
+    /// The card is drawn under exactly this condition — see `NotchRootView`,
+    /// which needs a hovered index *and* an open notch — so saying "visible" here
+    /// means the same thing it does there.
+    private var visibleTooltipProvider: String? {
+        guard isExpanded, let hoveredSnapshot else { return nil }
+        return hoveredSnapshot.providerID
+    }
+
+    /// Reports the crossings of `visibleTooltipProvider`, and only the
+    /// crossings: the two properties it watches are set many times per visit.
+    private func noteTooltipVisibility() {
+        let showing = visibleTooltipProvider
+        guard showing != shownTooltipProvider else { return }
+        let leaving = shownTooltipProvider
+        shownTooltipProvider = showing
+        if let leaving { onTooltipDismissed?(leaving) }
+    }
+
     var shapeLength: CGFloat { shapeLength(cellCount: snapshots.count) }
 
     /// **The notch in the hand, as it would be on `edge`**, in screen points:
@@ -1281,16 +1311,29 @@ final class NotchViewModel: ObservableObject {
             : contentCardHeight(sessionCap: cap)
     }
 
-    /// How tall the tallest card may be before the panel runs off the screen.
+    /// How tall the tallest card may be before it runs off the screen.
     ///
     /// Which way it runs out differs by orientation, because the card's height
     /// is spent on a different axis: along a side edge it is spent *along* the
     /// stack, half of it past each end, so the stack itself takes its share
     /// first. Along a horizontal edge the card hangs *inward* instead, and what
     /// it competes with is the depth already spent on the notch body and tail.
+    ///
+    /// **The side-edge form was challenged once and held.** `cardAlong` clamps
+    /// the card into `visibleAlongRange` rather than keeping it centred on its
+    /// ring, which makes reserving the stack look like room the placement was
+    /// already free to use — and reserving it is what costs the session list a
+    /// legible card. Dropping the term was tried, and the suite refused it:
+    /// `testTheCardStillFitsTheScreenAtEverySize` and
+    /// `testLedgerRowsGrowTheCardAndStillFitEveryEdge` both caught a card taller
+    /// than the display. The term bounds the *whole* card, including the parts
+    /// no session cap governs — a local model's ledger rows, a reset-credits
+    /// block — so it is load-bearing beyond the centring argument that seems to
+    /// justify it. Do not remove it again without answering those two tests.
+    ///
     /// The screen is measured in real points, and everything it is compared
     /// against here is unscaled. Dividing brings the screen into the same space
-    /// rather than scaling the four constants below it: at `large` a card sized
+    /// rather than scaling the constants below it: at `large` a card sized
     /// against the raw height would be drawn a quarter taller than it was
     /// budgeted for, and run off the bottom of a small display.
     private func cardBudget(cellCount: Int) -> CGFloat {

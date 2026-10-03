@@ -247,4 +247,96 @@ final class DSHSessionActivityTests: XCTestCase {
 
         XCTAssertEqual(DSHSessionActivity.read(home: home).map(\.name), ["Second", "First"])
     }
+
+    // MARK: - Read and unread
+
+    /// Rewrites a session's projection and dates it, so "it settled later" is a
+    /// fact of the fixture rather than a race with the filesystem's clock.
+    private func settle(_ name: String, at date: Date, title: String) throws {
+        let url = DSHSessionActivity.projectionURL(home: home, session: name)
+        try projection(title: title).data(using: .utf8)!.write(to: url)
+        try manager.setAttributes([.modificationDate: date], ofItemAtPath: url.path)
+    }
+
+    /// **A completion waits to be read, and reading it clears it.**
+    ///
+    /// Not a time window: the card is opened *because* something just finished,
+    /// so the finished session has to still be there, and how long that takes
+    /// is not something the app can guess. It is `success` until the card has
+    /// been closed over it — and then the next turn makes it `busy`, which puts
+    /// it back on its own.
+    func testAFinishedSessionReadsAsCompleteUntilItHasBeenRead() throws {
+        let directory = try session("loop", projection: projection(title: "Work"))
+        let descriptor = hold(directory)
+        defer { release(descriptor) }
+
+        let settled = Date(timeIntervalSince1970: 2_000_000)
+        try settle("loop", at: settled, title: "Work")
+        let id = DSHSessionActivity.sessionID("loop")
+
+        // Not read since before it settled: it is a completion.
+        XCTAssertEqual(
+            DSHSessionActivity.read(home: home, acknowledged: [id: settled.addingTimeInterval(-60)])
+                .first?.state,
+            .success)
+
+        // Read at the time it settled: it is nothing to report.
+        XCTAssertEqual(
+            DSHSessionActivity.read(home: home, acknowledged: [id: settled]).first?.state,
+            .idle)
+    }
+
+    /// A session mid-turn is never a completion, however long the turn runs.
+    func testAWorkingSessionIsNotACompletion() throws {
+        let directory = try session("busy", projection: projection(pendingCalls: ["call": 1]))
+        let descriptor = hold(directory)
+        defer { release(descriptor) }
+
+        XCTAssertEqual(
+            DSHSessionActivity.read(home: home, acknowledged: [:]).first?.state,
+            .busy)
+    }
+
+    /// **A session that finished before Codenotch was watching is not unread.**
+    ///
+    /// The marks start empty, so without the seed every session that had ever
+    /// settled would arrive as a completion and the card would open onto a
+    /// backlog nobody was waiting on.
+    @MainActor func testASessionThatFinishedBeforeLaunchIsNotUnread() throws {
+        let directory = try session("stale", projection: projection(title: "Yesterday"))
+        let descriptor = hold(directory)
+        defer { release(descriptor) }
+
+        let monitor = DSHSessionMonitor(home: home, interval: 60)
+        monitor.start()
+        monitor.stop()
+
+        XCTAssertEqual(monitor.sessions.first?.state, .idle, "an old completion arrived unread")
+    }
+
+    /// Closing the card reads what it showed; the next turn comes back by
+    /// itself, and reading that one clears it too.
+    @MainActor func testClosingTheCardReadsItAndTheNextTurnComesBack() throws {
+        let directory = try session("again", projection: projection(title: "Work"))
+        let descriptor = hold(directory)
+        defer { release(descriptor) }
+
+        let monitor = DSHSessionMonitor(home: home, interval: 60)
+        monitor.start()
+        monitor.stop()
+        monitor.markSeen()
+
+        // The turn settles, later than anything the monitor has seen.
+        try settle("again", at: Date().addingTimeInterval(60), title: "Work")
+        monitor.start()
+        monitor.stop()
+        XCTAssertEqual(monitor.sessions.first?.state, .success,
+                       "a completion after the last look did not come back")
+
+        monitor.markSeen()
+        monitor.start()
+        monitor.stop()
+        XCTAssertEqual(monitor.sessions.first?.state, .idle,
+                       "closing the card did not clear it")
+    }
 }
