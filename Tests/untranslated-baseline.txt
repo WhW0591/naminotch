@@ -1,0 +1,313 @@
+# Keys the source asks for that have no zh-Hans yet.
+#
+# Generated when the guard below was added: 306 of the 642 keys in use at the
+# time, most of them older than the work that noticed them. The list may only
+# shrink — translate a string, delete its line. A key that is *not* here and
+# has no zh-Hans fails `LocalizationCoverageTests`, which is the point: the
+# rule is the test's, not a note somebody has to remember to read.
+$\(formatted)
+%@ / %@ left
+%@ / %@ remaining
+%@ / %@ tokens
+%@ / %@ tokens remaining
+%@ credits left · %@ monthly + %@ extra
+%@ of %@ monthly credits left
+%@ tokens
+1 USD = \(MoneyFormat.string(prices.rate, currency: prices.currency))
+A banner in Notification Center, which reaches you on another display or with the notch hidden. The notch stays quiet; sounds still play.
+API Key
+API key
+API key (per token)
+Abacus.AI
+About \(days) days
+Account usage (\(reading.currency))
+Active time
+Activity
+Activity…
+Add Endpoint
+Add to Endpoints
+Adds a compact weekly-usage ring around each chosen provider that publishes it.
+Alert when \(displayName) crosses 80% and 100% of a limit.
+Alerts for \(displayName) are muted. Click to unmute.
+All
+All accounts
+All time
+Ample, watch and critical each stay one flat colour, jumping between them at the limits below.
+Antigravity in \(displayPath)
+Apify CLI
+Appearance & Icon
+Asks macOS for \(provider.name)'s saved login again. Deny stops Codenotch reading it until you ask again.
+Auth Header
+Authentication required to inspect usage route
+Authorization
+Base URL
+Billing
+Cancel
+Channel
+Checking usage route...
+Choose a preset to pre-fill settings:
+Codenotch is not reading \(provider.name)'s saved login. Choose Allow access… above and answer Allow.
+Codenotch reads usage from tools already signed in on this Mac — it never asks for your password. Install and sign in to any of Claude Code (the terminal tool, not the Claude app), Cursor (the editor or cursor-agent), Codex, Antigravity, GLM, Grok, OpenCode, Command Code, GitHub Copilot, Kimi Code, Kiro, Amp, Apify, the Kilo CLI or a Gemini API key (via Gemini CLI, OpenCode or Hermes), and its ring appears in the notch.
+Codenotch test
+Colour ramp
+Colour transition
+Configure endpoint details and credentials in Settings.
+Configured Endpoints
+Connect any OpenAI-compatible API, local inference runtime, or custom proxy.
+Connected · \(loaded) loaded
+Context \(Percent.text(for: fraction))%
+Costs
+Could not reach the endpoint
+Credit balance
+Current Spend ($)
+Custom Endpoint
+Custom Endpoints
+Custom JSON fields
+Cycle
+Daily limit
+Day
+Day starts at
+Day, week and month per login: sessions per project with what each cost.
+Days
+DeepSeek Harness
+Detected from each login once a day. A week of the plan costs the price ÷ 4.35; a project that used 4% of the weekly allowance spent 4% of that. Amounts in \(currencyName), your Mac's currency. Type the amount you actually pay to override the list price.
+Detected usage format: %@. Save Endpoint to apply.
+Discovered Local Services:
+Edit
+Edit Endpoint
+Elsewhere
+Estimated cost
+Estimated cost per day; hover a bar for active time
+Exchange rate
+Expires \(stamp)
+File contains malformed JSON.
+For every provider with a weekly limit beside a shorter one, the main ring shows the week. The shorter window moves to the thin ring and the card. Alerts, the menu bar and providers with no weekly limit are unchanged, and Claude's daily pace ring still leads when it is on.
+Hard step
+Harness session
+Hide Templates
+Hourly limit
+How the money is worked out
+Icon
+Import Custom JSON...
+Imported custom JSON preset mapping.
+In the notch
+Install the \(name) CLI first; Sign in opens its install page.
+Its \(alert.windowLabel.lowercased()) limit is spent — resets \($0.formatted(date: .omitted, time: .shortened))
+Its \(alert.windowLabel.lowercased()) limit is spent.
+Its \(window) limit is available again.
+Its \(window) limit is spent — resets \($0.formatted(date: .omitted, time: .shortened))
+Its \(window) limit is spent.
+JSON endpoint
+Kilo Cloud rejected the request
+LiteLLM
+LiteLLM key info may require a management credential; use Manual USD entry if unavailable.
+Loaded in \(runtime).
+Loading…
+Mac notifications
+Manual
+Market data
+Merged into your Mac's own notch the bar is exactly as deep as the cutout, so a ring and a percentage under it have to share that depth — showing it draws the rings smaller. Turn it off for the largest rings the cutout has room for.
+Model
+Model field
+Model filter (optional)
+Model name (e.g. gpt-4o, llama-3.3)
+Month
+Monthly Budget
+Monthly Budget ($)
+Monthly Budget (M tokens)
+Monthly Tokens
+Monthly plan
+Monthly price
+Name
+Name this account
+New Custom Endpoint
+New-API
+Next expires \(stamp)
+No OpenCode Go subscription on this account
+No custom endpoints yet. Click 'Add Endpoint' or pick a Quick Template to get started.
+No sessions on this day
+No supported usage schema detected
+No tokens today
+No usage URL for this base URL
+Not Checked
+Not an HTTP endpoint
+Not fetched yet
+On this edge your notch is merged into your Mac's own cutout, and the cutout sets its size. This has no effect here — it is waiting for you to move the notch to another edge.
+Online
+Open Activity…
+Open \(host)
+Open \(name)
+Open catalog
+OpenAI-compatible APIs, local runtimes and custom proxies.
+OpenRouter
+Opens System Settings when banners are off for Codenotch.
+Opens \(host) in your browser. That site has its own sign-in, separate from the credential read here.
+Opens \(name), which is where this account is signed in.
+Other (\(mergedCount))
+Other usage source
+Per-token prices
+Percentage under each ring
+Pinned to \(display.name).
+Plan
+Plan catalog
+Plan limit
+Plan not detected yet
+Play \(name)
+Public
+Quick Templates
+Quota Used
+Quota units
+Records path
+Refreshed once a day, no account needed: exchange rate from open.er-api.com, per-token prices from OpenRouter. Plans live in plans.json, editable.
+Remaining Budget
+Remaining Tokens
+Requests today · last used \(Self.lastUsed(lastRequest, now: now))
+Requires --metrics on llama-server
+Reset Spend
+Reset Tokens
+Retry detection
+Ring Accent
+Runs \(command) in your terminal; it opens the browser to sign in and saves the session this reads.
+Runs \(command) in your terminal; sign in there with /login and the notch reads the session.
+Save Endpoint
+Save JSON template...
+Saved template. Edit it and click Import Custom JSON to load.
+Scan Local Engines
+Select a model...
+Send a test
+Session
+Sessions
+Show dollar amount ($) instead of percentage (%)
+Show remaining budget instead of spent
+Show token count instead of percentage (%)
+Show weekly limit in menu bar
+Shows \(choice.name)'s five-hour limit in the menu bar. Codenotch reads it either way.
+Sign in to Antigravity in ~/.gemini/antigravity-\(slug) to read your usage
+Sign in to \(name)
+Sign in to \(name) to read this account.
+Sign in to \(name)…
+Sign in with \(name) to read this account.
+Sign out in the \(name) window to use another account.
+Signs out of \(name) — the session belongs to Codenotch.
+Slow
+Spend: $%.2f
+Subscription credits
+Switch accounts in \(name); the notch follows.
+Switch off to stop reading \(provider.name) and forget its readings. \(provider.signIn.signOutCaveat)
+Switch on to sign in and read \(provider.name) again.
+Test
+Test Connection & Fetch Models
+The \(membership) plan has nothing for Cursor to meter yet
+The address must start with http:// or https://
+The agent stopped to ask you something.
+The agent's turn is done.
+The colour blends continuously from ample to critical across the full range, turning yellow at the watch limit below.
+The endpoint answered \(httpResponse.statusCode)
+The endpoint did not answer in time
+The figure under each ring. Turn it off for rings alone; the number is still a hover away in the card.
+The notch opens for a moment or shows a card, with the sound you chose. Nothing reaches Notification Center.
+The notch opens for a moment, with the session sound.
+The same boundary is used everywhere a day is counted: the local model ledger, the cost log, and the DeepSeek Harness card, whose daily figures the platform cuts wherever Codenotch asks it to.
+The sound plays on the ordinary output, not the interface sound-effects channel — so it is still heard with \u{201C}Play user interface sound effects\u{201D} switched off in System Settings → Sound.
+This Kilo account has no usage to read yet — top up credits or subscribe to a coding plan.
+This is what one looks like.
+This month
+This session
+This week
+Today \(ledger.tokensTodayText)
+Token field
+Tokens (Millions)
+Tokens Since Server Start
+Tokens Used
+Tokens Used (M tokens)
+Tokens since server start
+Tokens: %@
+Total
+Total Spend
+Tracking Unit
+Turns
+Turns are read from the transcripts each account writes; the first ones show up a few minutes after a session starts.
+URL must start with http:// or https:// and have a valid host.
+USD ($)
+USD spend
+Unlimited on the \(membership) plan — nothing to meter
+Unreachable
+Upload Custom Image...
+Usage (\(number) h)
+Usage (\(number) wk)
+Usage URL
+Usage URL: %@
+Usage authentication
+Usage preset
+Usage rides on the account Kilo CLI signs into — run `kilo` once and sign in, and the notch reads it.
+Usage route unavailable or unreachable
+Usage source
+Week
+Weekly limit as the main ring
+What each project spent of each login's allowance.
+What the notch, the menu bar and notifications call this account. Empty goes back to \(provider.name).
+Where to notify
+Which appearance the settings window is drawn in. The notch is dark by design whatever this is set to — its own Surface choice above decides how dark.
+With the colour ramp on, this still marks critical elsewhere in the app, but the ring's own red only arrives at 100%.
+Work is counted from this hour rather than from midnight, so a session that runs past it belongs to the day it was started in — a reading taken at two in the morning is about the evening that produced it.
+Working in \(projectName(of: newest.project))
+You stay signed in to \(name) — end that session in \(name) itself.
+\(Int(h))h limit
+\(Int(minutes / 60))h limit
+\(Int(minutes))m limit
+\(Int(times.rounded()))× the plan
+\(LimitWindow.compact(input)) tokens
+\(LimitWindow.compact(today.inputTokens)) in · \(LimitWindow.compact(today.outputTokens)) out
+\(alert.providerName) is at \(alert.usedPercent)%
+\(alert.providerName) limit reached
+\(alert.usedPercent)% of its \(alert.windowLabel.lowercased()) limit used.
+\(alert.usedPercent)% used
+\(balance) of \(allowance) left
+\(catalog.plans.count) plans
+\(countText) · \(ElapsedCopy.ago(since: checkedAt, now: now))
+\(days) days ago
+\(days)d limit
+\(event.providerName) Limit Reached
+\(event.providerName) Reset
+\(event.providerName) Weekly Limit
+\(event.providerName) has reset
+\(event.providerName) limit reached
+\(event.windowLabel) limit is spent
+\(event.windowLabel) limit refreshed
+\(formatted) left
+\(hourly)/hour
+\(m / 60) h
+\(m / 60) h \(m % 60) min
+\(m) min
+\(money(used)) of \(money(cap))
+\(money(used)) this cycle
+\(n) unused resets
+\(name) (missing)
+\(name) finished
+\(name) is waiting on you
+\(name) · \(MoneyFormat.string(local, currency: prices.currency))/month (catalog)
+\(name) · price unknown, set it here
+\(phase) · \(queued) queued
+\(prices.prices.count) models
+\(provider.name) usage needs its sign-in renewed — run `claude` once in a terminal.
+\(r.turns) turns
+\(share) · \(UsageFormat.tokens(tokens))
+\(snapshot.displayName) Usage
+\(snapshot.localModel?.brand?.displayName ?? snapshot.displayName) · Local
+\(st.events) turns · \(st.files) files
+\(st.events) turns · \(st.files) files · \(st.errors) skipped
+\(value)% deficit
+\(value)% reserved
+and \(hidden) more
+e.g. 10.0 (leave empty for unlimited)
+e.g. 2.5
+e.g. 20.00 (leave empty for unlimited)
+e.g. 4.25
+e.g. My OpenRouter, Local vLLM
+https://api.openai.com/v1
+llama.cpp
+sk-... (optional for local)
+vLLM
+via \(source)
+~\(requestsToday) request today
+~\(requestsToday) requests today
