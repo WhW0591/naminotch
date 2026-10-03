@@ -6,7 +6,6 @@
 # nothing ever looks up. Both halves are pinned in `CatalogFormatTests`.
 # The list may only shrink: translate a string, delete its line.
 $%@
-%@ / %@ left
 %@ / %@ remaining
 %@ / %@ tokens
 %@ / %@ tokens remaining
@@ -42,132 +41,68 @@ $%@
 %@m
 %@m limit
 A banner in Notification Center, which reaches you on another display or with the notch hidden. The notch stays quiet; sounds still play.
-API Key
-API key
 API key (per token)
-Abacus.AI
 About %@ days
 Active time
 Activity
 Activity…
-Add Endpoint
-Add to Endpoints
 All
 All accounts
 All time
 Ample, watch and critical each stay one flat colour, jumping between them at the limits below.
 Apify CLI
-Appearance & Icon
-Auth Header
-Authentication required to inspect usage route
-Authorization
-Base URL
-Cancel
-Checking usage route...
-Choose a preset to pre-fill settings:
 Claude Code emptied this profile's saved login — it does that to every profile at once after it updates itself. Sign in again to %@ to read your usage.
 Codenotch test
 Colour ramp
 Configure endpoint details and credentials in Settings.
-Configured Endpoints
-Connect any OpenAI-compatible API, local inference runtime, or custom proxy.
 Connected · %@ loaded
 Context %@%%
 Could not reach the endpoint
 Credit balance
-Current Spend ($)
 Custom Endpoint
-Custom JSON fields
 Cycle
 Daily limit
 Day
 DeepSeek Harness
-Detected usage format: %@. Save Endpoint to apply.
-Discovered Local Services:
-Edit
-Edit Endpoint
 Elsewhere
 Estimated cost
 Estimated cost per day; hover a bar for active time
-File contains malformed JSON.
 Hard step
 Harness session
-Hide Templates
 Hourly limit
-Icon
-Import Custom JSON...
-Imported custom JSON preset mapping.
 In the notch
 Install the %@ CLI first; Sign in opens its install page.
 Its %@ limit is available again.
-JSON endpoint
 Kilo Cloud rejected the request
-LiteLLM
-LiteLLM key info may require a management credential; use Manual USD entry if unavailable.
 Loaded in %@.
 Loading…
 Mac notifications
-Manual
-Model
-Model field
-Model filter (optional)
-Model name (e.g. gpt-4o, llama-3.3)
 Month
 Monthly Budget
-Monthly Budget ($)
-Monthly Budget (M tokens)
 Monthly Tokens
 Monthly plan
-New Custom Endpoint
-New-API
 No OpenCode Go subscription on this account
-No custom endpoints yet. Click 'Add Endpoint' or pick a Quick Template to get started.
 No sessions on this day
-No supported usage schema detected
 No tokens today
-No usage URL for this base URL
 Not Checked
 Not an HTTP endpoint
 Online
-OpenRouter
 Other (%@)
-Other usage source
 Plan limit
-Public
-Quick Templates
 Quota Used
-Quota units
-Records path
 Remaining Budget
 Remaining Tokens
-Requires --metrics on llama-server
-Reset Spend
-Reset Tokens
 Resets in %@ Day %@h
 Resets in %@ Days %@h
 Resets in %@ min
 Resets in %@ sec
 Resets in %@h %@m
-Retry detection
-Ring Accent
 Runs %@ in your terminal; it opens the browser to sign in and saves the session this reads.
 Runs %@ in your terminal; sign in there with /login and the notch reads the session.
-Save Endpoint
-Save JSON template...
-Saved template. Edit it and click Import Custom JSON to load.
-Scan Local Engines
-Select a model...
 Session
 Sessions
-Show dollar amount ($) instead of percentage (%)
-Show remaining budget instead of spent
-Show token count instead of percentage (%)
 Sign in with the Kilo CLI to read your usage
 Slow
-Spend: $%.2f
-Subscription credits
-Test
-Test Connection & Fetch Models
 The address must start with http:// or https://
 The agent stopped to ask you something.
 The agent's turn is done.
@@ -182,43 +117,18 @@ This month
 This session
 This week
 Today %@
-Token field
-Tokens (Millions)
 Tokens Since Server Start
 Tokens Used
-Tokens Used (M tokens)
-Tokens since server start
-Tokens: %@
 Total
 Total Spend
-Tracking Unit
 Turns
 Turns are read from the transcripts each account writes; the first ones show up a few minutes after a session starts.
-URL must start with http:// or https:// and have a valid host.
-USD ($)
-USD spend
 Unreachable
-Upload Custom Image...
 Usage (%@ h)
 Usage (%@ wk)
-Usage URL
-Usage URL: %@
-Usage authentication
-Usage preset
 Usage rides on the account Kilo CLI signs into — run `kilo` once and sign in, and the notch reads it.
-Usage route unavailable or unreachable
-Usage source
 Week
 and %@ more
-e.g. 10.0 (leave empty for unlimited)
-e.g. 2.5
-e.g. 20.00 (leave empty for unlimited)
-e.g. 4.25
-e.g. My OpenRouter, Local vLLM
-https://api.openai.com/v1
-llama.cpp
 macOS refused Codenotch access to %@'s saved login. Use Allow access… in Settings to ask again.
-sk-... (optional for local)
-vLLM
 ~%@ request today
 ~%@ requests today
