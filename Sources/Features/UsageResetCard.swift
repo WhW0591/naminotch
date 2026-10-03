@@ -13,16 +13,18 @@ struct UsageResetCard: View {
     @Environment(\.colorScheme) private var colorScheme
 
     static let cardHeight: CGFloat = Design.px(210)
+    /// **The card is content, and content is not glass.**
+    ///
+    /// Liquid Glass belongs to the layer floating above content — the bar and its
+    /// handles — and Apple's guidance is blunt about the other side: "Don't use
+    /// Liquid Glass in the content layer", no glass lists, cards or table cells.
+    /// This is a card of limits and resets, so it is painted as one, and the
+    /// notch beside it stays glass.
+    private var surfaceFill: Color { Palette.card }
 
-    private var glassy: Bool { surfaceStyle.isGlass && !reduceTransparency }
-    private var secondaryInk: Color {
-        TooltipGlassContrast.secondaryInk(surfaceStyle: surfaceStyle, colorScheme: colorScheme,
-                                          reduceTransparency: reduceTransparency)
-    }
-    /// Clear on glass: anything of ours under it would override the Clear or
-    /// Tinted choice in Appearance settings. `darkGlass` is the one deliberate
-    /// exception, and its dim is drawn behind the glass itself, not here.
-    private var surfaceFill: Color { glassy ? .clear : Palette.card }
+    /// The same ink the tooltip's rows use. The card is no longer glass, so
+    /// this resolves to the ordinary secondary colour — see `TooltipGlassContrast`.
+    @Environment(\.tooltipSecondaryInk) private var secondaryInk
 
     private var clampedTailOffset: CGFloat {
         let size = TooltipTail.size(for: direction)
@@ -38,23 +40,6 @@ struct UsageResetCard: View {
 
     var body: some View {
         stack
-            .background {
-                // `isGlass` is only ever true where `glassEffect` exists; the
-                // availability check is what tells the compiler so.
-                if glassy {
-                    if #available(macOS 26.0, *) {
-                        Color.clear
-                            .glassEffect(surfaceStyle.glass, in: TooltipSilhouette(direction: direction, tailOffset: clampedTailOffset))
-                            .background {
-                                if let dim = TooltipGlassContrast.dim(surfaceStyle: surfaceStyle,
-                                                                      colorScheme: colorScheme,
-                                                                      reduceTransparency: reduceTransparency) {
-                                    TooltipSilhouette(direction: direction, tailOffset: clampedTailOffset).fill(dim)
-                                }
-                            }
-                    }
-                }
-            }
     }
 
     private var titleText: String {
