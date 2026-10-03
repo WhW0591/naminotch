@@ -206,7 +206,7 @@ struct MoveGrip: View, Animatable {
                 let s = spread(i)
                 Color.clear
                     .frame(width: 20, height: 20)
-                    .glassEffect(surfaceStyle.glass, in: Rectangle())
+                    .glassEffect(surfaceStyle.glass.interactive(), in: Rectangle())
                     .background { if let dim = surfaceStyle.glassDim { Rectangle().fill(dim) } }
                     .frame(width: dot, height: dot)
                     .clipShape(Circle())
