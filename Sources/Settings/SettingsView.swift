@@ -151,12 +151,15 @@ private struct VisualEffect: NSViewRepresentable {
 /// the sidebar, hairlines instead of shadows, white at stepped opacities for
 /// text rather than system greys that shift with the desktop behind them.
 private enum SettingsPalette {
-    static let window = Color(red: 0.055, green: 0.055, blue: 0.063)
-    static let sidebar = Color(red: 0.086, green: 0.086, blue: 0.094)
-    static let hairline = Color.white.opacity(0.07)
-    static let edge = Color.white.opacity(0.09)
-    static let selected = Color.white.opacity(0.10)
-    static let hovered = Color.white.opacity(0.05)
+    /// Semantic rather than fixed, so the pane follows the window's appearance
+    /// instead of painting over it: these were near-black constants, which is
+    /// why changing the theme moved the window's shadow and nothing else.
+    static let window = Color(nsColor: .windowBackgroundColor)
+    static let sidebar = Color(nsColor: .underPageBackgroundColor)
+    static let hairline = Color.primary.opacity(0.07)
+    static let edge = Color.primary.opacity(0.09)
+    static let selected = Color.primary.opacity(0.10)
+    static let hovered = Color.primary.opacity(0.05)
 }
 
 /// One row of the settings sidebar: a white symbol, the name, and for
@@ -187,12 +190,12 @@ private struct SettingsSidebarRow: View {
             HStack(spacing: 10) {
                 icon
                     .frame(width: 18)
-                    .foregroundStyle(.white.opacity(isSelected ? 0.95 : isHovered ? 0.85 : 0.6))
+                    .foregroundStyle(.primary.opacity(isSelected ? 0.95 : isHovered ? 0.85 : 0.6))
                     // Leans toward the pointer's row a hair, and pops once on selection.
                     .offset(x: isHovered && !isSelected && !reduceMotion ? 1.5 : 0)
                 Text(section.title)
                     .font(.system(size: 13, weight: isSelected ? .medium : .regular))
-                    .foregroundStyle(.white.opacity(isSelected ? 0.95 : isHovered ? 0.92 : 0.78))
+                    .foregroundStyle(.primary.opacity(isSelected ? 0.95 : isHovered ? 0.92 : 0.78))
                     .lineLimit(1)
                 Spacer(minLength: 4)
                 // A red dot for a row that wants attention. Nothing sets it now.
@@ -205,7 +208,7 @@ private struct SettingsSidebarRow: View {
                 if let count {
                     Text("\(count)")
                         .font(.system(size: 11, weight: .medium).monospacedDigit())
-                        .foregroundStyle(.white.opacity(isHovered || isSelected ? 0.55 : 0.42))
+                        .foregroundStyle(.primary.opacity(isHovered || isSelected ? 0.55 : 0.42))
                         .contentTransition(.numericText())
                 }
             }
@@ -237,7 +240,7 @@ private struct SettingsSidebarRow: View {
                         .overlay {
                             // A hairline lit from above, so the pill reads as raised.
                             Self.pill.strokeBorder(
-                                LinearGradient(colors: [.white.opacity(0.10), .white.opacity(0.02)],
+                                LinearGradient(colors: [.primary.opacity(0.10), .primary.opacity(0.02)],
                                                startPoint: .top, endPoint: .bottom),
                                 lineWidth: 0.5)
                         }
@@ -301,10 +304,10 @@ private struct DisclosureChevron: View {
         } label: {
             Image(systemName: "chevron.right")
                 .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(.white.opacity(isHovered ? 0.85 : 0.45))
+                .foregroundStyle(.primary.opacity(isHovered ? 0.85 : 0.45))
                 .rotationEffect(.degrees(isExpanded ? 90 : 0))
                 .frame(width: 18, height: 18)
-                .background(Circle().fill(.white.opacity(isHovered ? 0.08 : 0)))
+                .background(Circle().fill(.primary.opacity(isHovered ? 0.08 : 0)))
                 .contentShape(Circle())
         }
         .buttonStyle(SettingsPressStyle())
@@ -341,7 +344,7 @@ private struct SettingsQuitRow: View {
                 Text(L10n.t("Quit Codenotch"))
                     .font(.system(size: 13, weight: .regular))
             }
-            .foregroundStyle(isHovered ? Self.hoverRed : Color.white.opacity(0.55))
+            .foregroundStyle(isHovered ? Self.hoverRed : Color.primary.opacity(0.55))
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -612,7 +615,7 @@ struct SettingsView: View {
                 SettingsQuitRow(quit: quit)
                 Text("Codenotch \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")")
                     .font(.system(size: 11, weight: .regular))
-                    .foregroundStyle(.white.opacity(0.32))
+                    .foregroundStyle(.primary.opacity(0.32))
                     .padding(.horizontal, 10)
             }
             .padding(.horizontal, 10)
@@ -655,7 +658,7 @@ struct SettingsView: View {
                     .foregroundStyle(.white)
                 Text(section.subtitle)
                     .font(.system(size: 12, weight: .regular))
-                    .foregroundStyle(.white.opacity(0.5))
+                    .foregroundStyle(.primary.opacity(0.5))
             }
             .padding(.horizontal, 24)
             // The same above as below, so the block sits in the middle of its band.

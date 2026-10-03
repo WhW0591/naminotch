@@ -13,6 +13,14 @@ enum NotchSurfaceStyle: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
+    /// The two that are offered. `solid` is deliberately absent: it is not a
+    /// third look but the fallback for a Mac without `glassEffect` — the
+    /// deployment target is macOS 15 — and `effective` still reaches for it.
+    /// So it keeps its case, its title and its explanation, and loses only its
+    /// place in the picker. An install that had chosen it keeps drawing it;
+    /// there is simply no way to choose it again.
+    static var allCases: [NotchSurfaceStyle] { [.glass, .darkGlass] }
+
     /// Whether this Mac has a Liquid Glass to hand the surface to at all.
     ///
     /// Codenotch's deployment target is macOS 15, where `glassEffect` does not
