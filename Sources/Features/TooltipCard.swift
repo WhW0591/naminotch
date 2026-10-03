@@ -517,17 +517,10 @@ private struct MoneyBreakdownView: View {
         return UsageBand.rampColor(for: money.spentFraction, watchLimit: watchLimit, accent: accentColor)
     }
 
-    private var symbol: String {
-        switch money.currency.uppercased() {
-        case "CNY", "RMB", "JPY": return "¥"
-        case "USD": return "$"
-        case "EUR": return "€"
-        default: return "\(money.currency) "
-        }
-    }
-
+    /// Shared with the card's "Today" row, so an amount is written the same way
+    /// wherever it appears.
     private func amount(_ value: Double) -> String {
-        "\(symbol)\(String(format: "%.2f", locale: Locale(identifier: "en_US_POSIX"), value))"
+        UsageFormat.money(value, currency: money.currency) ?? "\(value)"
     }
 
     var body: some View {
@@ -752,68 +745,45 @@ enum UsageFormat {
         guard let value else { return "—" }
         return "\(value)d"
     }
-}
 
-private struct CodexMetric: Identifiable {
-    let id: String
-    let value: String
-    let label: String
-}
-
-private struct CodexMetricList: View {
-    let metrics: [CodexMetric]
-    @Environment(\.tooltipSecondaryInk) private var secondaryInk
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: NotchLayout.codexMetricRowGap) {
-            ForEach(metrics) { metric in
-                HStack(alignment: .firstTextBaseline, spacing: Design.px(20)) {
-                    Text(metric.label)
-                        .font(Typography.cardBody)
-                        .foregroundStyle(Palette.textPrimary)
-                        .lineLimit(1)
-
-                    Spacer(minLength: 0)
-
-                    Text(metric.value)
-                        .font(Typography.cardBody)
-                        .foregroundStyle(secondaryInk)
-                        .lineLimit(1)
-                        .monospacedDigit()
-                }
-                .frame(height: NotchLayout.codexMetricRowHeight)
-            }
+    /// An amount in the account's own currency, with the symbol its console
+    /// uses for it. Nil when there is no amount, or no currency to name it in —
+    /// a bare number would be read as whatever the reader's own money is.
+    static func money(_ value: Double?, currency: String?) -> String? {
+        guard let value, let currency, !currency.isEmpty else { return nil }
+        let symbol: String
+        switch currency.uppercased() {
+        case "CNY", "RMB", "JPY": symbol = "¥"
+        case "USD":               symbol = "$"
+        case "EUR":               symbol = "€"
+        default:                  symbol = "\(currency) "
         }
-        .frame(height: NotchLayout.codexMetricHeight)
+        return "\(symbol)\(String(format: "%.2f", locale: Locale(identifier: "en_US_POSIX"), value))"
     }
-}
 
-private struct CodexDailyUsageChart: View {
-    let buckets: [CodexTokenUsage.DailyBucket]
-    let maximum: Int
-    @Environment(\.tooltipSecondaryInk) private var secondaryInk
+    /// One hour of the day, in the reader's own convention — "6 AM" or "06",
+    /// whichever their locale writes.
+    static func hour(_ hour: Int) -> String {
+        let calendar = Calendar.current
+        let midnight = calendar.startOfDay(for: Date())
+        guard let date = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: midnight)
+        else { return "\(hour):00" }
+        let format = DateFormatter()
+        format.locale = L10n.locale
+        format.setLocalizedDateFormatFromTemplate("j")
+        return format.string(from: date)
+    }
 
-    var body: some View {
-        GeometryReader { proxy in
-            ZStack(alignment: .bottomLeading) {
-                Rectangle()
-                    .fill(Palette.ringTrack)
-                    .frame(height: NotchLayout.hairline)
-
-                HStack(alignment: .bottom, spacing: Design.px(4)) {
-                    ForEach(buckets) { bucket in
-                        RoundedRectangle(cornerRadius: Design.px(3), style: .continuous)
-                            .fill(secondaryInk)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: proxy.size.height
-                                   * CGFloat(bucket.tokens) / CGFloat(maximum))
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            }
-        }
-        .frame(height: NotchLayout.codexChartHeight)
-        .clipped()
+    /// The hours one day's figures cover, as "6 AM–6 AM".
+    ///
+    /// Written beside the figure it describes, so a total does not have to be
+    /// read assuming which midnight it belongs to — and in the reader's own hour
+    /// convention, because it is being compared against the clock on their menu
+    /// bar. Both ends read the same: a day runs from a clock hour to that same
+    /// clock hour, one day later.
+    static func dayBoundary(startHour: Int) -> String {
+        let opening = hour(startHour)
+        return "\(opening)–\(opening)"
     }
 }
 
@@ -896,36 +866,33 @@ private struct UsageResetCreditsSection: View {
 
 /// Account-wide Codex activity. Unlike the quota rows above, this is sourced
 /// from the Codex profile usage endpoint and is not a local estimate.
+///
+/// Only the day's figure is left. Lifetime totals, peak day, longest chat,
+/// both streaks, the 30-day total and the 30-bar chart were six rows and a
+/// block of chart for numbers that never change what you do next — and they
+/// were most of the card's height. Today is the one that does: it is the burn
+/// the quota rows above are being spent from.
 private struct CodexUsageSection: View {
-    let usage: CodexTokenUsage
+    let usage: AccountTokenUsage
     let now: Date
 
-    private var buckets: [CodexTokenUsage.DailyBucket] {
-        usage.last30Days(now: now)
-    }
-
-    private var maximum: Int {
-        max(1, buckets.map(\.tokens).max() ?? 0)
-    }
-
+    /// The day's tokens, what they cost where the account is billed by the day,
+    /// and the hours the day covers.
+    ///
+    /// Codex reports only the tokens, and its day is its own server's — so
+    /// nothing is printed in the brackets for it, because a boundary this app
+    /// did not set is one it cannot vouch for. DeepSeek's platform is cut by
+    /// the window Codenotch asks for, so it says which.
     private var todayText: String {
-        usage.usageToday(now: now).map { UsageFormat.tokens($0) } ?? L10n.t("Pending")
-    }
-
-    private var metrics: [CodexMetric] {
-        let summary = usage.summary
-        return [
-            CodexMetric(id: "lifetime", value: UsageFormat.tokens(summary?.lifetimeTokens),
-                        label: L10n.t("Lifetime tokens")),
-            CodexMetric(id: "peak", value: UsageFormat.tokens(summary?.peakDailyTokens),
-                        label: L10n.t("Peak tokens")),
-            CodexMetric(id: "longest", value: UsageFormat.duration(
-                seconds: summary?.longestRunningTurnSeconds), label: L10n.t("Longest chat")),
-            CodexMetric(id: "current-streak", value: UsageFormat.days(
-                summary?.currentStreakDays), label: L10n.t("Current streak")),
-            CodexMetric(id: "longest-streak", value: UsageFormat.days(
-                summary?.longestStreakDays), label: L10n.t("Longest streak"))
-        ]
+        guard let tokens = usage.usageToday(now: now) else { return L10n.t("Pending") }
+        var text = UsageFormat.tokens(tokens)
+        if let money = UsageFormat.money(usage.costToday(now: now), currency: usage.currency) {
+            text += " · \(money)"
+        }
+        if let hour = usage.dayStartHour {
+            text += " (\(UsageFormat.dayBoundary(startHour: hour)))"
+        }
+        return text
     }
 
     var body: some View {
@@ -935,21 +902,8 @@ private struct CodexUsageSection: View {
                 .frame(height: NotchLayout.hairline)
                 .padding(.top, NotchLayout.codexUsageTop)
 
-            CodexMetricList(metrics: metrics)
-                .padding(.top, NotchLayout.codexMetricTop)
-                .padding(.bottom, NotchLayout.codexMetricBottom)
-
-            Rectangle()
-                .fill(Palette.ringTrack)
-                .frame(height: NotchLayout.hairline)
-
             SplitRow(leading: L10n.t("Today"), trailing: todayText)
                 .padding(.top, NotchLayout.blockSpacing)
-            SplitRow(leading: L10n.t("30-day tokens"),
-                     trailing: UsageFormat.tokens(usage.usageInLast30Days(now: now)))
-                .padding(.top, NotchLayout.codexUsageRowGap)
-            CodexDailyUsageChart(buckets: buckets, maximum: maximum)
-                .padding(.top, NotchLayout.codexChartTop)
         }
     }
 }
@@ -1109,6 +1063,29 @@ struct TooltipCard: View {
         return activity.note ?? activity.sessions.first?.name ?? L10n.t("Thinking")
     }
 
+    /// The sessions this card will actually draw, after the drop below.
+    ///
+    /// **Idle sessions are dropped, for DeepSeek Harness.** A Harness session
+    /// sitting at its prompt is not news, and the card is clipped rather than
+    /// scrolled — so every idle row it lists pushes a *working* one off the
+    /// bottom, which is the half worth the space. Harness is the provider where
+    /// this bites: it is the one Codenotch is used through, so it is the one
+    /// with a dozen sessions open at once, and `DSHSessionActivity` only ever
+    /// reports `.busy`, `.waiting` or `.idle` — the filter is exactly
+    /// "working or blocked on you".
+    ///
+    /// Scoped to DSH rather than applied everywhere, for now: the other agents
+    /// have their own monitors and their own ideas of what "idle" means, and
+    /// none of them has been looked at for this.
+    ///
+    /// `ActivitySummary`'s initialiser is failable, so an agent with nothing
+    /// left loses the section whole rather than drawing an empty rule.
+    private var shownActivity: ActivitySummary? {
+        guard let activity, snapshot.providerID == DSHProvider.providerID else { return activity }
+        return ActivitySummary(sessions: activity.sessions.filter { $0.state != .idle },
+                               queued: activity.queued, note: activity.note)
+    }
+
     /// The same figure the hover region uses, so what is drawn and what is
     /// reachable can never drift apart.
     private var height: CGFloat {
@@ -1116,7 +1093,7 @@ struct TooltipCard: View {
             windowCount: snapshot.windows.count,
             groupCount: snapshot.windowGroupCount,
             moneyWindowCount: snapshot.windows.filter { $0.money != nil }.count,
-            sessionCount: snapshot.localModel == nil ? (activity?.sessions.count ?? 0) : 0,
+            sessionCount: snapshot.localModel == nil ? (shownActivity?.sessions.count ?? 0) : 0,
             sessionCap: sessionCap,
             statusMessage: snapshot.statusMessage,
             blockMessage: snapshot.block?.summary(now: now),
@@ -1149,8 +1126,8 @@ struct TooltipCard: View {
                     } else if let history = snapshot.customUsageHistory {
                         CodexUsageSection(usage: history.codexUsage, now: now)
                     }
-                    if let activity, snapshot.localModel == nil {
-                        SessionList(summary: activity, now: now, cap: sessionCap,
+                    if let shownActivity, snapshot.localModel == nil {
+                        SessionList(summary: shownActivity, now: now, cap: sessionCap,
                                     onFocus: onFocusSession)
                     }
                     if costRows > 0, let model = CostModels.model(for: snapshot.id) {
