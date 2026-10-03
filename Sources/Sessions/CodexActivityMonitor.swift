@@ -154,12 +154,18 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
 
     private let storeCache = CodexStoreCache()
 
+    /// Today's token increments per rollout. Held for the monitor's whole life
+    /// on purpose: the reader is incremental, and a fresh one per tick would
+    /// re-walk every open rollout from its end twice a second.
+    private let rolloutUsage = CodexRolloutUsage()
+
     /// When each row entered the state it is in, by session id. See `settled`.
     private var entered: [String: (state: AgentSession.State, at: Date)] = [:]
 
     private func rescan() {
         let read = Self.read(stateStore: stateStore, desktopStore: desktopStore,
-                             staleAfter: staleAfter, profile: profile, cache: storeCache)
+                             staleAfter: staleAfter, profile: profile, cache: storeCache,
+                             usage: rolloutUsage)
         let found = Self.settled(read, entered: &entered)
         guard found != sessions else { return }
         // Only on a change, as the Claude monitor does, and for the same
@@ -182,11 +188,16 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
                      staleAfter: TimeInterval, now: Date = Date(),
                      profile: CodexProfile = .default(),
                      cache: CodexStoreCache = CodexStoreCache(),
+                     usage: CodexRolloutUsage = CodexRolloutUsage(),
                      openRollouts: Set<String>? = nil) -> [AgentSession] {
         var found: [AgentSession] = []
         // Every thread id that is part of a conversation drawn below, so the
         // desktop app's copy of the same conversation is not drawn again.
         var drawn: Set<String> = []
+        // The rollouts behind each drawn row, in the order they will be read.
+        // Kept beside the rows rather than inside them: which files hold a
+        // conversation's day is the monitor's business, not the card's.
+        var files: [String: [URL]] = [:]
 
         // "Codex" is two programs that record their work in different places:
         // the CLI and the VS Code extension append to a rollout, and the
@@ -208,6 +219,7 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
                                         allowStale: conversation.isOpen)
             else { continue }
             found.append(session)
+            files[session.id] = conversation.rollouts
             drawn.formUnion(conversation.members)
         }
 
@@ -221,7 +233,80 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
 
         // Newest first, with the id breaking ties so two ticks that read the
         // same thing cannot draw the rows in a different order.
-        return found.sorted { $0.since == $1.since ? $0.id < $1.id : $0.since > $1.since }
+        return withTokenShares(found, files: files, usage: usage, now: now)
+            .sorted { $0.since == $1.since ? $0.id < $1.id : $0.since > $1.since }
+    }
+
+    /// The rows with every Codex conversation's second line rewritten to its
+    /// share of today's tokens.
+    ///
+    /// **The denominator is the rows in this reading**, not the account-wide
+    /// "Today" the card prints further up. That figure comes from the usage
+    /// endpoint and counts work no rollout on this machine recorded — another
+    /// machine, a rotated file — so dividing by it would make every share a
+    /// fraction of something the reader cannot see. What the shares are for is
+    /// ranking these rows against each other, and over these rows they add up
+    /// to a hundred.
+    ///
+    /// **Codex only.** The other monitors write their own `detail` and are not
+    /// asked for a share; a row with no rollouts of its own — the desktop app's
+    /// — is returned exactly as it was built.
+    ///
+    /// A row whose rollouts cannot be read keeps the line it already had. That
+    /// is what omitting the share means here: calling an unreadable file zero
+    /// would rank it last with the same confidence as a reading, which is the
+    /// one answer worse than saying nothing.
+    static func withTokenShares(_ sessions: [AgentSession], files: [String: [URL]],
+                                usage: CodexRolloutUsage, now: Date) -> [AgentSession] {
+        var spent: [String: (tokens: Int, readable: Bool)] = [:]
+        var day = 0
+        var asked: Set<String> = []
+        for session in sessions {
+            guard let owned = files[session.id], !owned.isEmpty else { continue }
+            asked.formUnion(owned.map(\.path))
+            var tokens = 0
+            var readable = false
+            for url in owned {
+                guard let counted = usage.tokensToday(in: url, now: now) else { continue }
+                readable = true
+                tokens += counted
+            }
+            spent[session.id] = (tokens, readable)
+            day += tokens
+        }
+        // Rollouts nothing asks about any more are forgotten, so a long-lived
+        // app does not hold a cursor per conversation it has ever drawn.
+        usage.forget(keeping: asked)
+
+        return sessions.map { session in
+            guard let known = spent[session.id], known.readable,
+                  let detail = tokenDetail(tokens: known.tokens, of: day)
+            else { return session }
+            return AgentSession(id: session.id, name: session.name, detail: detail,
+                                state: session.state, waitingFor: session.waitingFor,
+                                since: session.since, processID: session.processID)
+        }
+    }
+
+    /// What a Codex row says under its name: this conversation's share of the
+    /// day's tokens, and the count behind the share.
+    ///
+    /// `42% · 128.4M` is the shape. The share is what ranks the rows at a
+    /// glance, which is the whole point of the line, and the absolute is beside
+    /// it so a share of a quiet day is not read as a quiet session.
+    ///
+    /// A conversation that has spent nothing today says so as a count rather
+    /// than as `0%`: on a card of idle rows that is a line of zeroes saying
+    /// nothing, where "No tokens today" is a fact. Nothing reaches here for a
+    /// file that could not be read — the caller keeps the row's own line for
+    /// that case, since zero would be a claim the reading does not support.
+    static func tokenDetail(tokens: Int, of day: Int) -> String? {
+        guard tokens > 0 else { return L10n.t("No tokens today") }
+        guard day > 0 else { return nil }
+        // As a string, so the localized shape stays the `%@ · %@` the catalog
+        // already has a translation for rather than a `%lld%%` of its own.
+        let share = "\(Int((Double(tokens) / Double(day) * 100).rounded()))%"
+        return L10n.t("\(share) · \(UsageFormat.tokens(tokens))")
     }
 
     /// One working conversation: the thread it started from, when any of it
@@ -231,6 +316,11 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
         let at: Date
         let state: AgentSession.State
         let members: Set<String>
+        /// Every rollout the conversation owns — the root's and its helpers',
+        /// sorted. What a request spends is mostly spent by the helpers it
+        /// spawned, so crediting only the root's own file would rank the
+        /// conversation that did the most work near the bottom of the card.
+        let rollouts: [URL]
         let isOpen: Bool
     }
 
@@ -263,6 +353,7 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
         var newest: [String: Date] = [:]
         var roots: [String: CodexThread] = [:]
         var members: [String: Set<String>] = [:]
+        var owned: [String: Set<String>] = [:]
         var busyRoots: Set<String> = []
         var openRoots: Set<String> = []
         let rollouts = Set(threads.compactMap { $0.rollout?.path })
@@ -273,14 +364,20 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
             else { continue }
             let activity = cache.rolloutState(of: rollout, keeping: rollouts)
             let isRecent = now.timeIntervalSince(modified) <= staleAfter
-            guard isRecent || (openRollouts.contains(rollout.path) && activity == .busy)
-            else { continue }
             let root = root(of: thread)
             // A helper whose conversation cannot be found is not drawn at all.
             // Drawing it as a conversation of its own is the one wrong answer:
             // a row named after a prompt the person never wrote, announcing
             // "Complete" for a review while the real request is still working.
             guard !root.isHelper else { continue }
+            // The conversation owns this rollout whether or not the thread is
+            // moving now: today's spending is the conversation's, and a helper
+            // that finished an hour ago still spent today's tokens on its
+            // behalf. Nothing is read for a rollout no row draws from — the
+            // reader is asked only about the rows built below.
+            owned[root.key, default: []].insert(rollout.path)
+            guard isRecent || (openRollouts.contains(rollout.path) && activity == .busy)
+            else { continue }
             roots[root.key] = root
             members[root.key, default: []].formUnion([thread.id, root.id].filter { !$0.isEmpty })
             if activity == .busy || thread.key != root.key { busyRoots.insert(root.key) }
@@ -298,6 +395,10 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
                                     : state(of: root, staleAfter: staleAfter, now: now,
                                             cache: cache, live: live),
                                 members: members[key] ?? [],
+                                // Sorted so two ticks reading the same set ask
+                                // for the files in the same order.
+                                rollouts: (owned[key] ?? []).sorted()
+                                    .map(URL.init(fileURLWithPath:)),
                                 isOpen: openRoots.contains(key))
         }
     }
