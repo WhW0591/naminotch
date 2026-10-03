@@ -130,22 +130,6 @@ struct SettingsOrb: View {
     /// own translucent chrome.
     private var glassy: Bool { surfaceStyle.isGlass && !reduceTransparency }
 
-    private var drawsOwnGlass: Bool { false }
-
-    /// **Whether this disc draws its own glass. Never — the panel is the glass.**
-    ///
-    /// The panel behind it is one glass rectangle the size of the whole window,
-    /// and glass cannot sample glass: a second layer over it has nothing to
-    /// refract and reads as a grey film rather than as material. Both drawing
-    /// branches keep a non-glass alternative — the stroked arc and the filled
-    /// disc — so this shows those instead, and costs nothing new.
-    ///
-    /// Deliberately a second name rather than a false `glassy`: `glassy` also
-    /// gates the release and merge behaviour below, which is not about drawing
-    /// this disc at all, and flattening it changed paths that were never in
-    /// question. `MoveGrip`'s dots are left alone — their glass *is* the dot,
-    /// and there is no drawn version to fall back to.
-
     /// The resting arc, one gap inside the flare — see `FlareArc`.
     ///
     /// On glass the arc is the material itself rather than a stroke of our
@@ -153,7 +137,7 @@ struct SettingsOrb: View {
     /// a line drawn beside it.
     @ViewBuilder
     private var restingArc: some View {
-        if drawsOwnGlass {
+        if glassy {
             // `isGlass` is only ever true where `glassEffect` exists; the
             // availability check is what tells the compiler so.
             if #available(macOS 26.0, *) {
@@ -182,7 +166,7 @@ struct SettingsOrb: View {
     /// press, so its glass is `interactive` and reacts to the pointer.
     @ViewBuilder
     private var hoverDisc: some View {
-        if drawsOwnGlass {
+        if glassy {
             if #available(macOS 26.0, *) {
                 Color.clear
                     .frame(width: 100, height: 100)
