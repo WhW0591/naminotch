@@ -144,6 +144,10 @@ struct GlyphShape: Shape {
 }
 
 struct ProviderGlyphView: View {
+    /// Observed so the mark turns over when a window opens, and so a holiday
+    /// list arriving from the network redraws it.
+    @ObservedObject private var pricing = DeepSeekHolidays.shared
+
     let glyph: ProviderGlyph
     var customIconFilename: String? = nil
     var size: CGFloat = Design.px(46)
@@ -174,7 +178,7 @@ struct ProviderGlyphView: View {
         // line. One asset and two states, so there is no second drawing to keep
         // in step with the first, and the difference reads at a glance without
         // being a colour anybody has to learn.
-        .scaleEffect(y: glyph == .deepseek && DeepSeekPricing.isPeak() ? -1 : 1)
+        .scaleEffect(y: glyph == .deepseek && pricing.isPeak ? -1 : 1)
         .frame(width: size, height: size)
     }
 }
