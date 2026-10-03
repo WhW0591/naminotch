@@ -516,8 +516,15 @@ struct SettingsView: View {
             RoundedRectangle(cornerRadius: SettingsView.cornerRadius, style: .continuous)
                 .strokeBorder(SettingsPalette.edge, lineWidth: 1)
         }
-        // Always the dark look, controls included, to match the notch it sets up.
-        .environment(\.colorScheme, .dark)
+        // **No pinned `colorScheme`.** There used to be one — `.dark`, with the
+        // note that it matched the notch this window sets up — and it was why
+        // changing the appearance moved the window's chrome and nothing inside
+        // it: `Palette`, the semantic colours and the whole pane resolve against
+        // this, so pinning it overrode the window's own appearance twice over.
+        //
+        // The cost of removing it is the mismatch the note was avoiding: the
+        // settings window can now be light while the notch stays dark by design.
+        // That is the theme's business to resolve, not this line's.
         // Without this SwiftUI insets the content by the title bar's height
         // even though the window has none to speak of, and the panel's own
         // rounded top is pushed down leaving a transparent band with the
