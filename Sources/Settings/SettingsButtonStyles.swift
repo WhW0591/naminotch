@@ -28,6 +28,7 @@ private struct SettingsButtonBody: View {
     let compact: Bool
 
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.colorScheme) private var colorScheme
     @State private var isHovered = false
 
     private static let destructiveRed = Color(red: 1, green: 0.42, blue: 0.4)
@@ -46,7 +47,12 @@ private struct SettingsButtonBody: View {
         if configuration.role == .destructive { return Self.destructiveRed }
         switch kind {
         case .standard:  return .primary.opacity(isHovered ? 1 : 0.9)
-        case .prominent: return .black
+        // The inverse of the fill, which is `primary` — a light chip on a dark
+        // pane and a dark one on a light pane, which is what prominent means.
+        // A flat `.black` was correct only while the fill was a flat white; once
+        // the fill went semantic the two said the same thing and the button read
+        // as a black blob.
+        case .prominent: return colorScheme == .dark ? .black : .white
         }
     }
 
