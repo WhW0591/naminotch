@@ -240,9 +240,18 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         // instead of showing black wedges outside the curve.
         window.isOpaque = false
         window.backgroundColor = .clear
-        // The panel is always drawn dark (see `SettingsView.body`); AppKit's
-        // own controls inside it — pickers, switches, menus — follow suit.
-        window.appearance = NSAppearance(named: .darkAqua)
+        // **Follows the Mac, rather than pinning dark.**
+        //
+        // The window used to be pinned to `darkAqua`, which is why nothing in
+        // here ever changed with the system's Appearance setting. `nil` hands
+        // the decision back: the window, SwiftUI's `colorScheme` and every
+        // dynamic colour in `Palette` then resolve together for whichever the
+        // Mac is set to.
+        //
+        // This is the first time the pane is drawn in light mode, so anything
+        // in it that assumed a dark backdrop is now visible as such. Revert
+        // this one commit if the result is worse than the pinning was.
+        window.appearance = nil
         window.hasShadow = true
         window.delegate = self
         watchForClicksAway(in: window)
