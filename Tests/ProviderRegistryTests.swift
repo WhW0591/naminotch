@@ -103,10 +103,16 @@ final class ProviderRegistryTests: XCTestCase {
         let readme = try String(
             contentsOf: root.appendingPathComponent("README.md"), encoding: .utf8)
 
+        // The README names every provider it can read; it does not have to do it
+        // in a table. It used to be one row per provider in bold, and this
+        // checked for that shape — so rewriting the README as prose failed
+        // twenty-three times for a reason that had nothing to do with whether a
+        // provider was documented. The intent is that no provider is missing from
+        // the README; the form is the README's business.
         for entry in ProviderCatalog.all {
             XCTAssertTrue(
-                readme.contains("**\(entry.label)**"),
-                "\(entry.id) is catalogued but the README has no **\(entry.label)** row"
+                readme.contains(entry.label),
+                "\(entry.id) is catalogued but the README never names \(entry.label)"
             )
         }
     }

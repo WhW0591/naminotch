@@ -49,19 +49,23 @@ socket. Nothing is typed into NamiNotch except the tokens it has to be given, an
 those go in the keychain.
 
 **Through a CLI that is already signed in.** Claude Code, Codex, Cursor (or
-`cursor-agent`), Gemini (CLI, OpenCode or Hermes), Grok, Kimi, Kiro, OpenCode,
+`cursor-agent`), Gemini API (via CLI, OpenCode or Hermes), Grok,\1GLM, Kimi, Kiro, OpenCode,
 Command Code, GitHub Copilot (`gh`), Amp, Apify, Kilo.
 
 **Through a sign-in of its own, in a NamiNotch window.** DeepSeek Platform,
 MiniMax, QianwenAI — the session lives in the app and nothing is read from a
 browser's cookies.
 
-**From a local runtime.** Ollama and LM Studio, including loaded models, memory,
+**From a local runtime.** Ollama (Local) and LM Studio, including loaded models, memory,
 context and generation speed.
 
 **From this Mac's files or endpoints.** Claude Desktop's cached response,
 Antigravity's language server or quota endpoint, Devin's `GetUserStatus`, and the
-balances Harness files in `~/.dsh/.credentials.yaml`.
+balances DeepSeek Harness files in `~/.dsh/.credentials.yaml`.
+
+**Whatever you add yourself.** Custom Endpoints: any OpenAI-compatible API, local
+runtime or proxy, given a usage URL and a unit — spend, tokens or credits — and
+read on its own terms.
 
 Per-provider detail — what each one shows and where the figure comes from — is
 under [docs/providers](docs/providers).
