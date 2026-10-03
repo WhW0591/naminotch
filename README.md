@@ -2,19 +2,42 @@
 
 ![NamiNotch](docs/design/codenotch-banner.png)
 
-[![CI](https://github.com/whw0591/naminotch/actions/workflows/ci.yml/badge.svg)](https://github.com/whw0591/naminotch/actions/workflows/ci.yml)
 ![Platform](https://img.shields.io/badge/platform-macOS%2026%2B-black)
 ![Swift](https://img.shields.io/badge/swift-5-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-> **A fork of [vinzdg/codenotch](https://github.com/vinzdg/codenotch)**, MIT.
-> It began there and carries that history; what has changed since — the features
-> removed, the providers added, the rename — is recorded in [TASKS.md](TASKS.md).
-> Not affiliated with, or endorsed by, the original author.
 
 **A macOS app that pins a small black notch to a screen edge, showing how much
 of each coding assistant's usage limit you have burned — and whether it is
 still working, done, or waiting on you.**
+
+## What this one changes
+
+This began as [Codenotch](https://github.com/vinzdg/codenotch) and is now
+NamiNotch. It is a personal edit of that app rather than a proposal to it, so it
+removes as much as it adds, and the decisions behind each change — including the
+ones that were tried and reverted — are all in [TASKS.md](TASKS.md).
+
+**Removed.** The Windows port, the website, the release chain and its appcast,
+the phone link, and the what's-new sheet. Every language but English and
+Simplified Chinese.
+
+**Renamed.** NamiNotch, with the bundle identifier `com.whw0591.naminotch`, and
+a first-launch migration that carries an existing install's preferences, support
+directory and endpoint tokens across so the rename is not a fresh start.
+
+**In Chinese.** The whole interface, including the parts that had never been
+translated.
+
+**Appearance.** The settings window follows the Mac, with a three-way choice of
+its own; the notch keeps the two glass styles and drops the opaque black one.
+
+**Sessions and sound.** Codex and the Harness finish with different sounds, and a
+session that stopped to ask you something rings however it got there.
+
+**DeepSeek.** The mark turns over while the platform is at its peak rate —
+09:00–12:00 and 14:00–18:00 Beijing time, Monday to Friday, excluding the
+statutory holidays read from [holiday-cn](https://github.com/NateScarlet/holiday-cn).
 
 ![Collapsed notch with hover tooltip](docs/design/frame-124-hover-tooltip.png)
 
