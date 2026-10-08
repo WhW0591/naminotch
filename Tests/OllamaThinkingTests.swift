@@ -157,7 +157,7 @@ final class OllamaThinkingActivityTests: XCTestCase {
         var raised: [String] = []
         var focused = false
         var refreshed = false
-        model.onFocusApp = { raised.append($0) }
+        model.onFocusApp = { raised.append($0); return true }
         model.onFocusSession = { _ in focused = true }
         model.onRefreshProvider = { _ in refreshed = true }
         model.sessions["cursor"] = [AgentSession(id: "c", name: "Chat", detail: "", state: .busy,
@@ -167,6 +167,39 @@ final class OllamaThinkingActivityTests: XCTestCase {
         XCTAssertEqual(raised, ["com.todesktop.230313mzl4w4u92"])
         XCTAssertFalse(focused)
         XCTAssertFalse(refreshed)
+    }
+
+    /// A provider with an app of its own still opens it when no session names a
+    /// window: Codex's desktop row is published for only a few seconds after a
+    /// write, but the app that wrote it is still there.
+    func testACellTapFallsBackToTheProvidersApp() {
+        let model = NotchViewModel()
+        let snapshot = ProviderSnapshot(id: "codex", displayName: "Codex", glyph: .ollama,
+            fidelity: .official, status: .ok, windows: [], kind: .usage)
+        var raised: [String] = []
+        var refreshed = false
+        model.onFocusApp = { raised.append($0); return true }
+        model.onFocusSession = { _ in XCTFail("no session to open") }
+        model.onRefreshProvider = { _ in refreshed = true }
+        model.providerApps = ["codex": "com.openai.codex"]
+        model.cellTapped(snapshot)
+        XCTAssertEqual(raised, ["com.openai.codex"])
+        XCTAssertFalse(refreshed)
+    }
+
+    /// An app that is not running answers false, and the tap falls back to the
+    /// re-read rather than pretending it opened something.
+    func testACellTapRefreshesWhenTheAppIsNotRunning() async {
+        let model = NotchViewModel()
+        let snapshot = ProviderSnapshot(id: "codex", displayName: "Codex", glyph: .ollama,
+            fidelity: .official, status: .ok, windows: [], kind: .usage)
+        var refreshed = false
+        model.onFocusApp = { _ in false }
+        model.onRefreshProvider = { _ in refreshed = true }
+        model.providerApps = ["codex": "com.openai.codex"]
+        model.cellTapped(snapshot)
+        for _ in 0..<50 where !refreshed { try? await Task.sleep(for: .milliseconds(10)) }
+        XCTAssertTrue(refreshed)
     }
 }
 

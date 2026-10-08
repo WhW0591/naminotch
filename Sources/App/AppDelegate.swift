@@ -338,8 +338,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             // launched: an app that is not running answers false and is left
             // alone.
             fleet.onFocusApp = { bundleID in
-                _ = SessionFocus.activateApp(bundleID: bundleID)
+                SessionFocus.activateApp(bundleID: bundleID)
             }
+            // Where a provider has an app of its own, a cell tap that found no
+            // session to open raises it — Codex's desktop row is only published
+            // for a few seconds after a write, but the app that wrote it is
+            // still there.
+            fleet.providerApps = Dictionary(allProviders.compactMap { provider -> (String, String)? in
+                guard case .openApp(let bundleID, _) = provider.signInRoute else { return nil }
+                return (provider.id, bundleID)
+            }, uniquingKeysWith: { first, _ in first })
             self.settings = settings
 
             // An agent app has no dock icon and no window: installed and

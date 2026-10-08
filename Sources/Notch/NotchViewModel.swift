@@ -163,8 +163,16 @@ final class NotchViewModel: ObservableObject {
     var onRefreshProvider: ((String) async -> Void)?
     /// Raise the app that hosts a session which has no process of its own —
     /// Cursor, Antigravity. Wired to `SessionFocus.activateApp(bundleID:)`,
-    /// which does nothing when the app is not running.
-    var onFocusApp: ((String) -> Void)?
+    /// which does nothing when the app is not running and answers false so the
+    /// caller can fall back.
+    var onFocusApp: ((String) -> Bool)?
+    /// Each provider's own app, where it has one, from its sign-in route.
+    ///
+    /// The last place a cell tap looks. A provider whose sessions name neither
+    /// a process nor an app — or whose app-hosted row is only published for a
+    /// few seconds after a write, as Codex's is — still has an application
+    /// open, and that is the window the reader means.
+    var providerApps: [String: String] = [:]
     /// A tooltip has just gone away, for this provider.
     ///
     /// A *look* is the whole visit — the card appearing and then closing again —
@@ -1214,10 +1222,14 @@ final class NotchViewModel: ObservableObject {
                 onFocusSession?(pid)
                 return
             }
-            if let bundleID = session.appBundleID {
-                onFocusApp?(bundleID)
+            if let bundleID = session.appBundleID, onFocusApp?(bundleID) == true {
                 return
             }
+        }
+        // Nothing to open among the sessions, or the app one named is not
+        // running. The provider's own app is the last place to look.
+        if let bundleID = providerApps[snapshot.providerID], onFocusApp?(bundleID) == true {
+            return
         }
         guard let onRefreshProvider else { return }
         Task { await refresh(snapshot, using: onRefreshProvider) }
