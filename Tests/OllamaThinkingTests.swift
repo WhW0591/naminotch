@@ -100,6 +100,29 @@ final class OllamaThinkingActivityTests: XCTestCase {
             }
         }
     }
+
+    /// A cell click opens the session worth reaching: the one blocked on you
+    /// first, then the one working, and only when it names a process at all.
+    func testTheSessionACellClickOpens() {
+        let model = NotchViewModel()
+        let snapshot = ProviderSnapshot(id: "dsh", displayName: "Harness", glyph: .ollama,
+            fidelity: .official, status: .ok, windows: [], kind: .usage)
+        let now = Date()
+        func session(_ id: String, _ state: AgentSession.State, pid: pid_t?) -> AgentSession {
+            AgentSession(id: id, name: id, detail: "", state: state, waitingFor: nil,
+                         since: now, processID: pid)
+        }
+        model.sessions["dsh"] = [session("idle", .idle, pid: 11),
+                                 session("busy", .busy, pid: 22),
+                                 session("waiting", .waiting, pid: 33)]
+        XCTAssertEqual(model.focusableSession(for: snapshot)?.processID, 33)
+        model.sessions["dsh"] = [session("busy", .busy, pid: 22)]
+        XCTAssertEqual(model.focusableSession(for: snapshot)?.processID, 22)
+        model.sessions["dsh"] = [session("named", .busy, pid: nil)]
+        XCTAssertNil(model.focusableSession(for: snapshot), "no pid is no window to open")
+        model.sessions["dsh"] = []
+        XCTAssertNil(model.focusableSession(for: snapshot))
+    }
 }
 
 private final class RelayEvidence: @unchecked Sendable {

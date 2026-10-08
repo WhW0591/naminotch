@@ -1603,8 +1603,17 @@ final class NotchWindowController {
         if notchRect.contains(local),
            let index = cellIndex(along: placement.along(of: local)),
            model.snapshots.indices.contains(index) {
+            let snapshot = model.snapshots[index]
+            // A cell with something running in it is a way back to that window:
+            // the click opens the session the card would list first. With
+            // nothing running there is no window to open, so the click keeps
+            // its old meaning and re-reads the provider rather than launching
+            // anything on your behalf.
+            if let session = model.focusableSession(for: snapshot), let pid = session.processID {
+                model.onFocusSession?(pid)
+                return
+            }
             if let onRefreshProvider {
-                let snapshot = model.snapshots[index]
                 Task { await model.refresh(snapshot, using: onRefreshProvider) }
             }
         }

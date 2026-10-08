@@ -1178,6 +1178,20 @@ final class NotchViewModel: ObservableObject {
         ActivitySummary(sessions: sessions[providerID] ?? [])
     }
 
+    /// The session a click on this provider's cell should open.
+    ///
+    /// The one blocked on you first, then the one working, then whatever is
+    /// there — the row the card would put first is the one a click should
+    /// reach. Nil when nothing names a process, which is the honest answer for
+    /// a local runtime and for an agent whose monitor reports no pid: there is
+    /// no window to open, so the click keeps its old meaning.
+    func focusableSession(for snapshot: ProviderSnapshot) -> AgentSession? {
+        let named = (activity(for: snapshot)?.sessions ?? []).filter { $0.processID != nil }
+        return named.first { $0.state == .waiting }
+            ?? named.first { $0.state == .busy }
+            ?? named.first
+    }
+
     var hoveredSnapshot: ProviderSnapshot? {
         guard let hoveredIndex, snapshots.indices.contains(hoveredIndex) else { return nil }
         return snapshots[hoveredIndex]

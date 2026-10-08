@@ -31,6 +31,10 @@ A borderless panel pinned to a screen edge, over the bezel. `Sources/Notch/`.
   overrides all of them.
 - **The move handle** carries the notch to another edge by drag, and the settings
   disc opens the settings window.
+- **A running session is a way back to its window.** Clicking a provider's cell
+  raises the terminal or app its session runs in — the one blocked on you first,
+  then the one working — the same jump a session row makes from the card. A cell
+  with nothing running keeps the plain re-read, and never launches anything.
 - **Cell budget.** How many cells fit is `NotchLayout.sessionsFitting`, and the
   card's height is bounded by the screen. See the Tripwires before touching
   either; both have been broken already.
