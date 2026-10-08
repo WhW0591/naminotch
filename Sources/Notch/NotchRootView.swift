@@ -445,6 +445,13 @@ struct NotchRootView: View {
                 // edge that is the ring alone — the label sits below it, in the
                 // notch's depth, and claims nothing here.
                 .frame(width: model.edge.isVertical ? nil : NotchLayout.cellAlong(for: model.edge))
+                // The same second route the settings orb has: the panel's own
+                // `mouseDown` reaches `handleClick`, but SwiftUI swallows a
+                // click its hosting view hit-tests, so a gesture on the cell
+                // itself is the one that fires every time. Both reach the one
+                // action in `cellTapped`.
+                .contentShape(Rectangle())
+                .onTapGesture { model.cellTapped(snapshot) }
                 .opacity(model.isExpanded ? 1 : 0)
                 // A short slide toward the edge, no scaling: the clip is
                 // already doing the concealing, and scaling on top of it

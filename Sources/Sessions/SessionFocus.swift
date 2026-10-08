@@ -33,7 +33,7 @@ enum SessionFocus {
             Log.usage.debug("no owning app for pid \(pid, privacy: .public)")
             return false
         }
-        return await MainActor.run { app.activate() }
+        return await MainActor.run { bringToFront(app) }
     }
 
     /// The process's controlling terminal, named the way ps prints it
@@ -78,9 +78,31 @@ enum SessionFocus {
             Log.usage.debug("no owning app for pid \(pid, privacy: .public)")
             return false
         }
-        // `activate()` rather than the deprecated options form: the notch's own
-        // panel is non-activating, so there is no focus of ours to hand over
-        // and nothing to co-ordinate.
+        return bringToFront(app)
+    }
+
+    /// Bring an already-running app to the front.
+    ///
+    /// `NSRunningApplication.activate()` is a *request*, and the system weighs
+    /// it against who is actually active. Clicking the notch never activates
+    /// us — the panel is non-activating on purpose — so that request was
+    /// routinely refused and the click did nothing. Apple's cooperative
+    /// activation wants the active app to yield before the target activates,
+    /// and `NSWorkspace.openApplication` is the one interface that performs
+    /// that hand-off for us; an app that is already running (the caller found
+    /// it by pid) has its running instance activated rather than a second one
+    /// launched. `activate()` stays as the fallback for an app with no bundle
+    /// to open.
+    @discardableResult
+    static func bringToFront(_ app: NSRunningApplication) -> Bool {
+        if let url = app.bundleURL {
+            let configuration = NSWorkspace.OpenConfiguration()
+            configuration.activates = true
+            configuration.allowsRunningApplicationSubstitution = true
+            NSWorkspace.shared.openApplication(at: url, configuration: configuration,
+                                               completionHandler: nil)
+            return true
+        }
         return app.activate()
     }
 

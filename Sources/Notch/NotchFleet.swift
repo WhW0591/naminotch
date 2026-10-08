@@ -441,6 +441,7 @@ final class NotchFleet {
         controller.onOpenSettings = onOpenSettings
         controller.model.onOpenSettings = onOpenSettings
         controller.model.onFocusSession = onFocusSession
+        controller.model.onRefreshProvider = onRefreshProvider
         controller.model.onTooltipDismissed = onTooltipDismissed
         controller.onReposition = onReposition
         controller.onMoveToEdge = onMoveToEdge

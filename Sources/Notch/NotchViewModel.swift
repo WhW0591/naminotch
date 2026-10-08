@@ -157,6 +157,10 @@ final class NotchViewModel: ObservableObject {
     /// A tap on a session row in the tooltip: jump to the terminal tab the
     /// session runs in. Takes the session's pid; wired to `SessionFocus`.
     var onFocusSession: ((pid_t) -> Void)?
+    /// One provider re-read, as the cell tap asks for it. The controller's own
+    /// `onRefreshProvider`, mirrored here because a cell tap is answered by a
+    /// SwiftUI gesture now — see `NotchRootView.cells`.
+    var onRefreshProvider: ((String) async -> Void)?
     /// A tooltip has just gone away, for this provider.
     ///
     /// A *look* is the whole visit — the card appearing and then closing again —
@@ -1190,6 +1194,20 @@ final class NotchViewModel: ObservableObject {
         return named.first { $0.state == .waiting }
             ?? named.first { $0.state == .busy }
             ?? named.first
+    }
+
+    /// What a tap on a provider's cell does.
+    ///
+    /// A running session is a way back to its window; with nothing running
+    /// there is nothing to open, so the tap keeps its old meaning and re-reads
+    /// the provider instead.
+    func cellTapped(_ snapshot: ProviderSnapshot) {
+        if let session = focusableSession(for: snapshot), let pid = session.processID {
+            onFocusSession?(pid)
+            return
+        }
+        guard let onRefreshProvider else { return }
+        Task { await refresh(snapshot, using: onRefreshProvider) }
     }
 
     var hoveredSnapshot: ProviderSnapshot? {

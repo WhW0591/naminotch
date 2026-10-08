@@ -123,6 +123,30 @@ final class OllamaThinkingActivityTests: XCTestCase {
         model.sessions["dsh"] = []
         XCTAssertNil(model.focusableSession(for: snapshot))
     }
+
+    /// The tap acts on that choice: a session to open, or the old re-read.
+    func testACellTapOpensTheSessionOrRefreshes() async {
+        let model = NotchViewModel()
+        let snapshot = ProviderSnapshot(id: "dsh", displayName: "Harness", glyph: .ollama,
+            fidelity: .official, status: .ok, windows: [], kind: .usage)
+        var opened: pid_t?
+        var refreshed: [String] = []
+        model.onFocusSession = { opened = $0 }
+        model.onRefreshProvider = { refreshed.append($0) }
+
+        model.sessions["dsh"] = [AgentSession(id: "s", name: "s", detail: "", state: .busy,
+                                              waitingFor: nil, since: Date(), processID: 77)]
+        model.cellTapped(snapshot)
+        XCTAssertEqual(opened, 77)
+        XCTAssertTrue(refreshed.isEmpty)
+
+        opened = nil
+        model.sessions["dsh"] = []
+        model.cellTapped(snapshot)
+        for _ in 0..<50 where refreshed.isEmpty { try? await Task.sleep(for: .milliseconds(10)) }
+        XCTAssertNil(opened)
+        XCTAssertEqual(refreshed, ["dsh"])
+    }
 }
 
 private final class RelayEvidence: @unchecked Sendable {
