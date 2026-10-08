@@ -333,6 +333,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             fleet.onFocusSession = { pid in
                 Task { _ = await SessionFocus.focus(pid: pid) }
             }
+            // A session with no process of its own — Cursor, Antigravity —
+            // lives in its editor, so that is the window to raise. Nothing is
+            // launched: an app that is not running answers false and is left
+            // alone.
+            fleet.onFocusApp = { bundleID in
+                _ = SessionFocus.activateApp(bundleID: bundleID)
+            }
             self.settings = settings
 
             // An agent app has no dock icon and no window: installed and

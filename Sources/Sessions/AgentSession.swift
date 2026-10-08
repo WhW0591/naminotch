@@ -34,6 +34,15 @@ struct AgentSession: Identifiable, Equatable {
     /// to jump to that session.
     let processID: pid_t?
 
+    /// The app the session's window belongs to, when it is app-hosted and
+    /// publishes no process of its own.
+    ///
+    /// Cursor and Antigravity record their work in a database or a transcript,
+    /// not in a terminal, so there is no pid to walk up to an application —
+    /// the editor *is* the window, and this names it. A session with a process
+    /// ignores this: the process tree already finds the terminal that owns it.
+    let appBundleID: String?
+
     /// Written out rather than synthesised so `processID` can default to nil:
     /// four of the five monitors have no pid to give, and a memberwise
     /// initialiser would have made every one of them say so.
@@ -44,7 +53,8 @@ struct AgentSession: Identifiable, Equatable {
         state: State,
         waitingFor: String?,
         since: Date,
-        processID: pid_t? = nil
+        processID: pid_t? = nil,
+        appBundleID: String? = nil
     ) {
         self.id = id
         self.name = name
@@ -53,5 +63,6 @@ struct AgentSession: Identifiable, Equatable {
         self.waitingFor = waitingFor
         self.since = since
         self.processID = processID
+        self.appBundleID = appBundleID
     }
 }

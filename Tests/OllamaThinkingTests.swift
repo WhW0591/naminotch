@@ -147,6 +147,27 @@ final class OllamaThinkingActivityTests: XCTestCase {
         XCTAssertNil(opened)
         XCTAssertEqual(refreshed, ["dsh"])
     }
+
+    /// A session with no process names its editor instead, and the tap raises
+    /// that rather than re-reading.
+    func testACellTapRaisesTheHostingAppWhenThereIsNoProcess() {
+        let model = NotchViewModel()
+        let snapshot = ProviderSnapshot(id: "cursor", displayName: "Cursor", glyph: .ollama,
+            fidelity: .official, status: .ok, windows: [], kind: .usage)
+        var raised: [String] = []
+        var focused = false
+        var refreshed = false
+        model.onFocusApp = { raised.append($0) }
+        model.onFocusSession = { _ in focused = true }
+        model.onRefreshProvider = { _ in refreshed = true }
+        model.sessions["cursor"] = [AgentSession(id: "c", name: "Chat", detail: "", state: .busy,
+                                                 waitingFor: nil, since: Date(),
+                                                 appBundleID: "com.todesktop.230313mzl4w4u92")]
+        model.cellTapped(snapshot)
+        XCTAssertEqual(raised, ["com.todesktop.230313mzl4w4u92"])
+        XCTAssertFalse(focused)
+        XCTAssertFalse(refreshed)
+    }
 }
 
 private final class RelayEvidence: @unchecked Sendable {

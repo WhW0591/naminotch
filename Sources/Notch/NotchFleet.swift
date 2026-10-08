@@ -79,6 +79,8 @@ final class NotchFleet {
     var onRefreshProvider: ((String) async -> Void)?
     var onOpenSettings: (() -> Void)?
     var onFocusSession: ((pid_t) -> Void)?
+    /// Raise the app that hosts a session with no process of its own.
+    var onFocusApp: ((String) -> Void)?
     /// A tooltip closed, for this provider. See `NotchViewModel`.
     var onTooltipDismissed: ((String) -> Void)?
     var signInItems: [(title: String, action: () -> Void)] = []
@@ -441,6 +443,7 @@ final class NotchFleet {
         controller.onOpenSettings = onOpenSettings
         controller.model.onOpenSettings = onOpenSettings
         controller.model.onFocusSession = onFocusSession
+        controller.model.onFocusApp = onFocusApp
         controller.model.onRefreshProvider = onRefreshProvider
         controller.model.onTooltipDismissed = onTooltipDismissed
         controller.onReposition = onReposition

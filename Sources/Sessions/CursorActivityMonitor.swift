@@ -239,7 +239,8 @@ final class CursorActivityMonitor: ObservableObject, AgentActivityMonitor {
             detail: (head["subtitle"] as? String) ?? "Cursor",
             state: state,
             waitingFor: isWaiting ? L10n.t("needs your input") : nil,
-            since: since
+            since: since,
+            appBundleID: CursorCredentials.bundleID
         )
     }
 

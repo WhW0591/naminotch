@@ -190,7 +190,8 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
                      profile: CodexProfile = .default(),
                      cache: CodexStoreCache = CodexStoreCache(),
                      usage: CodexRolloutUsage = CodexRolloutUsage(),
-                     openRollouts: Set<String>? = nil) -> [AgentSession] {
+                     openRollouts: Set<String>? = nil,
+                     rolloutOwners: [String: pid_t]? = nil) -> [AgentSession] {
         var found: [AgentSession] = []
         // Every thread id that is part of a conversation drawn below, so the
         // desktop app's copy of the same conversation is not drawn again.
@@ -203,9 +204,16 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
         // "Codex" is two programs that record their work in different places:
         // the CLI and the VS Code extension append to a rollout, and the
         // desktop app writes to its own catalogue.
-        let openRollouts = openRollouts ?? CodexOpenRollouts.paths(
-            under: profile.configDirectory.appendingPathComponent("sessions")
-        )
+        let owners: [String: pid_t]
+        if let rolloutOwners {
+            owners = rolloutOwners
+        } else if let openRollouts {
+            owners = Dictionary(uniqueKeysWithValues: openRollouts.map { ($0, 0) })
+        } else {
+            owners = CodexOpenRollouts.owners(
+                under: profile.configDirectory.appendingPathComponent("sessions"))
+        }
+        let openRollouts = Set(owners.keys)
         for conversation in liveConversations(cache.recentThreads(in: stateStore),
                                               staleAfter: staleAfter, now: now, cache: cache,
                                               openRollouts: openRollouts) {
@@ -213,11 +221,15 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
             // The id the single row always had, so a conversation that is not
             // a sub-agent's keeps it and nothing keyed on it moves.
             let handle = root.rollout?.lastPathComponent ?? root.id
+            // The process reading this conversation's rollout is the one to
+            // walk up to a terminal when its cell is clicked.
+            let pid = conversation.rollouts.compactMap { owners[$0.path] }.first { $0 > 0 }
             guard let session = session(id: "\(profile.id).\(handle)",
                                         name: root.label(fallback: profile.displayName),
                                         modified: conversation.at, state: conversation.state,
                                         staleAfter: staleAfter, now: now,
-                                        allowStale: conversation.isOpen)
+                                        allowStale: conversation.isOpen,
+                                        processID: pid)
             else { continue }
             found.append(session)
             files[session.id] = conversation.rollouts
@@ -228,7 +240,8 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
            desktop.threadID.isEmpty || !drawn.contains(desktop.threadID),
            let session = session(id: "\(profile.id).desktop", name: desktop.title,
                                  modified: desktop.updatedAt, state: .busy,
-                                 staleAfter: staleAfter, now: now) {
+                                 staleAfter: staleAfter, now: now,
+                                 appBundleID: "com.openai.codex") {
             found.append(session)
         }
 
@@ -285,7 +298,8 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
             else { return session }
             return AgentSession(id: session.id, name: session.name, detail: detail,
                                 state: session.state, waitingFor: session.waitingFor,
-                                since: session.since, processID: session.processID)
+                                since: session.since, processID: session.processID,
+                                appBundleID: session.appBundleID)
         }
     }
 
@@ -460,7 +474,9 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
         id: String, name: String, modified: Date,
         state: AgentSession.State = .busy,
         staleAfter: TimeInterval, now: Date,
-        allowStale: Bool = false
+        allowStale: Bool = false,
+        processID: pid_t? = nil,
+        appBundleID: String? = nil
     ) -> AgentSession? {
         guard allowStale || now.timeIntervalSince(modified) <= staleAfter else { return nil }
 
@@ -470,24 +486,32 @@ final class CodexActivityMonitor: ObservableObject, AgentActivityMonitor {
             detail: state == .success ? L10n.t("Complete") : L10n.t("Working"),
             state: state,
             waitingFor: nil,
-            since: modified
+            since: modified,
+            processID: processID,
+            appBundleID: appBundleID
         )
     }
 }
 
 enum CodexOpenRollouts {
     static func paths(under root: URL, pids suppliedPIDs: [pid_t]? = nil) -> Set<String> {
+        Set(owners(under: root, pids: suppliedPIDs).keys)
+    }
+
+    /// The same scan, keeping *which* process holds each rollout. A click on a
+    /// session's cell turns this into the terminal the agent runs in.
+    static func owners(under root: URL, pids suppliedPIDs: [pid_t]? = nil) -> [String: pid_t] {
         let pids: [pid_t]
         if let suppliedPIDs {
             pids = suppliedPIDs
         } else {
             var count = proc_listpids(UInt32(PROC_ALL_PIDS), 0, nil, 0)
-            guard count > 0 else { return [] }
+            guard count > 0 else { return [:] }
             var listed = [pid_t](repeating: 0,
                                  count: Int(count) / MemoryLayout<pid_t>.stride + 16)
             count = proc_listpids(UInt32(PROC_ALL_PIDS), 0, &listed,
                                   Int32(listed.count * MemoryLayout<pid_t>.stride))
-            guard count > 0 else { return [] }
+            guard count > 0 else { return [:] }
             pids = listed.prefix(Int(count) / MemoryLayout<pid_t>.stride).filter(isCodex)
         }
 
@@ -498,7 +522,7 @@ enum CodexOpenRollouts {
             free(resolved)
             resolvedPrefix = path.hasSuffix("/") ? path : path + "/"
         }
-        var found: Set<String> = []
+        var found: [String: pid_t] = [:]
         for pid in pids where pid > 0 {
             let size = proc_pidinfo(pid, PROC_PIDLISTFDS, 0, nil, 0)
             guard size > 0 else { continue }
@@ -520,9 +544,9 @@ enum CodexOpenRollouts {
                 }
                 guard path.hasSuffix(".jsonl") else { continue }
                 if path.hasPrefix(prefix) {
-                    found.insert(path)
+                    found[path] = pid
                 } else if path.hasPrefix(resolvedPrefix) {
-                    found.insert(prefix + path.dropFirst(resolvedPrefix.count))
+                    found[prefix + path.dropFirst(resolvedPrefix.count)] = pid
                 }
             }
         }

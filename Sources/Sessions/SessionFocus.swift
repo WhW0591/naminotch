@@ -106,6 +106,18 @@ enum SessionFocus {
         return app.activate()
     }
 
+    /// Raise the running app with this bundle id.
+    ///
+    /// Returns false when it is not running — a click must never launch an
+    /// application on the reader's behalf, only go back to one they already
+    /// have open.
+    @discardableResult
+    static func activateApp(bundleID: String) -> Bool {
+        guard let app = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first
+        else { return false }
+        return bringToFront(app)
+    }
+
     /// The nearest ancestor process that macOS knows as a running application.
     static func owningApp(of pid: pid_t) -> NSRunningApplication? {
         for candidate in ancestry(of: pid) {

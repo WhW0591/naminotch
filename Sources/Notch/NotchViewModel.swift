@@ -161,6 +161,10 @@ final class NotchViewModel: ObservableObject {
     /// `onRefreshProvider`, mirrored here because a cell tap is answered by a
     /// SwiftUI gesture now — see `NotchRootView.cells`.
     var onRefreshProvider: ((String) async -> Void)?
+    /// Raise the app that hosts a session which has no process of its own —
+    /// Cursor, Antigravity. Wired to `SessionFocus.activateApp(bundleID:)`,
+    /// which does nothing when the app is not running.
+    var onFocusApp: ((String) -> Void)?
     /// A tooltip has just gone away, for this provider.
     ///
     /// A *look* is the whole visit — the card appearing and then closing again —
@@ -1190,21 +1194,30 @@ final class NotchViewModel: ObservableObject {
     /// a local runtime and for an agent whose monitor reports no pid: there is
     /// no window to open, so the click keeps its old meaning.
     func focusableSession(for snapshot: ProviderSnapshot) -> AgentSession? {
-        let named = (activity(for: snapshot)?.sessions ?? []).filter { $0.processID != nil }
-        return named.first { $0.state == .waiting }
-            ?? named.first { $0.state == .busy }
-            ?? named.first
+        let reachable = (activity(for: snapshot)?.sessions ?? []).filter {
+            $0.processID != nil || $0.appBundleID != nil
+        }
+        return reachable.first { $0.state == .waiting }
+            ?? reachable.first { $0.state == .busy }
+            ?? reachable.first
     }
 
     /// What a tap on a provider's cell does.
     ///
-    /// A running session is a way back to its window; with nothing running
-    /// there is nothing to open, so the tap keeps its old meaning and re-reads
-    /// the provider instead.
+    /// A reachable session is a way back to its window — the process to walk
+    /// up to a terminal, or the editor that hosts it. With none, there is
+    /// nothing to open, so the tap keeps its old meaning and re-reads the
+    /// provider instead.
     func cellTapped(_ snapshot: ProviderSnapshot) {
-        if let session = focusableSession(for: snapshot), let pid = session.processID {
-            onFocusSession?(pid)
-            return
+        if let session = focusableSession(for: snapshot) {
+            if let pid = session.processID {
+                onFocusSession?(pid)
+                return
+            }
+            if let bundleID = session.appBundleID {
+                onFocusApp?(bundleID)
+                return
+            }
         }
         guard let onRefreshProvider else { return }
         Task { await refresh(snapshot, using: onRefreshProvider) }

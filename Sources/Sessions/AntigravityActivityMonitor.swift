@@ -216,7 +216,8 @@ final class AntigravityActivityMonitor: AgentActivityMonitor {
             detail: detail,
             state: state,
             waitingFor: waitingFor,
-            since: modified
+            since: modified,
+            appBundleID: "com.google.antigravity"
         )
     }
 }
