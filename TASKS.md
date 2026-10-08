@@ -475,7 +475,13 @@ Cursor both feed it, through one display model.
       inputs, summary precedence, label widths, elapsed copy
 - [ ] Notify on `waiting` (deliberately not built — colour and pulse only, per the
       design call. The hook is `ActivitySummary.waitingSessions`)
-- [ ] Click a session to focus its terminal window
+- [x] Click a session to focus its terminal window — and a provider's cell, which
+      opens the session the card would list first. It took two fixes to actually
+      work: the tap needed a SwiftUI gesture, because the panel's own `mouseDown`
+      is not reached for a click the hosting view hit-tests, and raising the app
+      needed `NSWorkspace.openApplication`'s cooperative activation — a
+      non-activating panel's app is not the active app `activate()` would have to
+      be yielded from.
 
 ### Why it is inside the ring
 
